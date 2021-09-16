@@ -57,17 +57,26 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\DomofonContext.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="Forms\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
+    <Compile Include="Forms\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Accrual.cs" />
+    <Compile Include="Models\Adress.cs" />
     <Compile Include="Models\Company.cs" />
+    <Compile Include="Models\DomofonHandset.cs" />
+    <Compile Include="Models\DomofonKey.cs" />
+    <Compile Include="Models\DomofonSystem.cs" />
+    <Compile Include="Models\Payment.cs" />
+    <Compile Include="Models\RepairRequest.cs" />
+    <Compile Include="Models\Serviceman.cs" />
+    <Compile Include="Models\Subscriber.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form1.resx">
+    <EmbeddedResource Include="Forms\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -79,7 +88,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
