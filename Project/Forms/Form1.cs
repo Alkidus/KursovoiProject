@@ -15,7 +15,10 @@ namespace Project
         public Form1()
         {
             InitializeComponent();
+            Text = "PROJECT_DOMOFON";
+            this.BackColor = Color.Aquamarine;
         }
+
 
     }
 }
