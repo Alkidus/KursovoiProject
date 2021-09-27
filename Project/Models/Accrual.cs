@@ -14,8 +14,8 @@ namespace Project.Models
         }
         public int Id { get; set; }
         public DateTime SumPlusDate { get; set; } //дата начисления абонплаты
-        public float SumPlus { get; set; } //сумма начисленной абонплаты
-        public int SubscriberId { get; set; }
+        public decimal SumPlus { get; set; } //сумма начисленной абонплаты
+        public Nullable<int> SubscriberId { get; set; }
         public string Comments { get; set; } //коментарии
         //public virtual Subscriber Subscriber { get; set; }
         public virtual ICollection<Subscriber> Subscribers { get; set; }

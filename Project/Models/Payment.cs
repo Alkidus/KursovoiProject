@@ -10,8 +10,8 @@ namespace Project.Models
     {
         public int Id { get; set; }
         public DateTime SumPMinusDate { get; set; } // дата оплаты абонента
-        public float SumMinus{ get; set; } // сумма оплаты абонента
-        public int SubscriberId { get; set; }
+        public decimal SumMinus{ get; set; } // сумма оплаты абонента
+        public Nullable<int> SubscriberId { get; set; }
         public string Comments { get; set; } //коментарии
         public virtual Subscriber Subscriber { get; set; }
     }

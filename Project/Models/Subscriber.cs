@@ -26,10 +26,10 @@ namespace Project.Models
         public int AdressId { get; set; } //адресс
         public int DomofonHandsetId { get; set; } //тип трубки
         public int DomofonKeyId { get; set; } //тип ключа
-        public int PaymentId { get; set; } //оплаты
-        public int AccrualId { get; set; } //начисления
+        public Nullable<int> PaymentId { get; set; } //оплаты
+        public Nullable<int> AccrualId { get; set; } //начисления
         public string Comments { get; set; } //коментарии
-        public int RepairRequestId { get; set; } //заявки
+        public Nullable<int> RepairRequestId { get; set; } //заявки
         public virtual ICollection<Payment> Payments { get; set; }
         public virtual ICollection<Accrual> Accruals { get; set; }
         public virtual ICollection<RepairRequest> RepairRequests { get; set; }

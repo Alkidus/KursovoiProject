@@ -12,8 +12,8 @@ namespace Project.Controller
     {
         public DomofonContext() : base("MyConnString")
         {
-            //Database.SetInitializer<DomofonContext>(new CreateDatabaseIfNotExists<DomofonContext>());
-            Database.SetInitializer<DomofonContext>(new DropCreateDatabaseIfModelChanges<DomofonContext>());
+            Database.SetInitializer<DomofonContext>(new CreateDatabaseIfNotExists<DomofonContext>());
+            //Database.SetInitializer<DomofonContext>(new DropCreateDatabaseIfModelChanges<DomofonContext>());
         }
 
         public DbSet<Accrual> Accruals { get; set; }
