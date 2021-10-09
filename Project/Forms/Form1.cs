@@ -9,11 +9,13 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Project.Models;
 using Project.Controller;
+using Project.Forms;
 
 namespace Project
 {
     public partial class Form1 : Form
     {
+        public string activeTable = "";
         public Form1()
         {
             InitializeComponent();
@@ -23,16 +25,6 @@ namespace Project
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            //Company myCompany = new Company
-            //{
-            //    Name = "К.С-Инвест",
-            //    Adress = "г.Чернигов, ул. Родимцева 14",//адрес
-            //    Phone = "+38 (0462) 614-681",//тедефон
-            //    Account = "UA133052990000026008006300527",//расчетный счет в банке
-            //    Code = "33660167",//код ЕДРПОУ
-            //    BankCode = "305299"// МФО банка
-            //};
-
             //using (DomofonContext db = new DomofonContext())
             //{
             //    //db.Companies.Add(
@@ -285,6 +277,7 @@ namespace Project
             //    db.SaveChanges();
             //}
             GetAllCompanies();
+            activeTable = "company";
         }
         private void GetAllCompanies()
         {
@@ -336,12 +329,14 @@ namespace Project
         {
             ClearTable();
             GetAllAdresses();
+            activeTable = "adress";
         }
 
         private void Keys_btn_Click(object sender, EventArgs e)
         {
             ClearTable();
             GetAllKeys();
+            activeTable = "key";
         }
 
         private void GetAllKeys()
@@ -364,6 +359,7 @@ namespace Project
         {
             ClearTable();
             GetAllHandSets();
+            activeTable = "handset";
         }
 
         private void GetAllHandSets()
@@ -386,6 +382,7 @@ namespace Project
         {
             ClearTable();
             GetAllDomofonSystems();
+            activeTable = "domofon";
         }
 
         private void GetAllDomofonSystems()
@@ -408,6 +405,7 @@ namespace Project
         {
             ClearTable();
             GetAllServiсeman();
+            activeTable = "serviceman";
         }
 
         private void GetAllServiсeman()
@@ -431,6 +429,7 @@ namespace Project
         {
             ClearTable();
             GetAllCompanies();
+            activeTable = "company";
         }
         private void ClearTable()
         {
@@ -446,12 +445,14 @@ namespace Project
         {
             ClearTable();
             GetAllAdresses();
+            activeTable = "subscriber";
         }
 
         private void Repair_btn_Click(object sender, EventArgs e)
         {
             ClearTable();
             GetAllRepairs();
+            activeTable = "repair";
         }
 
         private void GetAllRepairs()
@@ -477,6 +478,64 @@ namespace Project
                         item.Status, item.SubscriberId, item.Comments);
                 }
             }
+        }
+
+        private void ADD_btn_Click(object sender, EventArgs e)
+        {
+            switch (activeTable)
+            {
+                case "company":
+                    break;
+                case "serviceman":
+                    break;
+                case "subscriber":
+                    break;
+                case "repair":
+                    break;
+                case "adress":
+                    AdressForm adressform = new AdressForm();
+                    DialogResult result = adressform.ShowDialog(this);
+                    if (result == DialogResult.Cancel)
+                        return;
+                    //Player player = new Player();
+                    //player.Age = (int)plForm.numericUpDown1.Value;
+                    //player.Name = plForm.textBox1.Text;
+                    //player.Position = plForm.comboBox1.SelectedItem.ToString();
+
+                    //db.Players.Add(player);
+                    //db.SaveChanges();
+
+                    Adress adress = new Adress();
+                    adress.City = adressform.textBox1.Text;
+                    adress.Street = adressform.textBox2.Text;
+                    adress.House = (int)adressform.numericUpDown1.Value;
+                    adress.Corpus = adressform.textBox3.Text;
+                    adress.Entrance = (int)adressform.numericUpDown2.Value;
+                    adress.ContractNumb = adressform.textBox5.Text;
+                    adress.ContractDate = adressform.dateTimePicker1.Value;
+                    adress.FlatCount = (int)adressform.numericUpDown3.Value;
+                    adress.DoorsCount = (int)adressform.numericUpDown4.Value;
+                    adress.DomofonSystemId = adressform.comboBox1.SelectedItem.ToString();
+                    adress.DomofonKeyId = adressform.comboBox1.SelectedItem.ToString();
+                    break;
+                case "key":
+                    break;
+                case "handset":
+                    break;
+                case "domofon":
+                    break;
+
+            }
+        }
+
+        private void CHAGE_btn_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void DELL_btn_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

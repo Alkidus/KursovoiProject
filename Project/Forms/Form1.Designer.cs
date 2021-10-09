@@ -38,6 +38,7 @@ namespace Project
             this.начислитьАбонплатуToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.провестиОплатуToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addServiсemanToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.chooseCompanyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.печатьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.выходToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.отчетыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -52,16 +53,16 @@ namespace Project
             this.Keys_btn = new System.Windows.Forms.Button();
             this.HandSet_btn = new System.Windows.Forms.Button();
             this.Domofons_btn = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.chooseCompanyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ADD_btn = new System.Windows.Forms.Button();
+            this.CHAGE_btn = new System.Windows.Forms.Button();
+            this.DELL_btn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // dataGridView1
             // 
+            this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -69,6 +70,7 @@ namespace Project
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(394, 27);
             this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(778, 572);
             this.dataGridView1.TabIndex = 0;
             // 
@@ -135,6 +137,13 @@ namespace Project
             this.addServiсemanToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
             this.addServiсemanToolStripMenuItem.Text = "Добавить мастера";
             this.addServiсemanToolStripMenuItem.Click += new System.EventHandler(this.addServiсemanToolStripMenuItem_Click);
+            // 
+            // chooseCompanyToolStripMenuItem
+            // 
+            this.chooseCompanyToolStripMenuItem.Name = "chooseCompanyToolStripMenuItem";
+            this.chooseCompanyToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
+            this.chooseCompanyToolStripMenuItem.Text = "Выбрать компанию";
+            this.chooseCompanyToolStripMenuItem.Click += new System.EventHandler(this.chooseCompanyToolStripMenuItem_Click);
             // 
             // печатьToolStripMenuItem
             // 
@@ -257,60 +266,56 @@ namespace Project
             this.Domofons_btn.UseVisualStyleBackColor = true;
             this.Domofons_btn.Click += new System.EventHandler(this.Domofons_btn_Click);
             // 
-            // button1
+            // ADD_btn
             // 
-            this.button1.Cursor = System.Windows.Forms.Cursors.Cross;
-            this.button1.FlatAppearance.BorderColor = System.Drawing.Color.Green;
-            this.button1.FlatAppearance.BorderSize = 3;
-            this.button1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Green;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button1.ForeColor = System.Drawing.Color.Green;
-            this.button1.Location = new System.Drawing.Point(15, 340);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(100, 45);
-            this.button1.TabIndex = 8;
-            this.button1.Text = "Добавить";
-            this.button1.UseVisualStyleBackColor = true;
+            this.ADD_btn.Cursor = System.Windows.Forms.Cursors.Cross;
+            this.ADD_btn.FlatAppearance.BorderColor = System.Drawing.Color.Green;
+            this.ADD_btn.FlatAppearance.BorderSize = 3;
+            this.ADD_btn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Green;
+            this.ADD_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ADD_btn.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ADD_btn.ForeColor = System.Drawing.Color.Green;
+            this.ADD_btn.Location = new System.Drawing.Point(15, 340);
+            this.ADD_btn.Name = "ADD_btn";
+            this.ADD_btn.Size = new System.Drawing.Size(100, 45);
+            this.ADD_btn.TabIndex = 8;
+            this.ADD_btn.Text = "Добавить";
+            this.ADD_btn.UseVisualStyleBackColor = true;
+            this.ADD_btn.Click += new System.EventHandler(this.ADD_btn_Click);
             // 
-            // button2
+            // CHAGE_btn
             // 
-            this.button2.Cursor = System.Windows.Forms.Cursors.Cross;
-            this.button2.FlatAppearance.BorderColor = System.Drawing.Color.Gold;
-            this.button2.FlatAppearance.BorderSize = 3;
-            this.button2.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gold;
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button2.ForeColor = System.Drawing.Color.Blue;
-            this.button2.Location = new System.Drawing.Point(145, 340);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(100, 45);
-            this.button2.TabIndex = 9;
-            this.button2.Text = "Изменить";
-            this.button2.UseVisualStyleBackColor = true;
+            this.CHAGE_btn.Cursor = System.Windows.Forms.Cursors.Cross;
+            this.CHAGE_btn.FlatAppearance.BorderColor = System.Drawing.Color.Gold;
+            this.CHAGE_btn.FlatAppearance.BorderSize = 3;
+            this.CHAGE_btn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gold;
+            this.CHAGE_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.CHAGE_btn.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.CHAGE_btn.ForeColor = System.Drawing.Color.Blue;
+            this.CHAGE_btn.Location = new System.Drawing.Point(145, 340);
+            this.CHAGE_btn.Name = "CHAGE_btn";
+            this.CHAGE_btn.Size = new System.Drawing.Size(100, 45);
+            this.CHAGE_btn.TabIndex = 9;
+            this.CHAGE_btn.Text = "Изменить";
+            this.CHAGE_btn.UseVisualStyleBackColor = true;
+            this.CHAGE_btn.Click += new System.EventHandler(this.CHAGE_btn_Click);
             // 
-            // button3
+            // DELL_btn
             // 
-            this.button3.Cursor = System.Windows.Forms.Cursors.Cross;
-            this.button3.FlatAppearance.BorderColor = System.Drawing.Color.Red;
-            this.button3.FlatAppearance.BorderSize = 3;
-            this.button3.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Red;
-            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button3.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button3.ForeColor = System.Drawing.Color.Red;
-            this.button3.Location = new System.Drawing.Point(275, 340);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(100, 45);
-            this.button3.TabIndex = 10;
-            this.button3.Text = "Удалить";
-            this.button3.UseVisualStyleBackColor = true;
-            // 
-            // chooseCompanyToolStripMenuItem
-            // 
-            this.chooseCompanyToolStripMenuItem.Name = "chooseCompanyToolStripMenuItem";
-            this.chooseCompanyToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
-            this.chooseCompanyToolStripMenuItem.Text = "Выбрать компанию";
-            this.chooseCompanyToolStripMenuItem.Click += new System.EventHandler(this.chooseCompanyToolStripMenuItem_Click);
+            this.DELL_btn.Cursor = System.Windows.Forms.Cursors.Cross;
+            this.DELL_btn.FlatAppearance.BorderColor = System.Drawing.Color.Red;
+            this.DELL_btn.FlatAppearance.BorderSize = 3;
+            this.DELL_btn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Red;
+            this.DELL_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.DELL_btn.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.DELL_btn.ForeColor = System.Drawing.Color.Red;
+            this.DELL_btn.Location = new System.Drawing.Point(275, 340);
+            this.DELL_btn.Name = "DELL_btn";
+            this.DELL_btn.Size = new System.Drawing.Size(100, 45);
+            this.DELL_btn.TabIndex = 10;
+            this.DELL_btn.Text = "Удалить";
+            this.DELL_btn.UseVisualStyleBackColor = true;
+            this.DELL_btn.Click += new System.EventHandler(this.DELL_btn_Click);
             // 
             // Form1
             // 
@@ -319,9 +324,9 @@ namespace Project
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1184, 611);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.DELL_btn);
+            this.Controls.Add(this.CHAGE_btn);
+            this.Controls.Add(this.ADD_btn);
             this.Controls.Add(this.Domofons_btn);
             this.Controls.Add(this.HandSet_btn);
             this.Controls.Add(this.Keys_btn);
@@ -343,8 +348,6 @@ namespace Project
         }
 
         #endregion
-
-        private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button ChooseSubs_btn;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem файлToolStripMenuItem;
@@ -365,11 +368,12 @@ namespace Project
         private System.Windows.Forms.Button Keys_btn;
         private System.Windows.Forms.Button HandSet_btn;
         private System.Windows.Forms.Button Domofons_btn;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button ADD_btn;
+        private System.Windows.Forms.Button CHAGE_btn;
+        private System.Windows.Forms.Button DELL_btn;
         private System.Windows.Forms.ToolStripMenuItem addServiсemanToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem chooseCompanyToolStripMenuItem;
+        public System.Windows.Forms.DataGridView dataGridView1;
     }
 }
 

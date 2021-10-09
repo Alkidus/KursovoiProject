@@ -57,6 +57,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\DomofonContext.cs" />
+    <Compile Include="Controller\Methods.cs" />
+    <Compile Include="Forms\AdressForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AdressForm.Designer.cs">
+      <DependentUpon>AdressForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\ChooseSub.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -82,6 +89,9 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Forms\AdressForm.resx">
+      <DependentUpon>AdressForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
