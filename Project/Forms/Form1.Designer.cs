@@ -37,6 +37,7 @@ namespace Project
             this.выбратьАбонентаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.начислитьАбонплатуToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.провестиОплатуToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addServiсemanToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.печатьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.выходToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.отчетыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -100,6 +101,7 @@ namespace Project
             this.выбратьАбонентаToolStripMenuItem,
             this.начислитьАбонплатуToolStripMenuItem,
             this.провестиОплатуToolStripMenuItem,
+            this.addServiсemanToolStripMenuItem,
             this.печатьToolStripMenuItem,
             this.выходToolStripMenuItem});
             this.файлToolStripMenuItem.Name = "файлToolStripMenuItem";
@@ -123,6 +125,13 @@ namespace Project
             this.провестиОплатуToolStripMenuItem.Name = "провестиОплатуToolStripMenuItem";
             this.провестиОплатуToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
             this.провестиОплатуToolStripMenuItem.Text = "Провести оплату";
+            // 
+            // addServiсemanToolStripMenuItem
+            // 
+            this.addServiсemanToolStripMenuItem.Name = "addServiсemanToolStripMenuItem";
+            this.addServiсemanToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
+            this.addServiсemanToolStripMenuItem.Text = "Добавить мастера";
+            this.addServiсemanToolStripMenuItem.Click += new System.EventHandler(this.addServiсemanToolStripMenuItem_Click);
             // 
             // печатьToolStripMenuItem
             // 
@@ -149,19 +158,19 @@ namespace Project
             // выбратьАбонентаToolStripMenuItem1
             // 
             this.выбратьАбонентаToolStripMenuItem1.Name = "выбратьАбонентаToolStripMenuItem1";
-            this.выбратьАбонентаToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.выбратьАбонентаToolStripMenuItem1.Size = new System.Drawing.Size(175, 22);
             this.выбратьАбонентаToolStripMenuItem1.Text = "Выбрать абонента";
             // 
             // должникиToolStripMenuItem
             // 
             this.должникиToolStripMenuItem.Name = "должникиToolStripMenuItem";
-            this.должникиToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.должникиToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.должникиToolStripMenuItem.Text = "Должники";
             // 
             // квитанцииToolStripMenuItem
             // 
             this.квитанцииToolStripMenuItem.Name = "квитанцииToolStripMenuItem";
-            this.квитанцииToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.квитанцииToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.квитанцииToolStripMenuItem.Text = "Квитанции";
             // 
             // справкаToolStripMenuItem
@@ -176,13 +185,13 @@ namespace Project
             // помощьToolStripMenuItem
             // 
             this.помощьToolStripMenuItem.Name = "помощьToolStripMenuItem";
-            this.помощьToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.помощьToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.помощьToolStripMenuItem.Text = "Помощь...";
             // 
             // оПрограммеToolStripMenuItem
             // 
             this.оПрограммеToolStripMenuItem.Name = "оПрограммеToolStripMenuItem";
-            this.оПрограммеToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.оПрограммеToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.оПрограммеToolStripMenuItem.Text = "О программе...";
             // 
             // Repair_btn
@@ -218,6 +227,7 @@ namespace Project
             this.Keys_btn.TabIndex = 5;
             this.Keys_btn.Text = "Ключи";
             this.Keys_btn.UseVisualStyleBackColor = true;
+            this.Keys_btn.Click += new System.EventHandler(this.Keys_btn_Click);
             // 
             // HandSet_btn
             // 
@@ -229,6 +239,7 @@ namespace Project
             this.HandSet_btn.TabIndex = 6;
             this.HandSet_btn.Text = "Виды трубок";
             this.HandSet_btn.UseVisualStyleBackColor = true;
+            this.HandSet_btn.Click += new System.EventHandler(this.HandSet_btn_Click);
             // 
             // Domofons_btn
             // 
@@ -240,6 +251,7 @@ namespace Project
             this.Domofons_btn.TabIndex = 7;
             this.Domofons_btn.Text = "Виды домофонов";
             this.Domofons_btn.UseVisualStyleBackColor = true;
+            this.Domofons_btn.Click += new System.EventHandler(this.Domofons_btn_Click);
             // 
             // button1
             // 
@@ -345,6 +357,7 @@ namespace Project
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.ToolStripMenuItem addServiсemanToolStripMenuItem;
     }
 }
 

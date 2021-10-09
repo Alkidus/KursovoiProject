@@ -25,12 +25,12 @@ namespace Project
         {
             Company myCompany = new Company
             {
-                CompanyName = "К.С-Инвест",
-                CompanyAdress = "г.Чернигов, ул. Родимцева 14",//адрес
-                CompanyPhone = "+38 (0462) 614-681",//тедефон
-                CompanyAccount = "UA133052990000026008006300527",//расчетный счет в банке
-                CompanyCode = "33660167",//код ЕДРПОУ
-                CompanyBankCode = "305299"// МФО банка
+                Name = "К.С-Инвест",
+                Adress = "г.Чернигов, ул. Родимцева 14",//адрес
+                Phone = "+38 (0462) 614-681",//тедефон
+                Account = "UA133052990000026008006300527",//расчетный счет в банке
+                Code = "33660167",//код ЕДРПОУ
+                BankCode = "305299"// МФО банка
             };
 
             using(DomofonContext db = new DomofonContext())
@@ -60,7 +60,7 @@ namespace Project
             }
         }
 
-        private void Adress_btn_Click(object sender, EventArgs e)
+        private void GetAllAdresses()
         {
             using (DomofonContext db = new DomofonContext())
             {
@@ -83,6 +83,95 @@ namespace Project
                     dataGridView1.Rows.Add(item.Id, item.City, item.Street, item.House,
                         item.Corpus, item.Entrance, item.ContractNumb, item.ContractDate,
                         item.FlatCount, item.DoorsCount, item.DomofonSystemId, item.DomofonKeyId);
+                }
+            }
+        }
+        private void Adress_btn_Click(object sender, EventArgs e)
+        {
+            GetAllAdresses();
+        }
+
+        private void Keys_btn_Click(object sender, EventArgs e)
+        {
+            GetAllKeys();
+        }
+
+        private void GetAllKeys()
+        {
+            using (DomofonContext db = new DomofonContext())
+            {
+                var keys = db.DomofonKeys.ToList();
+                dataGridView1.Columns.Add("col0", "ID");
+                dataGridView1.Columns.Add("col1", "DomofonKeyType");
+                dataGridView1.Columns.Add("col2", "DomofonKeyCode");
+
+                foreach (var item in keys)
+                {
+                    dataGridView1.Rows.Add(item.Id, item.DomofonKeyType, item.DomofonKeyCode);
+                }
+            }
+        }
+
+        private void HandSet_btn_Click(object sender, EventArgs e)
+        {
+            GetAllHandSets();
+        }
+
+        private void GetAllHandSets()
+        {
+            using (DomofonContext db = new DomofonContext())
+            {
+                var handsets = db.DomofonHandsets.ToList();
+                dataGridView1.Columns.Add("col0", "ID");
+                dataGridView1.Columns.Add("col1", "DomofonHandsetType");
+                dataGridView1.Columns.Add("col2", "Comments");
+
+                foreach (var item in handsets)
+                {
+                    dataGridView1.Rows.Add(item.Id, item.DomofonHandsetType, item.Comments);
+                }
+            }
+        }
+
+        private void Domofons_btn_Click(object sender, EventArgs e)
+        {
+            GetAllDomofonSystems();
+        }
+
+        private void GetAllDomofonSystems()
+        {
+            using (DomofonContext db = new DomofonContext())
+            {
+                var domofonsystems = db.DomofonSystems.ToList();
+                dataGridView1.Columns.Add("col0", "ID");
+                dataGridView1.Columns.Add("col1", "DomofonSystemType");
+                dataGridView1.Columns.Add("col2", "Comments");
+
+                foreach (var item in domofonsystems)
+                {
+                    dataGridView1.Rows.Add(item.Id, item.DomofonSystemType, item.Comments);
+                }
+            }
+        }
+
+        private void addServiсemanToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            GetAllServiсeman();
+        }
+
+        private void GetAllServiсeman()
+        {
+            using (DomofonContext db = new DomofonContext())
+            {
+                var servicemen = db.Servicemen.ToList();
+                dataGridView1.Columns.Add("col0", "ID");
+                dataGridView1.Columns.Add("col1", "Name");
+                dataGridView1.Columns.Add("col2", "Surname");
+                dataGridView1.Columns.Add("col3", "Phone");
+
+                foreach (var item in servicemen)
+                {
+                    dataGridView1.Rows.Add(item.Id, item.Name, item.Surname, item.Phone);
                 }
             }
         }
