@@ -55,7 +55,34 @@ namespace Project
 
                 foreach (var item in comp)
                 {
-                    dataGridView1.Rows.Add(item.Id, item.CompanyName, item.CompanyAdress, item.CompanyPhone, item.CompanyAccount, item.CompanyCode, item.CompanyBankCode);
+                    dataGridView1.Rows.Add(item.Id, item.Name, item.Adress, item.Phone, item.Account, item.Code, item.BankCode);
+                }
+            }
+        }
+
+        private void Adress_btn_Click(object sender, EventArgs e)
+        {
+            using (DomofonContext db = new DomofonContext())
+            {
+                var adress = db.Adresses.ToList();
+                dataGridView1.Columns.Add("col0", "ID");
+                dataGridView1.Columns.Add("col1", "City");
+                dataGridView1.Columns.Add("col2", "Street");
+                dataGridView1.Columns.Add("col3", "House");
+                dataGridView1.Columns.Add("col4", "Corpus");
+                dataGridView1.Columns.Add("col5", "Entrance");
+                dataGridView1.Columns.Add("col6", "ContractNumb");
+                dataGridView1.Columns.Add("col7", "FlatCount");
+                dataGridView1.Columns.Add("col8", "DoorsCount");
+                dataGridView1.Columns.Add("col9", "DomofonSystemId");
+                dataGridView1.Columns.Add("col10", "DomofonKeyId");
+
+                foreach (var item in adress)
+                {
+                    dataGridView1.Rows.Add(item.Id, item.City, item.Street, 
+                        item.House, item.Corpus, item.Entrance, 
+                        item.ContractNumb, item.FlatCount, item.DoorsCount,
+                        item.DomofonSystemId, item.DomofonKeyId);
                 }
             }
         }

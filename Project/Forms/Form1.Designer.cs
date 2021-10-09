@@ -206,6 +206,7 @@ namespace Project
             this.Adress_btn.TabIndex = 4;
             this.Adress_btn.Text = "Список адресов";
             this.Adress_btn.UseVisualStyleBackColor = true;
+            this.Adress_btn.Click += new System.EventHandler(this.Adress_btn_Click);
             // 
             // Keys_btn
             // 
