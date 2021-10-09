@@ -55,6 +55,7 @@ namespace Project
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
+            this.chooseCompanyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -82,6 +83,7 @@ namespace Project
             this.ChooseSubs_btn.TabIndex = 1;
             this.ChooseSubs_btn.Text = "Выбрать абонента";
             this.ChooseSubs_btn.UseVisualStyleBackColor = false;
+            this.ChooseSubs_btn.Click += new System.EventHandler(this.ChooseSubs_btn_Click);
             // 
             // menuStrip1
             // 
@@ -102,6 +104,7 @@ namespace Project
             this.начислитьАбонплатуToolStripMenuItem,
             this.провестиОплатуToolStripMenuItem,
             this.addServiсemanToolStripMenuItem,
+            this.chooseCompanyToolStripMenuItem,
             this.печатьToolStripMenuItem,
             this.выходToolStripMenuItem});
             this.файлToolStripMenuItem.Name = "файлToolStripMenuItem";
@@ -204,6 +207,7 @@ namespace Project
             this.Repair_btn.TabIndex = 3;
             this.Repair_btn.Text = "Журнал заявок";
             this.Repair_btn.UseVisualStyleBackColor = true;
+            this.Repair_btn.Click += new System.EventHandler(this.Repair_btn_Click);
             // 
             // Adress_btn
             // 
@@ -301,6 +305,13 @@ namespace Project
             this.button3.Text = "Удалить";
             this.button3.UseVisualStyleBackColor = true;
             // 
+            // chooseCompanyToolStripMenuItem
+            // 
+            this.chooseCompanyToolStripMenuItem.Name = "chooseCompanyToolStripMenuItem";
+            this.chooseCompanyToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
+            this.chooseCompanyToolStripMenuItem.Text = "Выбрать компанию";
+            this.chooseCompanyToolStripMenuItem.Click += new System.EventHandler(this.chooseCompanyToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -358,6 +369,7 @@ namespace Project
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.ToolStripMenuItem addServiсemanToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem chooseCompanyToolStripMenuItem;
     }
 }
 
