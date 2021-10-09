@@ -72,17 +72,17 @@ namespace Project
                 dataGridView1.Columns.Add("col4", "Corpus");
                 dataGridView1.Columns.Add("col5", "Entrance");
                 dataGridView1.Columns.Add("col6", "ContractNumb");
-                dataGridView1.Columns.Add("col7", "FlatCount");
-                dataGridView1.Columns.Add("col8", "DoorsCount");
-                dataGridView1.Columns.Add("col9", "DomofonSystemId");
-                dataGridView1.Columns.Add("col10", "DomofonKeyId");
+                dataGridView1.Columns.Add("col7", "ContractDate");
+                dataGridView1.Columns.Add("col8", "FlatCount");
+                dataGridView1.Columns.Add("col9", "DoorsCount");
+                dataGridView1.Columns.Add("col10", "DomofonSystemId");
+                dataGridView1.Columns.Add("col11", "DomofonKeyId");
 
                 foreach (var item in adress)
                 {
-                    dataGridView1.Rows.Add(item.Id, item.City, item.Street, 
-                        item.House, item.Corpus, item.Entrance, 
-                        item.ContractNumb, item.FlatCount, item.DoorsCount,
-                        item.DomofonSystemId, item.DomofonKeyId);
+                    dataGridView1.Rows.Add(item.Id, item.City, item.Street, item.House,
+                        item.Corpus, item.Entrance, item.ContractNumb, item.ContractDate,
+                        item.FlatCount, item.DoorsCount, item.DomofonSystemId, item.DomofonKeyId);
                 }
             }
         }

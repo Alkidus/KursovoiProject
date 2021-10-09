@@ -15,6 +15,7 @@ namespace Project.Models
         public string Corpus { get; set; }//№ корпуса
         public int Entrance { get; set; } //номер подезда в доме
         public string ContractNumb { get; set; } //номер договора
+        public DateTime ContractDate { get; set; } //дата заключения договора на монтаж
         public int FlatCount { get; set; } //общее количество квартир в поъезде
         public int DoorsCount { get; set; } //общее количество дверей в поъезде
         public int DomofonSystemId { get; set; } //тип домофонной системы
