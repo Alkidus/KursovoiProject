@@ -324,7 +324,7 @@ namespace Project
                         item.Corpus, item.Entrance, item.ContractNumb, item.ContractDate.ToShortDateString(),
                         item.FlatCount, item.DoorsCount,
                         db.DomofonSystems.FirstOrDefault(el => el.Id == item.DomofonSystemId).DomofonSystemType,
-                        db.DomofonKeys.FirstOrDefault(el => el.Id == item.DomofonKeyId).DomofonKeyType);
+                        db.DomofonKeys.FirstOrDefault(el => el.Id == item.DomofonKeyId).DomofonKeyType + " " + db.DomofonKeys.FirstOrDefault(el => el.Id == item.DomofonKeyId).DomofonKeyCode);
                 }
             }
         }
