@@ -497,26 +497,32 @@ namespace Project
                     DialogResult result = adressform.ShowDialog(this);
                     if (result == DialogResult.Cancel)
                         return;
-                    //Player player = new Player();
-                    //player.Age = (int)plForm.numericUpDown1.Value;
-                    //player.Name = plForm.textBox1.Text;
-                    //player.Position = plForm.comboBox1.SelectedItem.ToString();
+                    using (DomofonContext db = new DomofonContext())
+                    {
+                        Adress adress = new Adress();
+                        adress.City = adressform.textBox1.Text;
+                        adress.Street = adressform.textBox2.Text;
+                        adress.House = (int)adressform.numericUpDown1.Value;
+                        adress.Corpus = adressform.textBox3.Text;
+                        adress.Entrance = (int)adressform.numericUpDown2.Value;
+                        adress.ContractNumb = adressform.textBox5.Text;
+                        adress.ContractDate = adressform.dateTimePicker1.Value;
+                        adress.FlatCount = (int)adressform.numericUpDown3.Value;
+                        adress.DoorsCount = (int)adressform.numericUpDown4.Value;
+                        var domofonSystemID = db.DomofonSystems.FirstOrDefault(el => el.DomofonSystemType == adressform.comboBox1.SelectedItem.ToString());
+                        if (domofonSystemID != null)
+                        {
+                            adress.DomofonSystemId = domofonSystemID.Id;
+                        }
+                        var domofonKeyID = db.DomofonKeys.FirstOrDefault(el => el.DomofonKeyType == adressform.comboBox2.SelectedItem.ToString());
+                        if (domofonKeyID != null)
+                        {
+                            adress.DomofonKeyId = domofonKeyID.Id;
+                        }
+                        db.Adresses.Add(adress);
+                        db.SaveChanges();
+                    }
 
-                    //db.Players.Add(player);
-                    //db.SaveChanges();
-
-                    Adress adress = new Adress();
-                    adress.City = adressform.textBox1.Text;
-                    adress.Street = adressform.textBox2.Text;
-                    adress.House = (int)adressform.numericUpDown1.Value;
-                    adress.Corpus = adressform.textBox3.Text;
-                    adress.Entrance = (int)adressform.numericUpDown2.Value;
-                    adress.ContractNumb = adressform.textBox5.Text;
-                    adress.ContractDate = adressform.dateTimePicker1.Value;
-                    adress.FlatCount = (int)adressform.numericUpDown3.Value;
-                    adress.DoorsCount = (int)adressform.numericUpDown4.Value;
-                    adress.DomofonSystemId = adressform.comboBox1.SelectedItem.ToString();
-                    adress.DomofonKeyId = adressform.comboBox1.SelectedItem.ToString();
                     break;
                 case "key":
                     break;
@@ -530,12 +536,135 @@ namespace Project
 
         private void CHAGE_btn_Click(object sender, EventArgs e)
         {
+            switch (activeTable)
+            {
+                case "company":
+                    break;
+                case "serviceman":
+                    break;
+                case "subscriber":
+                    break;
+                case "repair":
+                    break;
+                case "adress":
+                    if (dataGridView1.SelectedRows.Count > 0)
+                    {
+                        int index = dataGridView1.SelectedRows[0].Index;
+                        int id = 0;
+                        bool converted = Int32.TryParse(dataGridView1[0, index].Value.ToString(), out id);
+                        if (converted == false)
+                            return;
+                        using (DomofonContext db = new DomofonContext())
+                        {
+                            Adress adress = db.Adresses.Find(id);
+                            AdressForm adressform = new AdressForm();
+                            adressform.textBox1.Text = adress.City;
+                            adressform.textBox2.Text = adress.Street;
+                            adressform.numericUpDown1.Value = adress.House;
+                            adressform.textBox3.Text = adress.Corpus;
+                            adressform.numericUpDown2.Value = adress.Entrance;
+                            adressform.textBox5.Text = adress.ContractNumb;
+                            adressform.dateTimePicker1.Value = adress.ContractDate;
+                            adressform.numericUpDown3.Value = adress.FlatCount;
+                            adressform.numericUpDown4.Value = adress.DoorsCount;
+                            //adressform.comboBox1.SelectedItem = db.DomofonSystems.FirstOrDefault(el => el.Id == adress.DomofonSystemId).DomofonSystemType;
+                            //adressform.comboBox2.SelectedItem = db.DomofonKeys.FirstOrDefault(el => el.Id == adress.DomofonKeyId);
+                            for (int i = 0; i < adressform.comboBox1.Items.Count; i++)
+                            {
+                                if (adressform.comboBox1.Items[i].ToString() == db.DomofonSystems.FirstOrDefault(el => el.Id == adress.DomofonSystemId).DomofonSystemType)
+                                {
+                                    adressform.comboBox1.SelectedIndex = i;
+                                }
+                            }
+                            for (int i = 0; i < adressform.comboBox2.Items.Count; i++)
+                            {
+                                if (adressform.comboBox2.Items[i].ToString() == db.DomofonKeys.FirstOrDefault(el => el.Id == adress.DomofonKeyId).DomofonKeyType)
+                                {
+                                    adressform.comboBox2.SelectedIndex = i;
+                                }
+                            }
 
+                            DialogResult result = adressform.ShowDialog(this);
+
+                            if (result == DialogResult.Cancel)
+                                return;
+                            adress.City = adressform.textBox1.Text;
+                            adress.Street = adressform.textBox2.Text;
+                            adress.House = (int)adressform.numericUpDown1.Value;
+                            adress.Corpus = adressform.textBox3.Text;
+                            adress.Entrance = (int)adressform.numericUpDown2.Value;
+                            adress.ContractNumb = adressform.textBox5.Text;
+                            adress.ContractDate = adressform.dateTimePicker1.Value;
+                            adress.FlatCount = (int)adressform.numericUpDown3.Value;
+                            adress.DoorsCount = (int)adressform.numericUpDown4.Value;
+                            var domofonSystemID = db.DomofonSystems.FirstOrDefault(el => el.DomofonSystemType == adressform.comboBox1.SelectedItem.ToString());
+                            if (domofonSystemID != null)
+                            {
+                                adress.DomofonSystemId = domofonSystemID.Id;
+                            }
+                            var domofonKeyID = db.DomofonKeys.FirstOrDefault(el => el.DomofonKeyType == adressform.comboBox2.SelectedItem.ToString());
+                            if (domofonKeyID != null)
+                            {
+                                adress.DomofonKeyId = domofonKeyID.Id;
+                            }
+                            db.SaveChanges();
+                            dataGridView1.Refresh(); // обновляем грид
+                        }
+                    }
+                    break;
+                case "key":
+                    break;
+                case "handset":
+                    break;
+                case "domofon":
+                    break;
+            }
         }
 
         private void DELL_btn_Click(object sender, EventArgs e)
         {
-
+            switch (activeTable)
+            {
+                case "company":
+                    break;
+                case "serviceman":
+                    break;
+                case "subscriber":
+                    break;
+                case "repair":
+                    break;
+                case "adress":
+                    if (dataGridView1.SelectedRows.Count > 0)
+                    {
+                        int index = dataGridView1.SelectedRows[0].Index;
+                        int id = 0;
+                        bool converted = Int32.TryParse(dataGridView1[0, index].Value.ToString(), out id);
+                        if (converted == false)
+                            return;
+                        
+                        using (DomofonContext db = new DomofonContext())
+                        {
+                            Adress adress = db.Adresses.Find(id);
+                            DialogResult dialogResult = MessageBox.Show("Выдействительно хотите удалить адрес: "
+                                + adress.Street + " " + adress.House + " "
+                                + adress.Corpus + " подъезд " + adress.Entrance + "?", "WARNING", MessageBoxButtons.YesNo);
+                            if (dialogResult == DialogResult.Yes)
+                            {
+                                db.Adresses.Remove(adress);
+                                db.SaveChanges();
+                            }
+                            else if (dialogResult == DialogResult.No)
+                                return;
+                        } 
+                    }
+                    break;
+                case "key":
+                    break;
+                case "handset":
+                    break;
+                case "domofon":
+                    break;
+            }
         }
     }
 }
