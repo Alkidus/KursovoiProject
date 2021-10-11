@@ -10,6 +10,6 @@ namespace Project.Models
     {
         public int Id { get; set; }
         public string DomofonKeyType { get; set; } //тип домофонного ключа
-        public string DomofonKeyCode { get; set; } //код домофонного ключа
+        public string Comments { get; set; } // примечание
     }
 }
