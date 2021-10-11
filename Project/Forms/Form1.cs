@@ -673,5 +673,30 @@ namespace Project
                     break;
             }
         }
+
+        private void font_ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            fontDialog1.ShowColor = true;
+            if (fontDialog1.ShowDialog() == DialogResult.OK)
+            {
+                for(int i = 0; i < dataGridView1.Columns.Count; i++)
+                {
+                    dataGridView1.Columns[i].DefaultCellStyle.Font = fontDialog1.Font;
+                    dataGridView1.Columns[i].DefaultCellStyle.ForeColor = fontDialog1.Color;
+                }
+            }
+        }
+
+        private void color_ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            colorDialog1.Color = dataGridView1.Columns[0].DefaultCellStyle.ForeColor;
+            if (colorDialog1.ShowDialog() == DialogResult.OK)
+            {
+                for (int i = 0; i < dataGridView1.Columns.Count; i++)
+                {
+                    dataGridView1.Columns[i].DefaultCellStyle.ForeColor = colorDialog1.Color;
+                }
+            }
+        }
     }
 }

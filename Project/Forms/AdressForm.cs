@@ -28,7 +28,7 @@ namespace Project.Forms
                 var keys = db.DomofonKeys.ToList();
                 foreach(var item in keys)
                 {
-                    comboBox2.Items.Add(item.DomofonKeyType + " " + item.DomofonKeyCode);
+                    comboBox2.Items.Add(item.DomofonKeyType);
                 }
             }
         }
