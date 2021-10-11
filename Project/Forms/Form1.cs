@@ -21,6 +21,7 @@ namespace Project
             InitializeComponent();
             Text = "PROJECT_DOMOFON";
             this.BackColor = Color.Aquamarine;
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -320,8 +321,10 @@ namespace Project
                 foreach (var item in adress)
                 {
                     dataGridView1.Rows.Add(item.Id, item.City, item.Street, item.House,
-                        item.Corpus, item.Entrance, item.ContractNumb, item.ContractDate,
-                        item.FlatCount, item.DoorsCount, item.DomofonSystemId, item.DomofonKeyId);
+                        item.Corpus, item.Entrance, item.ContractNumb, item.ContractDate.ToShortDateString(),
+                        item.FlatCount, item.DoorsCount,
+                        db.DomofonSystems.FirstOrDefault(el => el.Id == item.DomofonSystemId).DomofonSystemType,
+                        db.DomofonKeys.FirstOrDefault(el => el.Id == item.DomofonKeyId).DomofonKeyType);
                 }
             }
         }
@@ -521,6 +524,7 @@ namespace Project
                         }
                         db.Adresses.Add(adress);
                         db.SaveChanges();
+                        dataGridView1.Refresh();
                     }
 
                     break;
@@ -655,6 +659,7 @@ namespace Project
                             }
                             else if (dialogResult == DialogResult.No)
                                 return;
+                            dataGridView1.Refresh();
                         } 
                     }
                     break;
