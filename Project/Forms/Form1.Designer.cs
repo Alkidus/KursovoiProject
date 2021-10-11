@@ -63,6 +63,7 @@ namespace Project
             this.color_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.fontDialog1 = new System.Windows.Forms.FontDialog();
+            this.default_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -345,7 +346,8 @@ namespace Project
             // 
             this.форматToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.font_ToolStripMenuItem,
-            this.color_ToolStripMenuItem});
+            this.color_ToolStripMenuItem,
+            this.default_ToolStripMenuItem});
             this.форматToolStripMenuItem.Name = "форматToolStripMenuItem";
             this.форматToolStripMenuItem.Size = new System.Drawing.Size(62, 20);
             this.форматToolStripMenuItem.Text = "Формат";
@@ -363,6 +365,13 @@ namespace Project
             this.color_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.color_ToolStripMenuItem.Text = "Цвет...";
             this.color_ToolStripMenuItem.Click += new System.EventHandler(this.color_ToolStripMenuItem_Click);
+            // 
+            // default_ToolStripMenuItem
+            // 
+            this.default_ToolStripMenuItem.Name = "default_ToolStripMenuItem";
+            this.default_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.default_ToolStripMenuItem.Text = "По умолчанию";
+            this.default_ToolStripMenuItem.Click += new System.EventHandler(this.default_ToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -426,6 +435,7 @@ namespace Project
         private System.Windows.Forms.ToolStripMenuItem color_ToolStripMenuItem;
         private System.Windows.Forms.ColorDialog colorDialog1;
         private System.Windows.Forms.FontDialog fontDialog1;
+        private System.Windows.Forms.ToolStripMenuItem default_ToolStripMenuItem;
     }
 }
 
