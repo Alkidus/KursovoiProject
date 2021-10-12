@@ -18,6 +18,7 @@ namespace Project
         public string activeTable = "";//переменная для определения выбранной таблицы
         public Font font = new Font("Comic Sans MS", 12);//шрифт в dataGridView по умолчанию
         public Color color = Color.Black;//цвет текста в dataGridView по умолчанию
+        public int? idAdress = null;
         public Form1()
         {
             InitializeComponent();
@@ -452,43 +453,75 @@ namespace Project
 
         private void ChooseSubs_btn_Click(object sender, EventArgs e)
         {
-            ClearTable();
-            GetAllSubscribers();
+            //ClearTable();
+            GetAllSubscribersByAdress();
             ChangeFontAndColor();
             activeTable = "subscriber";
         }
 
-        private void GetAllSubscribers()
+        private void GetAllSubscribersByAdress()
         {
             if (activeTable != "adress")
                 return;
-            // 1. Проверка, есть ли строки в dataGridView1
+            //// 1. Проверка, есть ли строки в dataGridView1
             //if (dataGridView1.RowCount <= 1)
             //    return;
 
-            // 2. Определение номера (позиции) выделенной строки
-            int index = dataGridView1.CurrentRow.Index;
+            //// 2. Определение номера (позиции) выделенной строки
+            //int index = dataGridView1.CurrentRow.Index;
 
-            // 3. Проверка, выделена ли вообще строка
-            if (index == dataGridView1.RowCount - 1)
-                return;
-
-            // 3. Если строка выделена, то вывести информацию о ней
-            int adressID = (int)dataGridView1.Rows[index].Cells[0].Value;
-            string s = (string)dataGridView1.Rows[index].Cells[0].Value;
-            string city = (string)dataGridView1.Rows[index].Cells[1].Value;
-            string street = (string)dataGridView1.Rows[index].Cells[2].Value;
-            //int index = dataGridView1.SelectedRows[0].Index;
-            //int id = 0;
-            //bool converted = Int32.TryParse(dataGridView1[0, index].Value.ToString(), out id);
-            //if (converted == false)
+            //// 3. Проверка, выделена ли вообще строка
+            //if (index == dataGridView1.RowCount - 1)
             //    return;
-            MessageBox.Show("activetable - " + activeTable + "\n"
-                + "city = " + city + "\n"
-                + " street = " + street + "\n"
-                + "s = " + s + "\n"
-                + "adressID = " + adressID);
 
+            //// 3. Если строка выделена, то вывести информацию о ней
+            //int adressID = (int)dataGridView1.Rows[index].Cells[0].Value;
+            //string s = (string)dataGridView1.Rows[index].Cells[0].Value;
+            //string city = (string)dataGridView1.Rows[index].Cells[1].Value;
+            //string street = (string)dataGridView1.Rows[index].Cells[2].Value;
+            //////////int index = dataGridView1.SelectedRows[0].Index;
+            //////////int id = 0;
+            //////////bool converted = Int32.TryParse(dataGridView1[0, index].Value.ToString(), out id);
+            //////////if (converted == false)
+            //////////    return;
+            //MessageBox.Show("activetable - " + activeTable + "\n"
+            //    + "city = " + city + "\n"
+            //    + " street = " + street + "\n"
+            //    + "s = " + s + "\n"
+            //    + "adressID = " + adressID);
+            if (dataGridView1.SelectedRows.Count > 0)
+            {
+                int index = dataGridView1.SelectedRows[0].Index;
+                int id = 0;
+                bool converted = Int32.TryParse(dataGridView1[0, index].Value.ToString(), out id);
+                if (converted == false)
+                    return;
+                ClearTable();
+                using (DomofonContext db = new DomofonContext())
+                {
+                    var subscribers = from sub in db.Subscribers
+                                      where sub.AdressId == id
+                                      select sub;
+
+                    //var subscribers = db.Subscribers.Find(el => el.AdressId == id);
+                    dataGridView1.Columns.Add("col0", "ID");
+                    dataGridView1.Columns.Add("col1", "Имя");
+                    dataGridView1.Columns.Add("col2", "Фамилия");
+                    dataGridView1.Columns.Add("col3", "Телефон");
+                    //subscriber.Name = subscriberform.textBox1.Text;
+                    //subscriber.Surname = subscriberform.textBox2.Text;
+                    //subscriber.Phone = subscriberform.textBox3.Text;
+                    //subscriber.Flat = (int)subscriberform.numericUpDown1.Value;
+                    //subscriber.ContractNumb = subscriberform.textBox4.Text;
+                    //subscriber.ContractDate = subscriberform.dateTimePicker1.Value;
+                    //subscriber.Code = subscriberform.textBox5.Text;
+                    //subscriber.Comments = subscriberform.textBox6.Text;
+                    foreach (var item in subscribers)
+                    {
+                        dataGridView1.Rows.Add(item.Id, item.Name, item.Surname, item.Phone);
+                    }
+                }
+            }
         }
         private void Repair_btn_Click(object sender, EventArgs e)
         {
@@ -566,7 +599,7 @@ namespace Project
                         db.Subscribers.Add(subscriber);
                         db.SaveChanges();
                         ClearTable();
-                        GetAllSubscribers();
+                        GetAllSubscribersByAdress();
                     }
                         break;
                 case "repair":
@@ -645,6 +678,8 @@ namespace Project
                         bool converted = Int32.TryParse(dataGridView1[0, index].Value.ToString(), out id);
                         if (converted == false)
                             return;
+                        //int idAdress = (int)dataGridView1.SelectedCells[0].Value;
+                        //MessageBox.Show("Index - " + index + "\n" + "id - " + id + "\n" + "idAdress - " + idAdress);
                         using (DomofonContext db = new DomofonContext())
                         {
                             Adress adress = db.Adresses.Find(id);
@@ -807,6 +842,16 @@ namespace Project
                 dataGridView1.Columns[i].DefaultCellStyle.Font = font;
                 dataGridView1.Columns[i].DefaultCellStyle.ForeColor = color;
             }
+        }
+
+        private void about_ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(@"Это программа для работы с абонентами домофонной компании 'PROJECT_DOMOFON ver. 1.0'. 
+Разработана в рамках учебной программы Компьютерной Академии ШАГ как курсовой проект по .NET. 
+Использовался язык программирования С# и Microsoft Visual Studio Enterprise 2019.
+Программист - Дьяконов Кирилл Владимирович, руководитель проекта - Горчинский Сергей Владимирович.
+г. Чернигов ноябрь 2021 год. Эта программа для бесплатного ознакомительного распространения.
+Для связи - alkiddkv@gmail.com", "О программе");
         }
     }
 }

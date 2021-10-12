@@ -47,9 +47,13 @@ namespace Project
             this.выбратьАбонентаToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.должникиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.квитанцииToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.форматToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.font_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.color_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.default_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.справкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.помощьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.оПрограммеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.help_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.about_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Repair_btn = new System.Windows.Forms.Button();
             this.Adress_btn = new System.Windows.Forms.Button();
             this.Keys_btn = new System.Windows.Forms.Button();
@@ -58,12 +62,8 @@ namespace Project
             this.ADD_btn = new System.Windows.Forms.Button();
             this.CHAGE_btn = new System.Windows.Forms.Button();
             this.DELL_btn = new System.Windows.Forms.Button();
-            this.форматToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.font_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.color_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.fontDialog1 = new System.Windows.Forms.FontDialog();
-            this.default_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -195,41 +195,73 @@ namespace Project
             // выбратьАбонентаToolStripMenuItem1
             // 
             this.выбратьАбонентаToolStripMenuItem1.Name = "выбратьАбонентаToolStripMenuItem1";
-            this.выбратьАбонентаToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.выбратьАбонентаToolStripMenuItem1.Size = new System.Drawing.Size(175, 22);
             this.выбратьАбонентаToolStripMenuItem1.Text = "Выбрать абонента";
             // 
             // должникиToolStripMenuItem
             // 
             this.должникиToolStripMenuItem.Name = "должникиToolStripMenuItem";
-            this.должникиToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.должникиToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.должникиToolStripMenuItem.Text = "Должники";
             // 
             // квитанцииToolStripMenuItem
             // 
             this.квитанцииToolStripMenuItem.Name = "квитанцииToolStripMenuItem";
-            this.квитанцииToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.квитанцииToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.квитанцииToolStripMenuItem.Text = "Квитанции";
+            // 
+            // форматToolStripMenuItem
+            // 
+            this.форматToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.font_ToolStripMenuItem,
+            this.color_ToolStripMenuItem,
+            this.default_ToolStripMenuItem});
+            this.форматToolStripMenuItem.Name = "форматToolStripMenuItem";
+            this.форматToolStripMenuItem.Size = new System.Drawing.Size(62, 20);
+            this.форматToolStripMenuItem.Text = "Формат";
+            // 
+            // font_ToolStripMenuItem
+            // 
+            this.font_ToolStripMenuItem.Name = "font_ToolStripMenuItem";
+            this.font_ToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.font_ToolStripMenuItem.Text = "Шрифт...";
+            this.font_ToolStripMenuItem.Click += new System.EventHandler(this.font_ToolStripMenuItem_Click);
+            // 
+            // color_ToolStripMenuItem
+            // 
+            this.color_ToolStripMenuItem.Name = "color_ToolStripMenuItem";
+            this.color_ToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.color_ToolStripMenuItem.Text = "Цвет...";
+            this.color_ToolStripMenuItem.Click += new System.EventHandler(this.color_ToolStripMenuItem_Click);
+            // 
+            // default_ToolStripMenuItem
+            // 
+            this.default_ToolStripMenuItem.Name = "default_ToolStripMenuItem";
+            this.default_ToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.default_ToolStripMenuItem.Text = "По умолчанию";
+            this.default_ToolStripMenuItem.Click += new System.EventHandler(this.default_ToolStripMenuItem_Click);
             // 
             // справкаToolStripMenuItem
             // 
             this.справкаToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.помощьToolStripMenuItem,
-            this.оПрограммеToolStripMenuItem});
+            this.help_ToolStripMenuItem,
+            this.about_ToolStripMenuItem});
             this.справкаToolStripMenuItem.Name = "справкаToolStripMenuItem";
             this.справкаToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
             this.справкаToolStripMenuItem.Text = "Справка";
             // 
-            // помощьToolStripMenuItem
+            // help_ToolStripMenuItem
             // 
-            this.помощьToolStripMenuItem.Name = "помощьToolStripMenuItem";
-            this.помощьToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.помощьToolStripMenuItem.Text = "Помощь...";
+            this.help_ToolStripMenuItem.Name = "help_ToolStripMenuItem";
+            this.help_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.help_ToolStripMenuItem.Text = "Помощь...";
             // 
-            // оПрограммеToolStripMenuItem
+            // about_ToolStripMenuItem
             // 
-            this.оПрограммеToolStripMenuItem.Name = "оПрограммеToolStripMenuItem";
-            this.оПрограммеToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.оПрограммеToolStripMenuItem.Text = "О программе...";
+            this.about_ToolStripMenuItem.Name = "about_ToolStripMenuItem";
+            this.about_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.about_ToolStripMenuItem.Text = "О программе...";
+            this.about_ToolStripMenuItem.Click += new System.EventHandler(this.about_ToolStripMenuItem_Click);
             // 
             // Repair_btn
             // 
@@ -342,37 +374,6 @@ namespace Project
             this.DELL_btn.UseVisualStyleBackColor = true;
             this.DELL_btn.Click += new System.EventHandler(this.DELL_btn_Click);
             // 
-            // форматToolStripMenuItem
-            // 
-            this.форматToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.font_ToolStripMenuItem,
-            this.color_ToolStripMenuItem,
-            this.default_ToolStripMenuItem});
-            this.форматToolStripMenuItem.Name = "форматToolStripMenuItem";
-            this.форматToolStripMenuItem.Size = new System.Drawing.Size(62, 20);
-            this.форматToolStripMenuItem.Text = "Формат";
-            // 
-            // font_ToolStripMenuItem
-            // 
-            this.font_ToolStripMenuItem.Name = "font_ToolStripMenuItem";
-            this.font_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.font_ToolStripMenuItem.Text = "Шрифт...";
-            this.font_ToolStripMenuItem.Click += new System.EventHandler(this.font_ToolStripMenuItem_Click);
-            // 
-            // color_ToolStripMenuItem
-            // 
-            this.color_ToolStripMenuItem.Name = "color_ToolStripMenuItem";
-            this.color_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.color_ToolStripMenuItem.Text = "Цвет...";
-            this.color_ToolStripMenuItem.Click += new System.EventHandler(this.color_ToolStripMenuItem_Click);
-            // 
-            // default_ToolStripMenuItem
-            // 
-            this.default_ToolStripMenuItem.Name = "default_ToolStripMenuItem";
-            this.default_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.default_ToolStripMenuItem.Text = "По умолчанию";
-            this.default_ToolStripMenuItem.Click += new System.EventHandler(this.default_ToolStripMenuItem_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -417,8 +418,8 @@ namespace Project
         private System.Windows.Forms.ToolStripMenuItem должникиToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem квитанцииToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem справкаToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem помощьToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem оПрограммеToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem help_ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem about_ToolStripMenuItem;
         private System.Windows.Forms.Button Repair_btn;
         private System.Windows.Forms.Button Adress_btn;
         private System.Windows.Forms.Button Keys_btn;
