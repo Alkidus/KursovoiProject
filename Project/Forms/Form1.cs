@@ -15,14 +15,14 @@ namespace Project
 {
     public partial class Form1 : Form
     {
-        public string activeTable = "";
-        public Font font = new Font("Comic Sans MS", 12);
-        public Color color = Color.Black;
+        public string activeTable = "";//переменная для определения выбранной таблицы
+        public Font font = new Font("Comic Sans MS", 12);//шрифт в dataGridView по умолчанию
+        public Color color = Color.Black;//цвет текста в dataGridView по умолчанию
         public Form1()
         {
             InitializeComponent();
             Text = "PROJECT_DOMOFON";
-            this.BackColor = Color.Aquamarine;
+            //this.BackColor = Color.Aquamarine;
 
         }
 
@@ -453,11 +453,43 @@ namespace Project
         private void ChooseSubs_btn_Click(object sender, EventArgs e)
         {
             ClearTable();
-            GetAllAdresses();
+            GetAllSubscribers();
             ChangeFontAndColor();
             activeTable = "subscriber";
         }
 
+        private void GetAllSubscribers()
+        {
+            if (activeTable != "adress")
+                return;
+            // 1. Проверка, есть ли строки в dataGridView1
+            //if (dataGridView1.RowCount <= 1)
+            //    return;
+
+            // 2. Определение номера (позиции) выделенной строки
+            int index = dataGridView1.CurrentRow.Index;
+
+            // 3. Проверка, выделена ли вообще строка
+            if (index == dataGridView1.RowCount - 1)
+                return;
+
+            // 3. Если строка выделена, то вывести информацию о ней
+            int adressID = (int)dataGridView1.Rows[index].Cells[0].Value;
+            string s = (string)dataGridView1.Rows[index].Cells[0].Value;
+            string city = (string)dataGridView1.Rows[index].Cells[1].Value;
+            string street = (string)dataGridView1.Rows[index].Cells[2].Value;
+            //int index = dataGridView1.SelectedRows[0].Index;
+            //int id = 0;
+            //bool converted = Int32.TryParse(dataGridView1[0, index].Value.ToString(), out id);
+            //if (converted == false)
+            //    return;
+            MessageBox.Show("activetable - " + activeTable + "\n"
+                + "city = " + city + "\n"
+                + " street = " + street + "\n"
+                + "s = " + s + "\n"
+                + "adressID = " + adressID);
+
+        }
         private void Repair_btn_Click(object sender, EventArgs e)
         {
             ClearTable();
@@ -493,6 +525,7 @@ namespace Project
 
         private void ADD_btn_Click(object sender, EventArgs e)
         {
+            DialogResult result;
             switch (activeTable)
             {
                 case "company":
@@ -500,12 +533,47 @@ namespace Project
                 case "serviceman":
                     break;
                 case "subscriber":
-                    break;
+                    SubscriberForm subscriberform = new SubscriberForm();
+                    result = subscriberform.ShowDialog(this);
+                    if (result == DialogResult.Cancel)
+                        return;
+                    using (DomofonContext db = new DomofonContext())
+                    {
+                        Subscriber subscriber = new Subscriber();
+                        subscriber.Name = subscriberform.textBox1.Text;
+                        subscriber.Surname = subscriberform.textBox2.Text;
+                        subscriber.Phone = subscriberform.textBox3.Text;
+                        subscriber.Flat = (int)subscriberform.numericUpDown1.Value;
+                        subscriber.ContractNumb = subscriberform.textBox4.Text;
+                        subscriber.ContractDate = subscriberform.dateTimePicker1.Value;
+                        subscriber.Code = subscriberform.textBox5.Text;
+                        subscriber.Comments = subscriberform.textBox6.Text;
+                        var domofonAdresstID = db.Adresses.FirstOrDefault(el => el.Street + " дом № " + el.House + " корпус " + el.Corpus + " подъезд № " + el.Entrance == subscriberform.comboBox1.SelectedItem.ToString());
+                        if (domofonAdresstID != null)
+                        {
+                            subscriber.AdressId = domofonAdresstID.Id;
+                        }
+                        var domofonHandsetID = db.DomofonHandsets.FirstOrDefault(el => el.DomofonHandsetType == subscriberform.comboBox2.SelectedItem.ToString());
+                        if (domofonHandsetID != null)
+                        {
+                            subscriber.DomofonHandsetId = domofonHandsetID.Id;
+                        }
+                        var domofonKeyID = db.DomofonKeys.FirstOrDefault(el => el.DomofonKeyType == subscriberform.comboBox3.SelectedItem.ToString());
+                        if (domofonKeyID != null)
+                        {
+                            subscriber.DomofonKeyId = domofonKeyID.Id;
+                        }
+                        db.Subscribers.Add(subscriber);
+                        db.SaveChanges();
+                        ClearTable();
+                        GetAllSubscribers();
+                    }
+                        break;
                 case "repair":
                     break;
                 case "adress":
                     AdressForm adressform = new AdressForm();
-                    DialogResult result = adressform.ShowDialog(this);
+                    result = adressform.ShowDialog(this);
                     if (result == DialogResult.Cancel)
                         return;
                     using (DomofonContext db = new DomofonContext())
@@ -557,6 +625,15 @@ namespace Project
                 case "serviceman":
                     break;
                 case "subscriber":
+                    if (dataGridView1.SelectedRows.Count > 0)
+                    {
+                        int index = dataGridView1.SelectedRows[0].Index;
+                        int id = 0;
+                        bool converted = Int32.TryParse(dataGridView1[0, index].Value.ToString(), out id);
+                        if (converted == false)
+                            return;
+
+                    }
                     break;
                 case "repair":
                     break;
@@ -685,7 +762,7 @@ namespace Project
                     break;
             }
         }
-        private void ChangeFontAndColor()
+        private void ChangeFontAndColor()//функция изменения цвета и размера шрифта
         {
             for (int i = 0; i < dataGridView1.Columns.Count; i++)
             {
