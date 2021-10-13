@@ -453,7 +453,6 @@ namespace Project
 
         private void ChooseSubs_btn_Click(object sender, EventArgs e)
         {
-            //ClearTable();
             GetAllSubscribersByAdress();
             ChangeFontAndColor();
             activeTable = "subscriber";
@@ -463,32 +462,6 @@ namespace Project
         {
             if (activeTable != "adress")
                 return;
-            //// 1. Проверка, есть ли строки в dataGridView1
-            //if (dataGridView1.RowCount <= 1)
-            //    return;
-
-            //// 2. Определение номера (позиции) выделенной строки
-            //int index = dataGridView1.CurrentRow.Index;
-
-            //// 3. Проверка, выделена ли вообще строка
-            //if (index == dataGridView1.RowCount - 1)
-            //    return;
-
-            //// 3. Если строка выделена, то вывести информацию о ней
-            //int adressID = (int)dataGridView1.Rows[index].Cells[0].Value;
-            //string s = (string)dataGridView1.Rows[index].Cells[0].Value;
-            //string city = (string)dataGridView1.Rows[index].Cells[1].Value;
-            //string street = (string)dataGridView1.Rows[index].Cells[2].Value;
-            //////////int index = dataGridView1.SelectedRows[0].Index;
-            //////////int id = 0;
-            //////////bool converted = Int32.TryParse(dataGridView1[0, index].Value.ToString(), out id);
-            //////////if (converted == false)
-            //////////    return;
-            //MessageBox.Show("activetable - " + activeTable + "\n"
-            //    + "city = " + city + "\n"
-            //    + " street = " + street + "\n"
-            //    + "s = " + s + "\n"
-            //    + "adressID = " + adressID);
             if (dataGridView1.SelectedRows.Count > 0)
             {
                 int index = dataGridView1.SelectedRows[0].Index;
@@ -502,23 +475,28 @@ namespace Project
                     var subscribers = from sub in db.Subscribers
                                       where sub.AdressId == id
                                       select sub;
+                    var subscriberList = subscribers.ToList();
+                    dataGridView1.Columns.Add("col0", "Адрес");
+                    dataGridView1.Columns.Add("col1", "Квартира");
+                    dataGridView1.Columns.Add("col2", "Имя");
+                    dataGridView1.Columns.Add("col3", "Фамилия");
+                    dataGridView1.Columns.Add("col4", "Телефон");
+                    dataGridView1.Columns.Add("col5", "№ договора");
+                    dataGridView1.Columns.Add("col6", "Дата договора");
+                    dataGridView1.Columns.Add("col7", "ID код");
+                    dataGridView1.Columns.Add("col8", "Трубка");
+                    dataGridView1.Columns.Add("col9", "Ключ");
+                    dataGridView1.Columns.Add("col10", "Комментарии");
 
-                    //var subscribers = db.Subscribers.Find(el => el.AdressId == id);
-                    dataGridView1.Columns.Add("col0", "ID");
-                    dataGridView1.Columns.Add("col1", "Имя");
-                    dataGridView1.Columns.Add("col2", "Фамилия");
-                    dataGridView1.Columns.Add("col3", "Телефон");
-                    //subscriber.Name = subscriberform.textBox1.Text;
-                    //subscriber.Surname = subscriberform.textBox2.Text;
-                    //subscriber.Phone = subscriberform.textBox3.Text;
-                    //subscriber.Flat = (int)subscriberform.numericUpDown1.Value;
-                    //subscriber.ContractNumb = subscriberform.textBox4.Text;
-                    //subscriber.ContractDate = subscriberform.dateTimePicker1.Value;
-                    //subscriber.Code = subscriberform.textBox5.Text;
-                    //subscriber.Comments = subscriberform.textBox6.Text;
-                    foreach (var item in subscribers)
+                    foreach (var item in subscriberList)
                     {
-                        dataGridView1.Rows.Add(item.Id, item.Name, item.Surname, item.Phone);
+                        dataGridView1.Rows.Add(db.Adresses.FirstOrDefault(el => el.Id == id).Street + " № "
+                            + db.Adresses.FirstOrDefault(el => el.Id == id).House
+                            + "к. " + db.Adresses.FirstOrDefault(el => el.Id == id).Corpus
+                            + " п. " + db.Adresses.FirstOrDefault(el => el.Id == id).Entrance,
+                            item.Flat, item.Name, item.Surname, item.Phone, item.ContractNumb, item.ContractDate.ToShortDateString(),
+                            item.Code, db.DomofonHandsets.FirstOrDefault(el => el.Id == item.DomofonHandsetId).DomofonHandsetType,
+                            db.DomofonKeys.FirstOrDefault(el => el.Id == item.DomofonKeyId).DomofonKeyType, item.Comments);
                     }
                 }
             }
