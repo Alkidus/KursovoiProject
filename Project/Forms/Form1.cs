@@ -478,21 +478,22 @@ namespace Project
                                   where sub.AdressId == ID
                                   select sub;
                 var subscriberList = subscribers.ToList();
-                dataGridView1.Columns.Add("col0", "Адрес");
-                dataGridView1.Columns.Add("col1", "Квартира");
-                dataGridView1.Columns.Add("col2", "Имя");
-                dataGridView1.Columns.Add("col3", "Фамилия");
-                dataGridView1.Columns.Add("col4", "Телефон");
-                dataGridView1.Columns.Add("col5", "№ договора");
-                dataGridView1.Columns.Add("col6", "Дата договора");
-                dataGridView1.Columns.Add("col7", "ID код");
-                dataGridView1.Columns.Add("col8", "Трубка");
-                dataGridView1.Columns.Add("col9", "Ключ");
-                dataGridView1.Columns.Add("col10", "Комментарии");
+                dataGridView1.Columns.Add("col0", "ID");
+                dataGridView1.Columns.Add("col1", "Адрес");
+                dataGridView1.Columns.Add("col2", "Квартира");
+                dataGridView1.Columns.Add("col3", "Имя");
+                dataGridView1.Columns.Add("col4", "Фамилия");
+                dataGridView1.Columns.Add("col5", "Телефон");
+                dataGridView1.Columns.Add("col6", "№ договора");
+                dataGridView1.Columns.Add("col7", "Дата договора");
+                dataGridView1.Columns.Add("col8", "ID код");
+                dataGridView1.Columns.Add("col9", "Трубка");
+                dataGridView1.Columns.Add("col10", "Ключ");
+                dataGridView1.Columns.Add("col11", "Комментарии");
 
                 foreach (var item in subscriberList)
                 {
-                    dataGridView1.Rows.Add(db.Adresses.FirstOrDefault(el => el.Id == ID).Street + " № "
+                    dataGridView1.Rows.Add(item.Id, db.Adresses.FirstOrDefault(el => el.Id == ID).Street + " № "
                         + db.Adresses.FirstOrDefault(el => el.Id == ID).House
                         + "к. " + db.Adresses.FirstOrDefault(el => el.Id == ID).Corpus
                         + " п. " + db.Adresses.FirstOrDefault(el => el.Id == ID).Entrance,
@@ -545,7 +546,7 @@ namespace Project
                 case "serviceman":
                     break;
                 case "subscriber":
-                    SubscriberForm subscriberform = new SubscriberForm();
+                    SubscriberForm subscriberform = new SubscriberForm(idAdress);
                     result = subscriberform.ShowDialog(this);
                     if (result == DialogResult.Cancel)
                         return;
@@ -647,7 +648,7 @@ namespace Project
                         using (DomofonContext db = new DomofonContext())
                         {
                             Subscriber subscriber = db.Subscribers.Find(id);
-                            SubscriberForm subscriberform = new SubscriberForm();
+                            SubscriberForm subscriberform = new SubscriberForm(idAdress);
                             //subscriber.Name = subscriberform.textBox1.Text;
                             //subscriber.Surname = subscriberform.textBox2.Text;
                             //subscriber.Phone = subscriberform.textBox3.Text;
@@ -713,7 +714,6 @@ namespace Project
                             {
                                 subscriber.DomofonKeyId = domofonKeyID.Id;
                             }
-                            db.Subscribers.Add(subscriber);
                             db.SaveChanges();
                             ClearTable();
                             GetAllSubscribersByAdress(idAdress);

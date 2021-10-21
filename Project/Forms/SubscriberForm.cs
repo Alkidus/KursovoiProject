@@ -8,14 +8,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Project.Controller;
+using Project.Models;
 
 namespace Project.Forms
 {
     public partial class SubscriberForm : Form
     {
-        public SubscriberForm()
+        public int idAdress = 0;
+        public SubscriberForm(int ID)
         {
             InitializeComponent();
+            idAdress = ID;
             Text = "SUBSCRIBER_DOMOFON";
             this.BackColor = Color.Aquamarine;
             
@@ -26,6 +29,8 @@ namespace Project.Forms
                 {
                     comboBox1.Items.Add(item.Street + " дом № " + item.House + " корпус " + item.Corpus + " подъезд № " + item.Entrance);
                 }
+                Adress adress = db.Adresses.Find(idAdress);
+                comboBox1.SelectedItem = adress.Street + " дом № " + adress.House + " корпус " + adress.Corpus + " подъезд № " + adress.Entrance;
                 var keys = db.DomofonKeys.ToList();
                 foreach (var item in keys)
                 {
@@ -47,6 +52,19 @@ namespace Project.Forms
         private void button2_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
+        }
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            string flatNumber = numericUpDown1.Value.ToString();
+            while (flatNumber.Length < 3)
+                flatNumber = "0" + flatNumber;
+            using (DomofonContext db = new DomofonContext())
+            {
+                Adress adress = db.Adresses.Find(idAdress);
+                textBox4.Text = adress.ContractNumb + flatNumber;
+                textBox4.Text = "500" + adress.ContractNumb + flatNumber;
+            }
         }
     }
 }

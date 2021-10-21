@@ -71,6 +71,7 @@ namespace Project.Forms
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(305, 30);
             this.numericUpDown1.TabIndex = 51;
+            this.numericUpDown1.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
             // 
             // dateTimePicker1
             // 
