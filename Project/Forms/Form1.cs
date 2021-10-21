@@ -18,7 +18,7 @@ namespace Project
         public string activeTable = "";//переменная для определения выбранной таблицы
         public Font font = new Font("Comic Sans MS", 12);//шрифт в dataGridView по умолчанию
         public Color color = Color.Black;//цвет текста в dataGridView по умолчанию
-        public int? idAdress = null;
+        public int idAdress = 0;
         public Form1()
         {
             InitializeComponent();
@@ -453,13 +453,6 @@ namespace Project
 
         private void ChooseSubs_btn_Click(object sender, EventArgs e)
         {
-            GetAllSubscribersByAdress();
-            ChangeFontAndColor();
-            activeTable = "subscriber";
-        }
-
-        private void GetAllSubscribersByAdress()
-        {
             if (activeTable != "adress")
                 return;
             if (dataGridView1.SelectedRows.Count > 0)
@@ -469,35 +462,43 @@ namespace Project
                 bool converted = Int32.TryParse(dataGridView1[0, index].Value.ToString(), out id);
                 if (converted == false)
                     return;
-                ClearTable();
-                using (DomofonContext db = new DomofonContext())
-                {
-                    var subscribers = from sub in db.Subscribers
-                                      where sub.AdressId == id
-                                      select sub;
-                    var subscriberList = subscribers.ToList();
-                    dataGridView1.Columns.Add("col0", "Адрес");
-                    dataGridView1.Columns.Add("col1", "Квартира");
-                    dataGridView1.Columns.Add("col2", "Имя");
-                    dataGridView1.Columns.Add("col3", "Фамилия");
-                    dataGridView1.Columns.Add("col4", "Телефон");
-                    dataGridView1.Columns.Add("col5", "№ договора");
-                    dataGridView1.Columns.Add("col6", "Дата договора");
-                    dataGridView1.Columns.Add("col7", "ID код");
-                    dataGridView1.Columns.Add("col8", "Трубка");
-                    dataGridView1.Columns.Add("col9", "Ключ");
-                    dataGridView1.Columns.Add("col10", "Комментарии");
+                idAdress = id;
+            }
+            GetAllSubscribersByAdress(idAdress);
+            ChangeFontAndColor();
+            activeTable = "subscriber";
+        }
 
-                    foreach (var item in subscriberList)
-                    {
-                        dataGridView1.Rows.Add(db.Adresses.FirstOrDefault(el => el.Id == id).Street + " № "
-                            + db.Adresses.FirstOrDefault(el => el.Id == id).House
-                            + "к. " + db.Adresses.FirstOrDefault(el => el.Id == id).Corpus
-                            + " п. " + db.Adresses.FirstOrDefault(el => el.Id == id).Entrance,
-                            item.Flat, item.Name, item.Surname, item.Phone, item.ContractNumb, item.ContractDate.ToShortDateString(),
-                            item.Code, db.DomofonHandsets.FirstOrDefault(el => el.Id == item.DomofonHandsetId).DomofonHandsetType,
-                            db.DomofonKeys.FirstOrDefault(el => el.Id == item.DomofonKeyId).DomofonKeyType, item.Comments);
-                    }
+        private void GetAllSubscribersByAdress(int ID)
+        {
+            ClearTable();
+            using (DomofonContext db = new DomofonContext())
+            {
+                var subscribers = from sub in db.Subscribers
+                                  where sub.AdressId == ID
+                                  select sub;
+                var subscriberList = subscribers.ToList();
+                dataGridView1.Columns.Add("col0", "Адрес");
+                dataGridView1.Columns.Add("col1", "Квартира");
+                dataGridView1.Columns.Add("col2", "Имя");
+                dataGridView1.Columns.Add("col3", "Фамилия");
+                dataGridView1.Columns.Add("col4", "Телефон");
+                dataGridView1.Columns.Add("col5", "№ договора");
+                dataGridView1.Columns.Add("col6", "Дата договора");
+                dataGridView1.Columns.Add("col7", "ID код");
+                dataGridView1.Columns.Add("col8", "Трубка");
+                dataGridView1.Columns.Add("col9", "Ключ");
+                dataGridView1.Columns.Add("col10", "Комментарии");
+
+                foreach (var item in subscriberList)
+                {
+                    dataGridView1.Rows.Add(db.Adresses.FirstOrDefault(el => el.Id == ID).Street + " № "
+                        + db.Adresses.FirstOrDefault(el => el.Id == ID).House
+                        + "к. " + db.Adresses.FirstOrDefault(el => el.Id == ID).Corpus
+                        + " п. " + db.Adresses.FirstOrDefault(el => el.Id == ID).Entrance,
+                        item.Flat, item.Name, item.Surname, item.Phone, item.ContractNumb, item.ContractDate.ToShortDateString(),
+                        item.Code, db.DomofonHandsets.FirstOrDefault(el => el.Id == item.DomofonHandsetId).DomofonHandsetType,
+                        db.DomofonKeys.FirstOrDefault(el => el.Id == item.DomofonKeyId).DomofonKeyType, item.Comments);
                 }
             }
         }
@@ -577,7 +578,7 @@ namespace Project
                         db.Subscribers.Add(subscriber);
                         db.SaveChanges();
                         ClearTable();
-                        GetAllSubscribersByAdress();
+                        GetAllSubscribersByAdress(idAdress);
                     }
                         break;
                 case "repair":
@@ -643,7 +644,80 @@ namespace Project
                         bool converted = Int32.TryParse(dataGridView1[0, index].Value.ToString(), out id);
                         if (converted == false)
                             return;
+                        using (DomofonContext db = new DomofonContext())
+                        {
+                            Subscriber subscriber = db.Subscribers.Find(id);
+                            SubscriberForm subscriberform = new SubscriberForm();
+                            //subscriber.Name = subscriberform.textBox1.Text;
+                            //subscriber.Surname = subscriberform.textBox2.Text;
+                            //subscriber.Phone = subscriberform.textBox3.Text;
+                            //subscriber.Flat = (int)subscriberform.numericUpDown1.Value;
+                            //subscriber.ContractNumb = subscriberform.textBox4.Text;
+                            //subscriber.ContractDate = subscriberform.dateTimePicker1.Value;
+                            //subscriber.Code = subscriberform.textBox5.Text;
+                            //subscriber.Comments = subscriberform.textBox6.Text;
+                            subscriberform.textBox1.Text = subscriber.Name;
+                            subscriberform.textBox2.Text = subscriber.Surname;
+                            subscriberform.textBox3.Text = subscriber.Phone;
+                            subscriberform.numericUpDown1.Value = subscriber.Flat;
+                            subscriberform.textBox4.Text = subscriber.ContractNumb;
+                            subscriberform.dateTimePicker1.Value = subscriber.ContractDate;
+                            subscriberform.textBox5.Text = subscriber.Code;
+                            subscriberform.textBox6.Text = subscriber.Comments;
+                            for (int i = 0; i < subscriberform.comboBox1.Items.Count; i++)
+                            {
+                                var adress = db.Adresses.FirstOrDefault(el => el.Id == subscriber.AdressId);
+                                if (subscriberform.comboBox1.Items[i].ToString() == adress.Street + " дом № " + adress.House + " корпус " + adress.Corpus + " подъезд № " + adress.Entrance)
+                                {
+                                    subscriberform.comboBox1.SelectedIndex = i;
+                                }
+                            }
+                            for (int i = 0; i < subscriberform.comboBox2.Items.Count; i++)
+                            {
+                                if (subscriberform.comboBox2.Items[i].ToString() == db.DomofonHandsets.FirstOrDefault(el => el.Id == subscriber.DomofonHandsetId).DomofonHandsetType)
+                                {
+                                    subscriberform.comboBox2.SelectedIndex = i;
+                                }
+                            }
+                            for (int i = 0; i < subscriberform.comboBox3.Items.Count; i++)
+                            {
+                                if (subscriberform.comboBox3.Items[i].ToString() == db.DomofonKeys.FirstOrDefault(el => el.Id == subscriber.DomofonKeyId).DomofonKeyType)
+                                {
+                                    subscriberform.comboBox3.SelectedIndex = i;
+                                }
+                            }
+                            DialogResult result = subscriberform.ShowDialog(this);
 
+                            if (result == DialogResult.Cancel)
+                                return;
+                            subscriber.Name = subscriberform.textBox1.Text;
+                            subscriber.Surname = subscriberform.textBox2.Text;
+                            subscriber.Phone = subscriberform.textBox3.Text;
+                            subscriber.Flat = (int)subscriberform.numericUpDown1.Value;
+                            subscriber.ContractNumb = subscriberform.textBox4.Text;
+                            subscriber.ContractDate = subscriberform.dateTimePicker1.Value;
+                            subscriber.Code = subscriberform.textBox5.Text;
+                            subscriber.Comments = subscriberform.textBox6.Text;
+                            var domofonAdresstID = db.Adresses.FirstOrDefault(el => el.Street + " дом № " + el.House + " корпус " + el.Corpus + " подъезд № " + el.Entrance == subscriberform.comboBox1.SelectedItem.ToString());
+                            if (domofonAdresstID != null)
+                            {
+                                subscriber.AdressId = domofonAdresstID.Id;
+                            }
+                            var domofonHandsetID = db.DomofonHandsets.FirstOrDefault(el => el.DomofonHandsetType == subscriberform.comboBox2.SelectedItem.ToString());
+                            if (domofonHandsetID != null)
+                            {
+                                subscriber.DomofonHandsetId = domofonHandsetID.Id;
+                            }
+                            var domofonKeyID = db.DomofonKeys.FirstOrDefault(el => el.DomofonKeyType == subscriberform.comboBox3.SelectedItem.ToString());
+                            if (domofonKeyID != null)
+                            {
+                                subscriber.DomofonKeyId = domofonKeyID.Id;
+                            }
+                            db.Subscribers.Add(subscriber);
+                            db.SaveChanges();
+                            ClearTable();
+                            GetAllSubscribersByAdress(idAdress);
+                        }
                     }
                     break;
                 case "repair":
@@ -736,6 +810,32 @@ namespace Project
                 case "serviceman":
                     break;
                 case "subscriber":
+                    if (dataGridView1.SelectedRows.Count > 0)
+                    {
+                        int index = dataGridView1.SelectedRows[0].Index;
+                        int id = 0;
+                        bool converted = Int32.TryParse(dataGridView1[0, index].Value.ToString(), out id);
+                        if (converted == false)
+                            return;
+
+                        using (DomofonContext db = new DomofonContext())
+                        {
+                            Subscriber subscriber = db.Subscribers.Find(id);
+                            DialogResult dialogResult = MessageBox.Show("Выдействительно хотите удалить абонента: "
+                                + subscriber.Name + " " + subscriber.Surname + ", кв. - "
+                                + subscriber.Flat + ", id - " + subscriber.Code + "?", "WARNING", MessageBoxButtons.YesNo);
+                            if (dialogResult == DialogResult.Yes)
+                            {
+                                db.Subscribers.Remove(subscriber);
+                                db.SaveChanges();
+                            }
+                            else if (dialogResult == DialogResult.No)
+                                return;
+                            //dataGridView1.Refresh();
+                            ClearTable();
+                            GetAllSubscribersByAdress(idAdress);
+                        }
+                    }
                     break;
                 case "repair":
                     break;
@@ -830,6 +930,11 @@ namespace Project
 Программист - Дьяконов Кирилл Владимирович, руководитель проекта - Горчинский Сергей Владимирович.
 г. Чернигов ноябрь 2021 год. Эта программа для бесплатного ознакомительного распространения.
 Для связи - alkiddkv@gmail.com", "О программе");
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }

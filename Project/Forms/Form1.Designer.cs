@@ -42,7 +42,7 @@ namespace Project
             this.addServiсemanToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.chooseCompanyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.печатьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.выходToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.отчетыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.выбратьАбонентаToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.должникиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -133,7 +133,7 @@ namespace Project
             this.addServiсemanToolStripMenuItem,
             this.chooseCompanyToolStripMenuItem,
             this.печатьToolStripMenuItem,
-            this.выходToolStripMenuItem});
+            this.exitToolStripMenuItem});
             this.файлToolStripMenuItem.Name = "файлToolStripMenuItem";
             this.файлToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.файлToolStripMenuItem.Text = "Файл";
@@ -176,11 +176,12 @@ namespace Project
             this.печатьToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
             this.печатьToolStripMenuItem.Text = "Печать";
             // 
-            // выходToolStripMenuItem
+            // exitToolStripMenuItem
             // 
-            this.выходToolStripMenuItem.Name = "выходToolStripMenuItem";
-            this.выходToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
-            this.выходToolStripMenuItem.Text = "Выход";
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
+            this.exitToolStripMenuItem.Text = "Выход";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // отчетыToolStripMenuItem
             // 
@@ -253,13 +254,13 @@ namespace Project
             // help_ToolStripMenuItem
             // 
             this.help_ToolStripMenuItem.Name = "help_ToolStripMenuItem";
-            this.help_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.help_ToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.help_ToolStripMenuItem.Text = "Помощь...";
             // 
             // about_ToolStripMenuItem
             // 
             this.about_ToolStripMenuItem.Name = "about_ToolStripMenuItem";
-            this.about_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.about_ToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.about_ToolStripMenuItem.Text = "О программе...";
             this.about_ToolStripMenuItem.Click += new System.EventHandler(this.about_ToolStripMenuItem_Click);
             // 
@@ -412,7 +413,7 @@ namespace Project
         private System.Windows.Forms.ToolStripMenuItem начислитьАбонплатуToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem провестиОплатуToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem печатьToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem выходToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem отчетыToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem выбратьАбонентаToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem должникиToolStripMenuItem;
