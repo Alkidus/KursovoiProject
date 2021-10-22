@@ -542,6 +542,24 @@ namespace Project
             switch (activeTable)
             {
                 case "company":
+                    CompanyForm companyForm = new CompanyForm();
+                    result = companyForm.ShowDialog(this);
+                    if (result == DialogResult.Cancel)
+                        return;
+                    using (DomofonContext db = new DomofonContext())
+                    {
+                        Company company = new Company();
+                        company.Name = companyForm.textBox1.Text;
+                        company.Adress = companyForm.textBox2.Text;
+                        company.Phone = companyForm.textBox3.Text;
+                        company.Account = companyForm.textBox4.Text;
+                        company.Code = companyForm.textBox5.Text;
+                        company.BankCode = companyForm.textBox6.Text;
+                        db.Companies.Add(company);
+                        db.SaveChanges();
+                        ClearTable();
+                        GetAllCompanies();
+                    }
                     break;
                 case "serviceman":
                     ServicemanForm servicemanForm = new ServicemanForm();
@@ -699,7 +717,26 @@ namespace Project
                             return;
                         using (DomofonContext db = new DomofonContext())
                         {
-
+                            Company company = db.Companies.Find(id);
+                            CompanyForm companyForm = new CompanyForm();
+                            companyForm.textBox1.Text = company.Name;
+                            companyForm.textBox2.Text = company.Adress;
+                            companyForm.textBox3.Text = company.Phone;
+                            companyForm.textBox4.Text = company.Account;
+                            companyForm.textBox5.Text = company.Code;
+                            companyForm.textBox6.Text = company.BankCode;
+                            DialogResult result = companyForm.ShowDialog(this);
+                            if (result == DialogResult.Cancel)
+                                return;
+                            company.Name = companyForm.textBox1.Text;
+                            company.Adress = companyForm.textBox2.Text;
+                            company.Phone = companyForm.textBox3.Text;
+                            company.Account = companyForm.textBox4.Text;
+                            company.Code = companyForm.textBox5.Text;
+                            company.BankCode = companyForm.textBox6.Text;
+                            db.SaveChanges();
+                            ClearTable();
+                            GetAllCompanies();
                         }
                     }
                     break;
@@ -984,7 +1021,18 @@ namespace Project
                             return;
                         using (DomofonContext db = new DomofonContext())
                         {
-
+                            Company company = db.Companies.Find(id);
+                            DialogResult dialogResult = MessageBox.Show("Выдействительно хотите удалить компанию: "
+                                + company.Name + " " + company.Adress + "?", "WARNING", MessageBoxButtons.YesNo);
+                            if (dialogResult == DialogResult.Yes)
+                            {
+                                db.Companies.Remove(company);
+                                db.SaveChanges();
+                            }
+                            else if (dialogResult == DialogResult.No)
+                                return;
+                            ClearTable();
+                            GetAllCompanies();
                         }
                     }
                     break;
