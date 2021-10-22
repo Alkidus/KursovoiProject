@@ -18,7 +18,7 @@ namespace Project
         public string activeTable = "";//переменная для определения выбранной таблицы
         public Font font = new Font("Comic Sans MS", 12);//шрифт в dataGridView по умолчанию
         public Color color = Color.Black;//цвет текста в dataGridView по умолчанию
-        public int idAdress = 0;
+        public int idAdress = 0;//переменная для хранения айдишника выбранного адреса
         public Form1()
         {
             InitializeComponent();
@@ -544,6 +544,21 @@ namespace Project
                 case "company":
                     break;
                 case "serviceman":
+                    ServicemanForm servicemanForm = new ServicemanForm();
+                    result = servicemanForm.ShowDialog(this);
+                    if (result == DialogResult.Cancel)
+                        return;
+                    using (DomofonContext db = new DomofonContext())
+                    {
+                        Serviceman serviceman = new Serviceman();
+                        serviceman.Name = servicemanForm.textBox1.Text;
+                        serviceman.Surname = servicemanForm.textBox2.Text;
+                        serviceman.Phone = servicemanForm.textBox3.Text;
+                        db.Servicemen.Add(serviceman);
+                        db.SaveChanges();
+                        ClearTable();
+                        GetAllServiсeman();
+                    }
                     break;
                 case "subscriber":
                     SubscriberForm subscriberform = new SubscriberForm(idAdress);
@@ -613,7 +628,6 @@ namespace Project
                         }
                         db.Adresses.Add(adress);
                         db.SaveChanges();
-                        //dataGridView1.Refresh();
                         ClearTable();
                         GetAllAdresses();
                     }
@@ -636,7 +650,34 @@ namespace Project
                 case "company":
                     break;
                 case "serviceman":
-                    break;
+                    if (dataGridView1.SelectedRows.Count > 0)
+                    {
+                        int index = dataGridView1.SelectedRows[0].Index;
+                        int id = 0;
+                        bool converted = Int32.TryParse(dataGridView1[0, index].Value.ToString(), out id);
+                        if (converted == false)
+                            return;
+                        using (DomofonContext db = new DomofonContext())
+                        {
+                            Serviceman serviceman = db.Servicemen.Find(id);
+                            ServicemanForm servicemanForm = new ServicemanForm();
+                            servicemanForm.textBox1.Text = serviceman.Name;
+                            servicemanForm.textBox2.Text = serviceman.Surname;
+                            servicemanForm.textBox3.Text = serviceman.Phone;
+                            DialogResult result = servicemanForm.ShowDialog(this);
+
+                            if (result == DialogResult.Cancel)
+                                return;
+
+                            serviceman.Name = servicemanForm.textBox1.Text;
+                            serviceman.Surname = servicemanForm.textBox2.Text;
+                            serviceman.Phone = servicemanForm.textBox3.Text;
+                            db.SaveChanges();
+                            ClearTable();
+                            GetAllServiсeman();
+                        }
+                    }
+                            break;
                 case "subscriber":
                     if (dataGridView1.SelectedRows.Count > 0)
                     {
@@ -649,14 +690,6 @@ namespace Project
                         {
                             Subscriber subscriber = db.Subscribers.Find(id);
                             SubscriberForm subscriberform = new SubscriberForm(idAdress);
-                            //subscriber.Name = subscriberform.textBox1.Text;
-                            //subscriber.Surname = subscriberform.textBox2.Text;
-                            //subscriber.Phone = subscriberform.textBox3.Text;
-                            //subscriber.Flat = (int)subscriberform.numericUpDown1.Value;
-                            //subscriber.ContractNumb = subscriberform.textBox4.Text;
-                            //subscriber.ContractDate = subscriberform.dateTimePicker1.Value;
-                            //subscriber.Code = subscriberform.textBox5.Text;
-                            //subscriber.Comments = subscriberform.textBox6.Text;
                             subscriberform.textBox1.Text = subscriber.Name;
                             subscriberform.textBox2.Text = subscriber.Surname;
                             subscriberform.textBox3.Text = subscriber.Phone;
@@ -808,6 +841,30 @@ namespace Project
                 case "company":
                     break;
                 case "serviceman":
+                    if (dataGridView1.SelectedRows.Count > 0)
+                    {
+                        int index = dataGridView1.SelectedRows[0].Index;
+                        int id = 0;
+                        bool converted = Int32.TryParse(dataGridView1[0, index].Value.ToString(), out id);
+                        if (converted == false)
+                            return;
+
+                        using (DomofonContext db = new DomofonContext())
+                        {
+                            Serviceman serviceman = db.Servicemen.Find(id);
+                            DialogResult dialogResult = MessageBox.Show("Выдействительно хотите удалить мастера: "
+                                + serviceman.Name + " " + serviceman.Surname + "?", "WARNING", MessageBoxButtons.YesNo);
+                            if (dialogResult == DialogResult.Yes)
+                            {
+                                db.Servicemen.Remove(serviceman);
+                                db.SaveChanges();
+                            }
+                            else if (dialogResult == DialogResult.No)
+                                return;
+                            ClearTable();
+                            GetAllServiсeman();
+                        }
+                    }
                     break;
                 case "subscriber":
                     if (dataGridView1.SelectedRows.Count > 0)
@@ -831,7 +888,6 @@ namespace Project
                             }
                             else if (dialogResult == DialogResult.No)
                                 return;
-                            //dataGridView1.Refresh();
                             ClearTable();
                             GetAllSubscribersByAdress(idAdress);
                         }

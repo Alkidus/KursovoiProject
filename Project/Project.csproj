@@ -64,6 +64,12 @@
     <Compile Include="Forms\AdressForm.Designer.cs">
       <DependentUpon>AdressForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\ServicemanForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ServicemanForm.Designer.cs">
+      <DependentUpon>ServicemanForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\SubscriberForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -94,6 +100,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ServicemanForm.resx">
+      <DependentUpon>ServicemanForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SubscriberForm.resx">
       <DependentUpon>SubscriberForm.cs</DependentUpon>

@@ -160,7 +160,7 @@ namespace Project
             // 
             this.addServiсemanToolStripMenuItem.Name = "addServiсemanToolStripMenuItem";
             this.addServiсemanToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
-            this.addServiсemanToolStripMenuItem.Text = "Добавить мастера";
+            this.addServiсemanToolStripMenuItem.Text = "Мастера по ремонту";
             this.addServiсemanToolStripMenuItem.Click += new System.EventHandler(this.addServiсemanToolStripMenuItem_Click);
             // 
             // chooseCompanyToolStripMenuItem

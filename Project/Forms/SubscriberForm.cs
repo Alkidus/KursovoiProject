@@ -20,7 +20,7 @@ namespace Project.Forms
             InitializeComponent();
             idAdress = ID;
             Text = "SUBSCRIBER_DOMOFON";
-            this.BackColor = Color.Aquamarine;
+            BackColor = Color.Aquamarine;
             
             using (DomofonContext db = new DomofonContext())
             {
@@ -46,12 +46,12 @@ namespace Project.Forms
 
         private void button1_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.OK;
+            DialogResult = DialogResult.OK;
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.Cancel;
+            DialogResult = DialogResult.Cancel;
         }
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
@@ -63,7 +63,7 @@ namespace Project.Forms
             {
                 Adress adress = db.Adresses.Find(idAdress);
                 textBox4.Text = adress.ContractNumb + flatNumber;
-                textBox4.Text = "500" + adress.ContractNumb + flatNumber;
+                textBox5.Text = "500" + adress.ContractNumb + flatNumber;
             }
         }
     }
