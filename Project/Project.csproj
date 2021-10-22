@@ -64,6 +64,12 @@
     <Compile Include="Forms\AdressForm.Designer.cs">
       <DependentUpon>AdressForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Key_Handset_Domofon_Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Key_Handset_Domofon_Form.Designer.cs">
+      <DependentUpon>Key_Handset_Domofon_Form.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\ServicemanForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -100,6 +106,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Key_Handset_Domofon_Form.resx">
+      <DependentUpon>Key_Handset_Domofon_Form.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ServicemanForm.resx">
       <DependentUpon>ServicemanForm.cs</DependentUpon>

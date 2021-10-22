@@ -634,10 +634,52 @@ namespace Project
 
                     break;
                 case "key":
+                    Key_Handset_Domofon_Form keyForm = new Key_Handset_Domofon_Form("key");
+                    result = keyForm.ShowDialog(this);
+                    if (result == DialogResult.Cancel)
+                        return;
+                    using (DomofonContext db = new DomofonContext())
+                    {
+                        DomofonKey domofonKey = new DomofonKey();
+                        domofonKey.DomofonKeyType = keyForm.textBox1.Text;
+                        domofonKey.Comments = keyForm.textBox2.Text;
+                        db.DomofonKeys.Add(domofonKey);
+                        db.SaveChanges();
+                        ClearTable();
+                        GetAllKeys();
+                    }
                     break;
                 case "handset":
+                    Key_Handset_Domofon_Form handsetForm = new Key_Handset_Domofon_Form("handset");
+                    result = handsetForm.ShowDialog(this);
+                    if (result == DialogResult.Cancel)
+                        return;
+                    using (DomofonContext db = new DomofonContext())
+                    {
+                        DomofonHandset handset = new DomofonHandset();
+                        handset.DomofonHandsetType = handsetForm.textBox1.Text;
+                        handset.Comments = handsetForm.textBox2.Text;
+                        db.DomofonHandsets.Add(handset);
+                        db.SaveChanges();
+                        ClearTable();
+                        GetAllHandSets();
+                    }
                     break;
                 case "domofon":
+                    Key_Handset_Domofon_Form domofonForm = new Key_Handset_Domofon_Form("domofon");
+                    result = domofonForm.ShowDialog(this);
+                    if (result == DialogResult.Cancel)
+                        return;
+                    using (DomofonContext db = new DomofonContext())
+                    {
+                        DomofonSystem domofon = new DomofonSystem();
+                        domofon.DomofonSystemType = domofonForm.textBox1.Text;
+                        domofon.Comments = domofonForm.textBox2.Text;
+                        db.DomofonSystems.Add(domofon);
+                        db.SaveChanges();
+                        ClearTable();
+                        GetAllDomofonSystems();
+                    }
                     break;
 
             }
@@ -648,6 +690,18 @@ namespace Project
             switch (activeTable)
             {
                 case "company":
+                    if (dataGridView1.SelectedRows.Count > 0)
+                    {
+                        int index = dataGridView1.SelectedRows[0].Index;
+                        int id = 0;
+                        bool converted = Int32.TryParse(dataGridView1[0, index].Value.ToString(), out id);
+                        if (converted == false)
+                            return;
+                        using (DomofonContext db = new DomofonContext())
+                        {
+
+                        }
+                    }
                     break;
                 case "serviceman":
                     if (dataGridView1.SelectedRows.Count > 0)
@@ -754,6 +808,18 @@ namespace Project
                     }
                     break;
                 case "repair":
+                    if (dataGridView1.SelectedRows.Count > 0)
+                    {
+                        int index = dataGridView1.SelectedRows[0].Index;
+                        int id = 0;
+                        bool converted = Int32.TryParse(dataGridView1[0, index].Value.ToString(), out id);
+                        if (converted == false)
+                            return;
+                        using (DomofonContext db = new DomofonContext())
+                        {
+
+                        }
+                    }
                     break;
                 case "adress":
                     if (dataGridView1.SelectedRows.Count > 0)
@@ -763,8 +829,6 @@ namespace Project
                         bool converted = Int32.TryParse(dataGridView1[0, index].Value.ToString(), out id);
                         if (converted == false)
                             return;
-                        //int idAdress = (int)dataGridView1.SelectedCells[0].Value;
-                        //MessageBox.Show("Index - " + index + "\n" + "id - " + id + "\n" + "idAdress - " + idAdress);
                         using (DomofonContext db = new DomofonContext())
                         {
                             Adress adress = db.Adresses.Find(id);
@@ -826,10 +890,82 @@ namespace Project
                     }
                     break;
                 case "key":
+                    if (dataGridView1.SelectedRows.Count > 0)
+                    {
+                        int index = dataGridView1.SelectedRows[0].Index;
+                        int id = 0;
+                        bool converted = Int32.TryParse(dataGridView1[0, index].Value.ToString(), out id);
+                        if (converted == false)
+                            return;
+                        using (DomofonContext db = new DomofonContext())
+                        {
+                            DomofonKey key = db.DomofonKeys.Find(id);
+                            Key_Handset_Domofon_Form keyForm = new Key_Handset_Domofon_Form("key");
+                            keyForm.textBox1.Text = key.DomofonKeyType;
+                            keyForm.textBox2.Text = key.Comments;
+                            DialogResult result = keyForm.ShowDialog(this);
+
+                            if (result == DialogResult.Cancel)
+                                return;
+                            key.DomofonKeyType = keyForm.textBox1.Text;
+                            key.Comments = keyForm.textBox2.Text;
+                            db.SaveChanges();
+                            ClearTable();
+                            GetAllKeys();
+                        }
+                    }
                     break;
                 case "handset":
+                    if (dataGridView1.SelectedRows.Count > 0)
+                    {
+                        int index = dataGridView1.SelectedRows[0].Index;
+                        int id = 0;
+                        bool converted = Int32.TryParse(dataGridView1[0, index].Value.ToString(), out id);
+                        if (converted == false)
+                            return;
+                        using (DomofonContext db = new DomofonContext())
+                        {
+                            DomofonHandset handset = db.DomofonHandsets.Find(id);
+                            Key_Handset_Domofon_Form handsetForm = new Key_Handset_Domofon_Form("handset");
+                            handsetForm.textBox1.Text = handset.DomofonHandsetType;
+                            handsetForm.textBox2.Text = handset.Comments;
+                            DialogResult result = handsetForm.ShowDialog(this);
+
+                            if (result == DialogResult.Cancel)
+                                return;
+                            handset.DomofonHandsetType = handsetForm.textBox1.Text;
+                            handset.Comments = handsetForm.textBox2.Text;
+                            db.SaveChanges();
+                            ClearTable();
+                            GetAllHandSets();
+                        }
+                    }
                     break;
                 case "domofon":
+                    if (dataGridView1.SelectedRows.Count > 0)
+                    {
+                        int index = dataGridView1.SelectedRows[0].Index;
+                        int id = 0;
+                        bool converted = Int32.TryParse(dataGridView1[0, index].Value.ToString(), out id);
+                        if (converted == false)
+                            return;
+                        using (DomofonContext db = new DomofonContext())
+                        {
+                            DomofonSystem domofon = db.DomofonSystems.Find(id);
+                            Key_Handset_Domofon_Form domofonForm = new Key_Handset_Domofon_Form("domofon");
+                            domofonForm.textBox1.Text = domofon.DomofonSystemType;
+                            domofonForm.textBox2.Text = domofon.Comments;
+                            DialogResult result = domofonForm.ShowDialog(this);
+
+                            if (result == DialogResult.Cancel)
+                                return;
+                            domofon.DomofonSystemType = domofonForm.textBox1.Text;
+                            domofon.Comments = domofonForm.textBox2.Text;
+                            db.SaveChanges();
+                            ClearTable();
+                            GetAllDomofonSystems();
+                        }
+                    }
                     break;
             }
         }
@@ -839,6 +975,18 @@ namespace Project
             switch (activeTable)
             {
                 case "company":
+                    if (dataGridView1.SelectedRows.Count > 0)
+                    {
+                        int index = dataGridView1.SelectedRows[0].Index;
+                        int id = 0;
+                        bool converted = Int32.TryParse(dataGridView1[0, index].Value.ToString(), out id);
+                        if (converted == false)
+                            return;
+                        using (DomofonContext db = new DomofonContext())
+                        {
+
+                        }
+                    }
                     break;
                 case "serviceman":
                     if (dataGridView1.SelectedRows.Count > 0)
@@ -894,6 +1042,18 @@ namespace Project
                     }
                     break;
                 case "repair":
+                    if (dataGridView1.SelectedRows.Count > 0)
+                    {
+                        int index = dataGridView1.SelectedRows[0].Index;
+                        int id = 0;
+                        bool converted = Int32.TryParse(dataGridView1[0, index].Value.ToString(), out id);
+                        if (converted == false)
+                            return;
+                        using (DomofonContext db = new DomofonContext())
+                        {
+
+                        }
+                    }
                     break;
                 case "adress":
                     if (dataGridView1.SelectedRows.Count > 0)
@@ -924,10 +1084,79 @@ namespace Project
                     }
                     break;
                 case "key":
+                    if (dataGridView1.SelectedRows.Count > 0)
+                    {
+                        int index = dataGridView1.SelectedRows[0].Index;
+                        int id = 0;
+                        bool converted = Int32.TryParse(dataGridView1[0, index].Value.ToString(), out id);
+                        if (converted == false)
+                            return;
+                        using (DomofonContext db = new DomofonContext())
+                        {
+                            DomofonKey key = db.DomofonKeys.Find(id);
+                            DialogResult dialogResult = MessageBox.Show("Выдействительно хотите удалить ключ: "
+                                + key.DomofonKeyType + "?", "WARNING", MessageBoxButtons.YesNo);
+                            if (dialogResult == DialogResult.Yes)
+                            {
+                                db.DomofonKeys.Remove(key);
+                                db.SaveChanges();
+                            }
+                            else if (dialogResult == DialogResult.No)
+                                return;
+                            ClearTable();
+                            GetAllKeys();
+                        }
+                    }
                     break;
                 case "handset":
+                    if (dataGridView1.SelectedRows.Count > 0)
+                    {
+                        int index = dataGridView1.SelectedRows[0].Index;
+                        int id = 0;
+                        bool converted = Int32.TryParse(dataGridView1[0, index].Value.ToString(), out id);
+                        if (converted == false)
+                            return;
+                        using (DomofonContext db = new DomofonContext())
+                        {
+                            DomofonHandset handset = db.DomofonHandsets.Find(id);
+                            DialogResult dialogResult = MessageBox.Show("Выдействительно хотите удалить трубку: "
+                                + handset.DomofonHandsetType + "?", "WARNING", MessageBoxButtons.YesNo);
+                            if (dialogResult == DialogResult.Yes)
+                            {
+                                db.DomofonHandsets.Remove(handset);
+                                db.SaveChanges();
+                            }
+                            else if (dialogResult == DialogResult.No)
+                                return;
+                            ClearTable();
+                            GetAllHandSets();
+                        }
+                    }
                     break;
                 case "domofon":
+                    if (dataGridView1.SelectedRows.Count > 0)
+                    {
+                        int index = dataGridView1.SelectedRows[0].Index;
+                        int id = 0;
+                        bool converted = Int32.TryParse(dataGridView1[0, index].Value.ToString(), out id);
+                        if (converted == false)
+                            return;
+                        using (DomofonContext db = new DomofonContext())
+                        {
+                            DomofonSystem domofon = db.DomofonSystems.Find(id);
+                            DialogResult dialogResult = MessageBox.Show("Выдействительно хотите удалить домофонную систему: "
+                                + domofon.DomofonSystemType + "?", "WARNING", MessageBoxButtons.YesNo);
+                            if (dialogResult == DialogResult.Yes)
+                            {
+                                db.DomofonSystems.Remove(domofon);
+                                db.SaveChanges();
+                            }
+                            else if (dialogResult == DialogResult.No)
+                                return;
+                            ClearTable();
+                            GetAllDomofonSystems();
+                        }
+                    }
                     break;
             }
         }
