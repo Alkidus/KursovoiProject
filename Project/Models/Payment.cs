@@ -9,7 +9,7 @@ namespace Project.Models
     public class Payment //оплаты абонентов
     {
         public int Id { get; set; }
-        public DateTime SumPMinusDate { get; set; } // дата оплаты абонента
+        public DateTime SumMinusDate { get; set; } // дата оплаты абонента
         public decimal SumMinus{ get; set; } // сумма оплаты абонента
         public Nullable<int> SubscriberId { get; set; }
         public string Comments { get; set; } //коментарии

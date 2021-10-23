@@ -36,17 +36,16 @@ namespace Project
             this.ChooseSubs_btn = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.выбратьАбонентаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.начислитьАбонплатуToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.провестиОплатуToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.chooseSubToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.makeAccrualToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.makePaymentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addServiсemanToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.chooseCompanyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.печатьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.printToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.отчетыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.выбратьАбонентаToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.должникиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.квитанцииToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.debtorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.receiptsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.форматToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.font_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.color_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -64,6 +63,7 @@ namespace Project
             this.DELL_btn = new System.Windows.Forms.Button();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.fontDialog1 = new System.Windows.Forms.FontDialog();
+            this.payments_btn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -127,34 +127,34 @@ namespace Project
             // файлToolStripMenuItem
             // 
             this.файлToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.выбратьАбонентаToolStripMenuItem,
-            this.начислитьАбонплатуToolStripMenuItem,
-            this.провестиОплатуToolStripMenuItem,
+            this.chooseSubToolStripMenuItem,
+            this.makeAccrualToolStripMenuItem,
+            this.makePaymentToolStripMenuItem,
             this.addServiсemanToolStripMenuItem,
             this.chooseCompanyToolStripMenuItem,
-            this.печатьToolStripMenuItem,
+            this.printToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.файлToolStripMenuItem.Name = "файлToolStripMenuItem";
             this.файлToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.файлToolStripMenuItem.Text = "Файл";
             // 
-            // выбратьАбонентаToolStripMenuItem
+            // chooseSubToolStripMenuItem
             // 
-            this.выбратьАбонентаToolStripMenuItem.Name = "выбратьАбонентаToolStripMenuItem";
-            this.выбратьАбонентаToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
-            this.выбратьАбонентаToolStripMenuItem.Text = "Выбрать абонента";
+            this.chooseSubToolStripMenuItem.Name = "chooseSubToolStripMenuItem";
+            this.chooseSubToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
+            this.chooseSubToolStripMenuItem.Text = "Выбрать абонента";
             // 
-            // начислитьАбонплатуToolStripMenuItem
+            // makeAccrualToolStripMenuItem
             // 
-            this.начислитьАбонплатуToolStripMenuItem.Name = "начислитьАбонплатуToolStripMenuItem";
-            this.начислитьАбонплатуToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
-            this.начислитьАбонплатуToolStripMenuItem.Text = "Начислить абонплату";
+            this.makeAccrualToolStripMenuItem.Name = "makeAccrualToolStripMenuItem";
+            this.makeAccrualToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
+            this.makeAccrualToolStripMenuItem.Text = "Начислить абонплату";
             // 
-            // провестиОплатуToolStripMenuItem
+            // makePaymentToolStripMenuItem
             // 
-            this.провестиОплатуToolStripMenuItem.Name = "провестиОплатуToolStripMenuItem";
-            this.провестиОплатуToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
-            this.провестиОплатуToolStripMenuItem.Text = "Провести оплату";
+            this.makePaymentToolStripMenuItem.Name = "makePaymentToolStripMenuItem";
+            this.makePaymentToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
+            this.makePaymentToolStripMenuItem.Text = "Провести оплату";
             // 
             // addServiсemanToolStripMenuItem
             // 
@@ -170,11 +170,11 @@ namespace Project
             this.chooseCompanyToolStripMenuItem.Text = "Выбрать компанию";
             this.chooseCompanyToolStripMenuItem.Click += new System.EventHandler(this.chooseCompanyToolStripMenuItem_Click);
             // 
-            // печатьToolStripMenuItem
+            // printToolStripMenuItem
             // 
-            this.печатьToolStripMenuItem.Name = "печатьToolStripMenuItem";
-            this.печатьToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
-            this.печатьToolStripMenuItem.Text = "Печать";
+            this.printToolStripMenuItem.Name = "printToolStripMenuItem";
+            this.printToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
+            this.printToolStripMenuItem.Text = "Печать";
             // 
             // exitToolStripMenuItem
             // 
@@ -186,30 +186,23 @@ namespace Project
             // отчетыToolStripMenuItem
             // 
             this.отчетыToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.выбратьАбонентаToolStripMenuItem1,
-            this.должникиToolStripMenuItem,
-            this.квитанцииToolStripMenuItem});
+            this.debtorsToolStripMenuItem,
+            this.receiptsToolStripMenuItem});
             this.отчетыToolStripMenuItem.Name = "отчетыToolStripMenuItem";
             this.отчетыToolStripMenuItem.Size = new System.Drawing.Size(60, 20);
             this.отчетыToolStripMenuItem.Text = "Отчеты";
             // 
-            // выбратьАбонентаToolStripMenuItem1
+            // debtorsToolStripMenuItem
             // 
-            this.выбратьАбонентаToolStripMenuItem1.Name = "выбратьАбонентаToolStripMenuItem1";
-            this.выбратьАбонентаToolStripMenuItem1.Size = new System.Drawing.Size(175, 22);
-            this.выбратьАбонентаToolStripMenuItem1.Text = "Выбрать абонента";
+            this.debtorsToolStripMenuItem.Name = "debtorsToolStripMenuItem";
+            this.debtorsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.debtorsToolStripMenuItem.Text = "Должники";
             // 
-            // должникиToolStripMenuItem
+            // receiptsToolStripMenuItem
             // 
-            this.должникиToolStripMenuItem.Name = "должникиToolStripMenuItem";
-            this.должникиToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
-            this.должникиToolStripMenuItem.Text = "Должники";
-            // 
-            // квитанцииToolStripMenuItem
-            // 
-            this.квитанцииToolStripMenuItem.Name = "квитанцииToolStripMenuItem";
-            this.квитанцииToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
-            this.квитанцииToolStripMenuItem.Text = "Квитанции";
+            this.receiptsToolStripMenuItem.Name = "receiptsToolStripMenuItem";
+            this.receiptsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.receiptsToolStripMenuItem.Text = "Квитанции";
             // 
             // форматToolStripMenuItem
             // 
@@ -224,21 +217,21 @@ namespace Project
             // font_ToolStripMenuItem
             // 
             this.font_ToolStripMenuItem.Name = "font_ToolStripMenuItem";
-            this.font_ToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.font_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.font_ToolStripMenuItem.Text = "Шрифт...";
             this.font_ToolStripMenuItem.Click += new System.EventHandler(this.font_ToolStripMenuItem_Click);
             // 
             // color_ToolStripMenuItem
             // 
             this.color_ToolStripMenuItem.Name = "color_ToolStripMenuItem";
-            this.color_ToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.color_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.color_ToolStripMenuItem.Text = "Цвет...";
             this.color_ToolStripMenuItem.Click += new System.EventHandler(this.color_ToolStripMenuItem_Click);
             // 
             // default_ToolStripMenuItem
             // 
             this.default_ToolStripMenuItem.Name = "default_ToolStripMenuItem";
-            this.default_ToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.default_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.default_ToolStripMenuItem.Text = "По умолчанию";
             this.default_ToolStripMenuItem.Click += new System.EventHandler(this.default_ToolStripMenuItem_Click);
             // 
@@ -254,13 +247,13 @@ namespace Project
             // help_ToolStripMenuItem
             // 
             this.help_ToolStripMenuItem.Name = "help_ToolStripMenuItem";
-            this.help_ToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.help_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.help_ToolStripMenuItem.Text = "Помощь...";
             // 
             // about_ToolStripMenuItem
             // 
             this.about_ToolStripMenuItem.Name = "about_ToolStripMenuItem";
-            this.about_ToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.about_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.about_ToolStripMenuItem.Text = "О программе...";
             this.about_ToolStripMenuItem.Click += new System.EventHandler(this.about_ToolStripMenuItem_Click);
             // 
@@ -375,6 +368,23 @@ namespace Project
             this.DELL_btn.UseVisualStyleBackColor = true;
             this.DELL_btn.Click += new System.EventHandler(this.DELL_btn_Click);
             // 
+            // payments_btn
+            // 
+            this.payments_btn.Cursor = System.Windows.Forms.Cursors.Cross;
+            this.payments_btn.FlatAppearance.BorderColor = System.Drawing.Color.Blue;
+            this.payments_btn.FlatAppearance.BorderSize = 3;
+            this.payments_btn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gold;
+            this.payments_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.payments_btn.Font = new System.Drawing.Font("Comic Sans MS", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.payments_btn.ForeColor = System.Drawing.Color.Blue;
+            this.payments_btn.Location = new System.Drawing.Point(15, 400);
+            this.payments_btn.Name = "payments_btn";
+            this.payments_btn.Size = new System.Drawing.Size(360, 47);
+            this.payments_btn.TabIndex = 11;
+            this.payments_btn.Text = "Оплаты";
+            this.payments_btn.UseVisualStyleBackColor = true;
+            this.payments_btn.Click += new System.EventHandler(this.payments_btn_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -382,6 +392,7 @@ namespace Project
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1184, 611);
+            this.Controls.Add(this.payments_btn);
             this.Controls.Add(this.DELL_btn);
             this.Controls.Add(this.CHAGE_btn);
             this.Controls.Add(this.ADD_btn);
@@ -409,15 +420,14 @@ namespace Project
         private System.Windows.Forms.Button ChooseSubs_btn;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem файлToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem выбратьАбонентаToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem начислитьАбонплатуToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem провестиОплатуToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem печатьToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem chooseSubToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem makeAccrualToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem makePaymentToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem printToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem отчетыToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem выбратьАбонентаToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem должникиToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem квитанцииToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem debtorsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem receiptsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem справкаToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem help_ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem about_ToolStripMenuItem;
@@ -438,6 +448,7 @@ namespace Project
         private System.Windows.Forms.ColorDialog colorDialog1;
         private System.Windows.Forms.FontDialog fontDialog1;
         private System.Windows.Forms.ToolStripMenuItem default_ToolStripMenuItem;
+        private System.Windows.Forms.Button payments_btn;
     }
 }
 
