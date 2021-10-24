@@ -1329,7 +1329,7 @@ namespace Project
                                 
                                 dataGridView1.Rows.Add(item.Id, db.Adresses.FirstOrDefault(el => el.Id == id).Street + " № "
                                     + db.Adresses.FirstOrDefault(el => el.Id == id).House
-                                    + "к. " + db.Adresses.FirstOrDefault(el => el.Id == id).Corpus
+                                    + " к. " + db.Adresses.FirstOrDefault(el => el.Id == id).Corpus
                                     + " п. " + db.Adresses.FirstOrDefault(el => el.Id == id).Entrance,
                                     item.Flat, item.Name, item.Surname, item.Code, totalAccrual, totalSumm, totalAccrual - totalSumm);//8-й столбец если будет знак "-" - значит у человека переплат
                             }
@@ -1348,6 +1348,7 @@ namespace Project
                     }
                     dataGridView1[9, 0].Value = totalDebt;//в десятой колонке выводим общуюю сумму задолжености
                     activeTable = "subscriber";//активируем таблицу subscriber
+                    ChangeFontAndColor();
                     break;
                 case "subscriber":
                     if (dataGridView1.SelectedRows.Count > 0)
@@ -1363,34 +1364,76 @@ namespace Project
                         {
                             Subscriber subscriber = db.Subscribers.Find(id);
                             dataGridView1.Columns.Add("col0", "ID");
-                            //dataGridView1.Columns.Add("col1", "Адрес");
-                            //dataGridView1.Columns.Add("col2", "Квартира");
-                            //dataGridView1.Columns.Add("col3", "Имя");
-                            //dataGridView1.Columns.Add("col4", "Фамилия");
-                            //dataGridView1.Columns.Add("col5", "ID код");
-                            dataGridView1.Columns.Add("col6", "Даты начислений"); 
-                            dataGridView1.Columns.Add("col7", "Начисления");
-                            dataGridView1.Columns.Add("col8", "Даты оплат"); 
-                            dataGridView1.Columns.Add("col9", "Оплаты");
-                            dataGridView1.Columns.Add("col10", "Общая задолженность");
+                            dataGridView1.Columns.Add("col1", "Даты начислений"); 
+                            dataGridView1.Columns.Add("col2", "Начисления");
+                            dataGridView1.Columns.Add("col3", "Даты оплат"); 
+                            dataGridView1.Columns.Add("col4", "Оплаты");
+                            dataGridView1.Columns.Add("col5", "Общая задолженность");
                             decimal totalAccrual = 0;
                             decimal totalSumm = 0;
                             var paymentsList = from payments in db.Payments
                                                where payments.SubscriberId == subscriber.Id
                                                select payments;
-                            foreach (var item in paymentsList)
-                            {
-                                dataGridView1.Rows.Add(/*"","","","","",*/"","","", item.SumMinusDate.ToShortDateString(), item.SumMinus);
-                                totalSumm += item.SumMinus;
-                            }
+
                             var accrualList = from accruals in db.Accruals
                                               //where accruals.SubscriberId == subscriber.Id                                                  
                                               select accruals;
-                            foreach(var item in accrualList)
+
+                            var allAccruals = accrualList.ToList();
+                            var allPayments = paymentsList.ToList();
+                            void AddPayments()
                             {
-                                dataGridView1.Rows.Add(/*"","","","","",*/"", item.SumPlusDate.ToShortDateString(), item.SumPlus);
-                                totalAccrual += item.SumPlus;
+                                for(int i = 0; i < allPayments.Count(); i++)
+                                {
+                                    dataGridView1[3, i].Value = allPayments[i].SumMinusDate.ToShortDateString();
+                                    dataGridView1[4, i].Value = allPayments[i].SumMinus;
+                                    totalSumm += allPayments[i].SumMinus;
+                                }
                             }
+                            void AddAccruals()
+                            {
+                                for (int i = 0; i < allAccruals.Count(); i++)
+                                {
+                                    dataGridView1[1, i].Value = allAccruals[i].SumPlusDate.ToShortDateString();
+                                    dataGridView1[2, i].Value = allAccruals[i].SumPlus;
+                                    totalAccrual += allAccruals[i].SumPlus;
+                                }
+                            }
+                            if(accrualList.Count() >= paymentsList.Count())
+                            {
+                                if(accrualList.Count() <= 6)//проверяем количесвто строк, чтобы добавить строки для данных абонента
+                                {
+                                    for(int i = 0; i < 6; i++)
+                                        dataGridView1.Rows.Add();
+                                }
+                                else
+                                {
+                                    for (int i = 0; i < accrualList.Count(); i++)
+                                    {
+                                        dataGridView1.Rows.Add();
+                                    }
+                                    AddAccruals();
+                                    AddPayments();
+                                }
+                            }
+                            else
+                            {
+                                if (paymentsList.Count() <= 6)
+                                {
+                                    for (int i = 0; i < 6; i++)
+                                        dataGridView1.Rows.Add();
+                                }
+                                else
+                                {
+                                    for (int i = 0; i < paymentsList.Count(); i++)
+                                    {
+                                        dataGridView1.Rows.Add();
+                                    }
+                                    AddPayments();
+                                    AddAccruals();
+                                }
+                            }
+                                
                             decimal totalDebit = totalAccrual - totalSumm;
                             dataGridView1[0, 0].Value = subscriber.Id;
                             dataGridView1[0, 1].Value = adress;
@@ -1403,13 +1446,15 @@ namespace Project
                             today = DateTime.Now;
                             dataGridView1[5, 0].Value = "По состоянию на " + today.ToShortDateString();
                             if (totalDebit >= 0)
-                                dataGridView1[5, 1].Value = "Долг: " + totalDebit;//в десятой колонке выводим общуюю сумму задолжености
+                                dataGridView1[5, 1].Value = "Долг: " + totalDebit;//в пятой колонке выводим общуюю сумму задолжености
                             else
                                 dataGridView1[5, 1].Value = "Переплата: " + totalDebit;
 
                         }
                         payments_btn.Visible = false;//скрыть кнопку "Оплаты"
                     }
+                    activeTable = "payments";//активируем таблицу payments
+                    ChangeFontAndColor();
                     break;
             }
         }
