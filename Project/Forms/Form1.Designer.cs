@@ -149,6 +149,7 @@ namespace Project
             this.makeAccrualToolStripMenuItem.Name = "makeAccrualToolStripMenuItem";
             this.makeAccrualToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
             this.makeAccrualToolStripMenuItem.Text = "Начислить абонплату";
+            this.makeAccrualToolStripMenuItem.Click += new System.EventHandler(this.makeAccrualToolStripMenuItem_Click);
             // 
             // makePaymentToolStripMenuItem
             // 
@@ -195,13 +196,13 @@ namespace Project
             // debtorsToolStripMenuItem
             // 
             this.debtorsToolStripMenuItem.Name = "debtorsToolStripMenuItem";
-            this.debtorsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.debtorsToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
             this.debtorsToolStripMenuItem.Text = "Должники";
             // 
             // receiptsToolStripMenuItem
             // 
             this.receiptsToolStripMenuItem.Name = "receiptsToolStripMenuItem";
-            this.receiptsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.receiptsToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
             this.receiptsToolStripMenuItem.Text = "Квитанции";
             // 
             // форматToolStripMenuItem
@@ -217,21 +218,21 @@ namespace Project
             // font_ToolStripMenuItem
             // 
             this.font_ToolStripMenuItem.Name = "font_ToolStripMenuItem";
-            this.font_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.font_ToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
             this.font_ToolStripMenuItem.Text = "Шрифт...";
             this.font_ToolStripMenuItem.Click += new System.EventHandler(this.font_ToolStripMenuItem_Click);
             // 
             // color_ToolStripMenuItem
             // 
             this.color_ToolStripMenuItem.Name = "color_ToolStripMenuItem";
-            this.color_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.color_ToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
             this.color_ToolStripMenuItem.Text = "Цвет...";
             this.color_ToolStripMenuItem.Click += new System.EventHandler(this.color_ToolStripMenuItem_Click);
             // 
             // default_ToolStripMenuItem
             // 
             this.default_ToolStripMenuItem.Name = "default_ToolStripMenuItem";
-            this.default_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.default_ToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
             this.default_ToolStripMenuItem.Text = "По умолчанию";
             this.default_ToolStripMenuItem.Click += new System.EventHandler(this.default_ToolStripMenuItem_Click);
             // 
@@ -247,13 +248,13 @@ namespace Project
             // help_ToolStripMenuItem
             // 
             this.help_ToolStripMenuItem.Name = "help_ToolStripMenuItem";
-            this.help_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.help_ToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.help_ToolStripMenuItem.Text = "Помощь...";
             // 
             // about_ToolStripMenuItem
             // 
             this.about_ToolStripMenuItem.Name = "about_ToolStripMenuItem";
-            this.about_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.about_ToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.about_ToolStripMenuItem.Text = "О программе...";
             this.about_ToolStripMenuItem.Click += new System.EventHandler(this.about_ToolStripMenuItem_Click);
             // 

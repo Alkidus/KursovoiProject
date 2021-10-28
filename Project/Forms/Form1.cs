@@ -1458,5 +1458,32 @@ namespace Project
                     break;
             }
         }
+
+        private void makeAccrualToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PaymentForm paymentForm = new PaymentForm("accrual");
+            DialogResult dialogResult = paymentForm.DialogResult;
+            if (dialogResult == DialogResult.Yes)
+            {
+                using(DomofonContext db = new DomofonContext())
+                {
+                    Accrual accrual = new Accrual();
+                    accrual.SumPlusDate = paymentForm.dateTimePicker1.Value;
+                    try
+                    {
+                        accrual.SumPlus = Convert.ToDecimal(paymentForm.textBox2.Text);
+                    }
+                    catch(Exception ex)
+                    {
+                        MessageBox.Show("");
+                    }
+                    accrual.Comments = paymentForm.textBox3.Text;
+                    db.Accruals.Add(accrual);
+                    db.SaveChanges();
+                }
+            }
+            else if (dialogResult == DialogResult.Cancel)
+                return;
+        }
     }
 }
