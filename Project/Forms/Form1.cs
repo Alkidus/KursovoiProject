@@ -439,7 +439,24 @@ namespace Project
             ChangeFontAndColor();
             payments_btn.Visible = false;
         }
+        private void GetAllAccruals()//выводим таблицу всех начислений
+        {
+            using (DomofonContext db = new DomofonContext())
+            {
+                var accrual = db.Accruals.ToList();
+                dataGridView1.Columns.Add("col0", "ID");
+                dataGridView1.Columns.Add("col1", "Дата начисления");
+                dataGridView1.Columns.Add("col2", "Сумма");
+                dataGridView1.Columns.Add("col3", "Комментарии");
 
+                foreach (var item in accrual)
+                {
+                    dataGridView1.Rows.Add(item.Id, item.SumPlusDate, item.SumPlus, item.Comments);
+                }
+            }
+            ChangeFontAndColor();
+            payments_btn.Visible = false;
+        }
         private void chooseCompanyToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ClearTable();
@@ -707,6 +724,12 @@ namespace Project
                         ClearTable();
                         GetAllDomofonSystems();
                     }
+                    break;
+                case "payments":
+                    break;
+                case "accrual":
+                    AddAccrual();
+                    GetAllAccruals();
                     break;
 
             }
@@ -1013,6 +1036,49 @@ namespace Project
                         }
                     }
                     break;
+                case "payments":
+                    if (dataGridView1.SelectedRows.Count > 0)
+                    {
+                        int index = dataGridView1.SelectedRows[0].Index;
+                        int id = 0;
+                        bool converted = Int32.TryParse(dataGridView1[0, index].Value.ToString(), out id);
+                        if (converted == false)
+                            return;
+                        using (DomofonContext db = new DomofonContext())
+                        {
+
+                        }
+                    }
+                    break;
+                case "accrual":
+                    if (dataGridView1.SelectedRows.Count > 0)
+                    {
+                        int index = dataGridView1.SelectedRows[0].Index;
+                        int id = 0;
+                        bool converted = Int32.TryParse(dataGridView1[0, index].Value.ToString(), out id);
+                        if (converted == false)
+                            return;
+                        using (DomofonContext db = new DomofonContext())
+                        {
+                            Accrual accrual = db.Accruals.Find(id);
+                            PaymentForm paymentForm = new PaymentForm("accrual");
+                            paymentForm.textBox1.Text = "ДЛЯ ВСЕХ";
+                            paymentForm.dateTimePicker1.Value = accrual.SumPlusDate;
+                            paymentForm.textBox3.Text = accrual.Comments;
+                            paymentForm.numericUpDown1.Value = (int)accrual.SumPlus;
+                            paymentForm.numericUpDown2.Value = accrual.SumPlus * 100 % 100;
+                            DialogResult result = paymentForm.ShowDialog(this);
+                            if (result == DialogResult.Cancel)
+                                return;
+                            accrual.SumPlusDate = paymentForm.dateTimePicker1.Value;
+                            accrual.Comments = paymentForm.textBox3.Text;
+                            accrual.SumPlus = paymentForm.numericUpDown1.Value + paymentForm.numericUpDown2.Value / 100;
+                            db.SaveChanges();
+                            ClearTable();
+                            GetAllAccruals();
+                        }
+                    }
+                    break;
             }
         }
 
@@ -1212,6 +1278,45 @@ namespace Project
                                 return;
                             ClearTable();
                             GetAllDomofonSystems();
+                        }
+                    }
+                    break;
+                case "payments":
+                    if (dataGridView1.SelectedRows.Count > 0)
+                    {
+                        int index = dataGridView1.SelectedRows[0].Index;
+                        int id = 0;
+                        bool converted = Int32.TryParse(dataGridView1[0, index].Value.ToString(), out id);
+                        if (converted == false)
+                            return;
+                        using (DomofonContext db = new DomofonContext())
+                        {
+
+                        }
+                    }
+                    break;
+                case "accrual":
+                    if (dataGridView1.SelectedRows.Count > 0)
+                    {
+                        int index = dataGridView1.SelectedRows[0].Index;
+                        int id = 0;
+                        bool converted = Int32.TryParse(dataGridView1[0, index].Value.ToString(), out id);
+                        if (converted == false)
+                            return;
+                        using (DomofonContext db = new DomofonContext())
+                        {
+                            Accrual accrual = db.Accruals.Find(id);
+                            DialogResult dialogResult = MessageBox.Show("Выдействительно хотите удалить начисление: "
+                                + accrual.SumPlusDate.ToShortDateString() + " сумма: " + accrual.SumPlus + "?", "WARNING", MessageBoxButtons.YesNo);
+                            if (dialogResult == DialogResult.Yes)
+                            {
+                                db.Accruals.Remove(accrual);
+                                db.SaveChanges();
+                            }
+                            else if (dialogResult == DialogResult.No)
+                                return;
+                            ClearTable();
+                            GetAllAccruals();
                         }
                     }
                     break;
@@ -1458,32 +1563,30 @@ namespace Project
                     break;
             }
         }
-
+        public void AddAccrual()
+        {
+            ClearTable();
+            PaymentForm paymentForm = new PaymentForm("accrual");
+            DialogResult dialogResult = paymentForm.ShowDialog(this);
+            if (dialogResult == DialogResult.Cancel)
+                return;
+            using (DomofonContext db = new DomofonContext())
+            {
+                Accrual accrual = new Accrual();
+                accrual.SumPlusDate = paymentForm.dateTimePicker1.Value;
+                accrual.SumPlus = paymentForm.numericUpDown1.Value + paymentForm.numericUpDown2.Value / 100;
+                accrual.Comments = paymentForm.textBox3.Text;
+                db.Accruals.Add(accrual);
+                db.SaveChanges();
+            }
+            ChangeFontAndColor();
+            payments_btn.Visible = false;//скрыть кнопку "Оплаты"
+        }
         private void makeAccrualToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            PaymentForm paymentForm = new PaymentForm("accrual");
-            DialogResult dialogResult = paymentForm.DialogResult;
-            if (dialogResult == DialogResult.Yes)
-            {
-                using(DomofonContext db = new DomofonContext())
-                {
-                    Accrual accrual = new Accrual();
-                    accrual.SumPlusDate = paymentForm.dateTimePicker1.Value;
-                    try
-                    {
-                        accrual.SumPlus = Convert.ToDecimal(paymentForm.textBox2.Text);
-                    }
-                    catch(Exception ex)
-                    {
-                        MessageBox.Show("");
-                    }
-                    accrual.Comments = paymentForm.textBox3.Text;
-                    db.Accruals.Add(accrual);
-                    db.SaveChanges();
-                }
-            }
-            else if (dialogResult == DialogResult.Cancel)
-                return;
+            AddAccrual();
+            GetAllAccruals();
+            activeTable = "accrual";
         }
     }
 }
