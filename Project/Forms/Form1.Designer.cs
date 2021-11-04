@@ -45,6 +45,7 @@ namespace Project
             this.отчетыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.debtorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.receiptsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.generalReportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.форматToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.font_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.color_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -63,6 +64,8 @@ namespace Project
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.fontDialog1 = new System.Windows.Forms.FontDialog();
             this.payments_btn = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.Back_btn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -180,7 +183,8 @@ namespace Project
             // 
             this.отчетыToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.debtorsToolStripMenuItem,
-            this.receiptsToolStripMenuItem});
+            this.receiptsToolStripMenuItem,
+            this.generalReportToolStripMenuItem});
             this.отчетыToolStripMenuItem.Name = "отчетыToolStripMenuItem";
             this.отчетыToolStripMenuItem.Size = new System.Drawing.Size(60, 20);
             this.отчетыToolStripMenuItem.Text = "Отчеты";
@@ -188,14 +192,21 @@ namespace Project
             // debtorsToolStripMenuItem
             // 
             this.debtorsToolStripMenuItem.Name = "debtorsToolStripMenuItem";
-            this.debtorsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.debtorsToolStripMenuItem.Size = new System.Drawing.Size(263, 22);
             this.debtorsToolStripMenuItem.Text = "Должники";
             // 
             // receiptsToolStripMenuItem
             // 
             this.receiptsToolStripMenuItem.Name = "receiptsToolStripMenuItem";
-            this.receiptsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.receiptsToolStripMenuItem.Size = new System.Drawing.Size(263, 22);
             this.receiptsToolStripMenuItem.Text = "Квитанции";
+            // 
+            // generalReportToolStripMenuItem
+            // 
+            this.generalReportToolStripMenuItem.Name = "generalReportToolStripMenuItem";
+            this.generalReportToolStripMenuItem.Size = new System.Drawing.Size(263, 22);
+            this.generalReportToolStripMenuItem.Text = "Общий отчет текущего состояния";
+            this.generalReportToolStripMenuItem.Click += new System.EventHandler(this.generalReportToolStripMenuItem_Click);
             // 
             // форматToolStripMenuItem
             // 
@@ -210,21 +221,21 @@ namespace Project
             // font_ToolStripMenuItem
             // 
             this.font_ToolStripMenuItem.Name = "font_ToolStripMenuItem";
-            this.font_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.font_ToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
             this.font_ToolStripMenuItem.Text = "Шрифт...";
             this.font_ToolStripMenuItem.Click += new System.EventHandler(this.font_ToolStripMenuItem_Click);
             // 
             // color_ToolStripMenuItem
             // 
             this.color_ToolStripMenuItem.Name = "color_ToolStripMenuItem";
-            this.color_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.color_ToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
             this.color_ToolStripMenuItem.Text = "Цвет...";
             this.color_ToolStripMenuItem.Click += new System.EventHandler(this.color_ToolStripMenuItem_Click);
             // 
             // default_ToolStripMenuItem
             // 
             this.default_ToolStripMenuItem.Name = "default_ToolStripMenuItem";
-            this.default_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.default_ToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
             this.default_ToolStripMenuItem.Text = "По умолчанию";
             this.default_ToolStripMenuItem.Click += new System.EventHandler(this.default_ToolStripMenuItem_Click);
             // 
@@ -240,13 +251,13 @@ namespace Project
             // help_ToolStripMenuItem
             // 
             this.help_ToolStripMenuItem.Name = "help_ToolStripMenuItem";
-            this.help_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.help_ToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.help_ToolStripMenuItem.Text = "Помощь...";
             // 
             // about_ToolStripMenuItem
             // 
             this.about_ToolStripMenuItem.Name = "about_ToolStripMenuItem";
-            this.about_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.about_ToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.about_ToolStripMenuItem.Text = "О программе...";
             this.about_ToolStripMenuItem.Click += new System.EventHandler(this.about_ToolStripMenuItem_Click);
             // 
@@ -319,7 +330,7 @@ namespace Project
             this.ADD_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ADD_btn.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.ADD_btn.ForeColor = System.Drawing.Color.Green;
-            this.ADD_btn.Location = new System.Drawing.Point(7, 365);
+            this.ADD_btn.Location = new System.Drawing.Point(7, 395);
             this.ADD_btn.Name = "ADD_btn";
             this.ADD_btn.Size = new System.Drawing.Size(120, 45);
             this.ADD_btn.TabIndex = 8;
@@ -336,7 +347,7 @@ namespace Project
             this.CHAGE_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.CHAGE_btn.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.CHAGE_btn.ForeColor = System.Drawing.Color.Blue;
-            this.CHAGE_btn.Location = new System.Drawing.Point(137, 365);
+            this.CHAGE_btn.Location = new System.Drawing.Point(137, 395);
             this.CHAGE_btn.Name = "CHAGE_btn";
             this.CHAGE_btn.Size = new System.Drawing.Size(120, 45);
             this.CHAGE_btn.TabIndex = 9;
@@ -353,7 +364,7 @@ namespace Project
             this.DELL_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.DELL_btn.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.DELL_btn.ForeColor = System.Drawing.Color.Red;
-            this.DELL_btn.Location = new System.Drawing.Point(267, 365);
+            this.DELL_btn.Location = new System.Drawing.Point(267, 395);
             this.DELL_btn.Name = "DELL_btn";
             this.DELL_btn.Size = new System.Drawing.Size(120, 45);
             this.DELL_btn.TabIndex = 10;
@@ -370,13 +381,36 @@ namespace Project
             this.payments_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.payments_btn.Font = new System.Drawing.Font("Comic Sans MS", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.payments_btn.ForeColor = System.Drawing.Color.Blue;
-            this.payments_btn.Location = new System.Drawing.Point(15, 441);
+            this.payments_btn.Location = new System.Drawing.Point(15, 471);
             this.payments_btn.Name = "payments_btn";
             this.payments_btn.Size = new System.Drawing.Size(360, 47);
             this.payments_btn.TabIndex = 11;
             this.payments_btn.Text = "Оплаты";
             this.payments_btn.UseVisualStyleBackColor = true;
             this.payments_btn.Click += new System.EventHandler(this.payments_btn_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label1.Location = new System.Drawing.Point(20, 350);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(244, 27);
+            this.label1.TabIndex = 12;
+            this.label1.Text = "Операции с компанией:";
+            // 
+            // Back_btn
+            // 
+            this.Back_btn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Back_btn.Font = new System.Drawing.Font("Comic Sans MS", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Back_btn.Image = ((System.Drawing.Image)(resources.GetObject("Back_btn.Image")));
+            this.Back_btn.Location = new System.Drawing.Point(287, 27);
+            this.Back_btn.Name = "Back_btn";
+            this.Back_btn.Size = new System.Drawing.Size(105, 55);
+            this.Back_btn.TabIndex = 13;
+            this.Back_btn.UseVisualStyleBackColor = true;
+            this.Back_btn.Click += new System.EventHandler(this.Back_btn_Click);
             // 
             // Form1
             // 
@@ -385,6 +419,8 @@ namespace Project
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1184, 611);
+            this.Controls.Add(this.Back_btn);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.payments_btn);
             this.Controls.Add(this.DELL_btn);
             this.Controls.Add(this.CHAGE_btn);
@@ -441,6 +477,9 @@ namespace Project
         private System.Windows.Forms.FontDialog fontDialog1;
         private System.Windows.Forms.ToolStripMenuItem default_ToolStripMenuItem;
         private System.Windows.Forms.Button payments_btn;
+        private System.Windows.Forms.ToolStripMenuItem generalReportToolStripMenuItem;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button Back_btn;
     }
 }
 

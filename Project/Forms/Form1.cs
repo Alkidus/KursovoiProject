@@ -24,7 +24,6 @@ namespace Project
             InitializeComponent();
             Text = "PROJECT_DOMOFON";
             //this.BackColor = Color.Aquamarine;
-
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -300,6 +299,7 @@ namespace Project
             }
             ChangeFontAndColor();
             payments_btn.Visible = false;
+            label1.Text = "Операции с компанией:";
         }
 
         private void GetAllAdresses()
@@ -331,6 +331,7 @@ namespace Project
             }
             ChangeFontAndColor();
             payments_btn.Visible = true;
+            label1.Text = "Операции с адресами:";
         }
         private void Adress_btn_Click(object sender, EventArgs e)
         {
@@ -362,6 +363,7 @@ namespace Project
             }
             ChangeFontAndColor();
             payments_btn.Visible = false;
+            label1.Text = "Операции с ключами:";
         }
 
         private void HandSet_btn_Click(object sender, EventArgs e)
@@ -387,6 +389,7 @@ namespace Project
             }
             ChangeFontAndColor();
             payments_btn.Visible = false;
+            label1.Text = "Операции с трубками:";
         }
 
         private void Domofons_btn_Click(object sender, EventArgs e)
@@ -412,6 +415,7 @@ namespace Project
             }
             ChangeFontAndColor();
             payments_btn.Visible = false;
+            label1.Text = "Операции с домофонами:";
         }
 
         private void addServiсemanToolStripMenuItem_Click(object sender, EventArgs e)
@@ -438,6 +442,7 @@ namespace Project
             }
             ChangeFontAndColor();
             payments_btn.Visible = false;
+            label1.Text = "Операции с мастерами:";
         }
         private void GetAllAccruals()//выводим таблицу всех начислений
         {
@@ -527,6 +532,7 @@ namespace Project
                         db.DomofonKeys.FirstOrDefault(el => el.Id == item.DomofonKeyId).DomofonKeyType, item.Comments);
                 }
             }
+            label1.Text = "Операции с абонентами:";
         }
         private void Repair_btn_Click(object sender, EventArgs e)
         {
@@ -560,6 +566,7 @@ namespace Project
             }
             ChangeFontAndColor();
             payments_btn.Visible = false;
+            label1.Text = "Операции с заявками:";
         }
 
         private void ADD_btn_Click(object sender, EventArgs e)
@@ -620,21 +627,29 @@ namespace Project
                         subscriber.ContractDate = subscriberform.dateTimePicker1.Value;
                         subscriber.Code = subscriberform.textBox5.Text;
                         subscriber.Comments = subscriberform.textBox6.Text;
-                        var domofonAdresstID = db.Adresses.FirstOrDefault(el => el.Street + " дом № " + el.House + " корпус " + el.Corpus + " подъезд № " + el.Entrance == subscriberform.comboBox1.SelectedItem.ToString());
-                        if (domofonAdresstID != null)
+                        try
                         {
-                            subscriber.AdressId = domofonAdresstID.Id;
+                            var domofonAdresstID = db.Adresses.FirstOrDefault(el => el.Street + " дом № " + el.House + " корпус " + el.Corpus + " подъезд № " + el.Entrance == subscriberform.comboBox1.SelectedItem.ToString());
+                            if (domofonAdresstID != null)
+                            {
+                                subscriber.AdressId = domofonAdresstID.Id;
+                            }
+                            var domofonHandsetID = db.DomofonHandsets.FirstOrDefault(el => el.DomofonHandsetType == subscriberform.comboBox2.SelectedItem.ToString());
+                            if (domofonHandsetID != null)
+                            {
+                                subscriber.DomofonHandsetId = domofonHandsetID.Id;
+                            }
+                            var domofonKeyID = db.DomofonKeys.FirstOrDefault(el => el.DomofonKeyType == subscriberform.comboBox3.SelectedItem.ToString());
+                            if (domofonKeyID != null)
+                            {
+                                subscriber.DomofonKeyId = domofonKeyID.Id;
+                            }
                         }
-                        var domofonHandsetID = db.DomofonHandsets.FirstOrDefault(el => el.DomofonHandsetType == subscriberform.comboBox2.SelectedItem.ToString());
-                        if (domofonHandsetID != null)
+                        catch(Exception ex)
                         {
-                            subscriber.DomofonHandsetId = domofonHandsetID.Id;
+                            MessageBox.Show("Все поля должны быть заполнены", "WARNING");
                         }
-                        var domofonKeyID = db.DomofonKeys.FirstOrDefault(el => el.DomofonKeyType == subscriberform.comboBox3.SelectedItem.ToString());
-                        if (domofonKeyID != null)
-                        {
-                            subscriber.DomofonKeyId = domofonKeyID.Id;
-                        }
+
                         db.Subscribers.Add(subscriber);
                         db.SaveChanges();
                         ClearTable();
@@ -1464,6 +1479,7 @@ namespace Project
                         bool converted = Int32.TryParse(dataGridView1[0, index].Value.ToString(), out id);
                         if (converted == false)
                             return;
+                        idAdress = id;
                         ClearTable();
                         using (DomofonContext db = new DomofonContext())
                         {
@@ -1522,6 +1538,7 @@ namespace Project
                     dataGridView1[9, 0].Value = totalDebt;//в десятой колонке выводим общуюю сумму задолжености
                     activeTable = "subscriber";//активируем таблицу subscriber
                     ChangeFontAndColor();
+                    label1.Text = "Операции с абонентами:";
                     break;
                 case "subscriber":
                     if (dataGridView1.SelectedRows.Count > 0)
@@ -1535,6 +1552,7 @@ namespace Project
                         ClearTable();
                         GetSubscriberPayments(id, adress);
                         payments_btn.Visible = false;//скрыть кнопку "Оплаты"
+                        label1.Text = "Операции с платежами:";
                     }
                     activeTable = "payments";//активируем таблицу payments
                     ChangeFontAndColor();
@@ -1655,12 +1673,102 @@ namespace Project
             }
             ChangeFontAndColor();
             payments_btn.Visible = false;//скрыть кнопку "Оплаты"
+            label1.Text = "Операции с начислениями:";
         }
         private void makeAccrualToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AddAccrual();
             GetAllAccruals();
             activeTable = "accrual";
+        }
+
+        private void generalReportToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ClearTable();
+            using (DomofonContext db = new DomofonContext())
+            {
+                dataGridView1.Columns.Add("col0", "Наименование");
+                dataGridView1.Columns.Add("col1", "Количество");
+                var company = from c in db.Companies
+                              select c;
+                foreach(var item in company)
+                {
+                    dataGridView1.Rows.Add(item.Name, item.Adress);
+                }
+                var adress = from a in db.Adresses
+                             select a;
+                int numberOfAdress = adress.Count();
+                dataGridView1.Rows.Add("Всего подъездов", numberOfAdress);
+                var subscribers = from s in db.Subscribers
+                                  select s;
+                int numberOfSubscribers = subscribers.Count();
+                dataGridView1.Rows.Add("Всего абонентов", numberOfSubscribers);
+
+                decimal sumOfAllAccruals = db.Accruals.Sum(acc => acc.SumPlus);
+                var allSub = from pay in db.Payments
+                             join sub in db.Subscribers on pay.SubscriberId equals sub.Id
+                             //where pay.SubscriberId == sub.Id
+                             select new { SubName = sub.Name + " " + sub.Surname, Payments = db.Payments.Sum(paym => paym.SumMinus) };
+                dataGridView1.Rows.Add("Всего начислено", sumOfAllAccruals);
+                dataGridView1.Rows.Add("Всего должников", allSub.Count());
+                dataGridView1.Rows.Add("На сумму", "Totalsum: " + allSub.Count()*sumOfAllAccruals + " - " + "totalpaym: " + allSub.Sum(x => x.Payments) + " res: " + (allSub.Count() * sumOfAllAccruals - allSub.Sum(x => x.Payments)));
+
+                var domofonSys = from ds in db.DomofonSystems
+                                 join adr in db.Adresses on ds.Id equals adr.DomofonSystemId
+                                 orderby ds.DomofonSystemType
+                                 select new { DomofoneType = ds.DomofonSystemType, Number = adr.Id };
+                var domofonSysList = domofonSys.ToList();
+                var domofonCount = domofonSysList.GroupBy(item => item).Select(item => new { Name = item.Key.DomofoneType, Count = item.Count() });
+                dataGridView1.Rows.Add("Установленно систем", "Количество:");
+
+                foreach (var item in domofonCount)
+                {
+                    dataGridView1.Rows.Add(item.Name, item.Count);
+                }
+
+                var handset = from hs in db.DomofonHandsets
+                              join sub in db.Subscribers on hs.Id equals sub.DomofonHandsetId
+                              orderby hs.DomofonHandsetType
+                              select new { HandSet = hs.DomofonHandsetType, Number = sub.Id };
+                var handsetList = handset.ToList();
+                //            File.ReadLines(path)
+                //.GroupBy(s => s)
+                //.ToDictionary(g => g.Key, g => g.Count())
+                //var newList = handsetList.GroupBy(item => item).ToDictionary(g => g.Key.HandSet, g => g.Count());
+                //dataGridView1.Rows.Add("Установленно трубок", "Количество:");
+                //foreach (var item in newList)
+                //{
+                //    dataGridView1.Rows.Add(item.Key, item.Value);
+                //}
+                var handsetCount = handsetList.GroupBy(item => item).Select(item => new { Name = item.Key.HandSet, Count = item.Count() }).OrderByDescending(item => item.Count).ThenBy(item => item.Name);
+                dataGridView1.Rows.Add("Установленно трубок", "Количество:");
+                foreach(var item in handsetCount)
+                {
+                    dataGridView1.Rows.Add(item.Name, item.Count);
+                }
+
+
+            }
+            ChangeFontAndColor();
+            payments_btn.Visible = false;//скрыть кнопку "Оплаты"
+            label1.Text = "Операции приостановлены:";
+        }
+
+        private void Back_btn_Click(object sender, EventArgs e)//обработчик кнопки назад
+        {
+            switch (activeTable)
+            {
+                case "subscriber":
+                    ClearTable();
+                    GetAllAdresses();
+                    activeTable = "adress";
+                    break;
+                case "payments":
+                    GetAllSubscribersByAdress(idAdress);
+                    ChangeFontAndColor();
+                    activeTable = "subscriber";
+                    break;
+            }
         }
     }
 }
