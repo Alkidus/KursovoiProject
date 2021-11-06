@@ -29,253 +29,253 @@ namespace Project
         private void Form1_Load(object sender, EventArgs e)
         {
             payments_btn.Visible = false;
-            using (DomofonContext db = new DomofonContext())
-            {
-                //db.Companies.Add(
-                //    new Company
-                //    {
-                //        Name = "К.С-Инвест",
-                //        Adress = "г.Чернигов, ул. Родимцева 14",//адрес
-                //        Phone = "+38 (0462) 614-681",//тедефон
-                //        Account = "UA133052990000026008006300527",//расчетный счет в банке
-                //        Code = "33660167",//код ЕДРПОУ
-                //        BankCode = "305299"// МФО банка
-                //    }
-                //);
-                //db.Servicemen.Add(new Serviceman { Name = "Петя", Surname = "Павленко", Phone = "0937033817" });
-                //db.Servicemen.Add(new Serviceman { Name = "Кирилл", Surname = "Павленко", Phone = "0934163083" });
-                //db.DomofonHandsets.Add(
-                //    new DomofonHandset
-                //    {
-                //        DomofonHandsetType = "SmartEl"
-                //    });
-                //db.DomofonHandsets.Add(
-                //    new DomofonHandset
-                //    {
-                //        DomofonHandsetType = "ТАП-02"
-                //    });
-                //db.DomofonHandsets.Add(
-                //    new DomofonHandset
-                //    {
-                //        DomofonHandsetType = "УКП-7"
-                //    });
-                //db.DomofonHandsets.Add(
-                //    new DomofonHandset
-                //    {
-                //        DomofonHandsetType = "УКП-12"
-                //    });
-                //db.DomofonHandsets.Add(
-                //    new DomofonHandset
-                //    {
-                //        DomofonHandsetType = "УКП-12М"
-                //    });
-                //db.DomofonHandsets.Add(
-                //    new DomofonHandset
-                //    {
-                //        DomofonHandsetType = "ВИДЕО"
-                //    });
-                //db.DomofonHandsets.Add(
-                //    new DomofonHandset
-                //    {
-                //        DomofonHandsetType = "Другое"
-                //    });
-                //db.DomofonKeys.Add(
-                //    new DomofonKey
-                //    {
-                //        DomofonKeyType = "АДК"
-                //    });
-                //db.DomofonKeys.Add(
-                //    new DomofonKey
-                //    {
-                //        DomofonKeyType = "Беркут ТМ"
-                //    });
-                //db.DomofonKeys.Add(
-                //    new DomofonKey
-                //    {
-                //        DomofonKeyType = "Беркут RC - 310"
-                //    });
-                //db.DomofonKeys.Add(
-                //    new DomofonKey
-                //    {
-                //        DomofonKeyType = "Беркут RC - T470"
-                //    });
-                //db.DomofonKeys.Add(
-                //    new DomofonKey
-                //    {
-                //        DomofonKeyType = "Беркут RC - 2K4"
-                //    });
-                //db.DomofonKeys.Add(
-                //    new DomofonKey
-                //    {
-                //        DomofonKeyType = "Беркут RC - T6K8"
-                //    });
-                //db.DomofonKeys.Add(
-                //    new DomofonKey
-                //    {
-                //        DomofonKeyType = "Vizit RF-2.1"
-                //    });
-                //db.DomofonKeys.Add(
-                //    new DomofonKey
-                //    {
-                //        DomofonKeyType = "Cyfral Dallas"
-                //    });
-                //db.DomofonSystems.Add(
-                //    new DomofonSystem
-                //    {
-                //        DomofonSystemType = "АДК"
-                //    });
-                //db.DomofonSystems.Add(
-                //    new DomofonSystem
-                //    {
-                //        DomofonSystemType = "Беркут"
-                //    });
-                //db.DomofonSystems.Add(
-                //new DomofonSystem
-                //{
-                //    DomofonSystemType = "Vizit"
-                //});
-                //db.DomofonSystems.Add(
-                //new DomofonSystem
-                //{
-                //    DomofonSystemType = "Cyfral"
-                //});
-                //db.DomofonSystems.Add(
-                //new DomofonSystem
-                //{
-                //    DomofonSystemType = "Беркут SmartEl"
-                //});
-                //db.Adresses.Add(
-                //    new Adress
-                //    {
-                //        City = "Чернигов",
-                //        Street = "Ивана Мазепы",
-                //        House = 33,
-                //        Entrance = 4,
-                //        ContractNumb = "697",
-                //        ContractDate = new DateTime(2010, 10, 12),
-                //        FlatCount = 15,
-                //        DoorsCount = 1,
-                //        DomofonSystemId = 3,
-                //        DomofonKeyId = 7
-                //    });
-                //db.Adresses.Add(
-                //    new Adress
-                //    {
-                //        City = "Чернигов",
-                //        Street = "Мстиславского",
-                //        House = 34,
-                //        Entrance = 1,
-                //        ContractNumb = "481",
-                //        ContractDate = new DateTime(2008, 05, 11),
-                //        FlatCount = 36,
-                //        DoorsCount = 1,
-                //        DomofonSystemId = 2,
-                //        DomofonKeyId = 4
-                //    });
-                //db.Adresses.Add(
-                //    new Adress
-                //    {
-                //        City = "Чернигов",
-                //        Street = "Попудренко",
-                //        House = 12,
-                //        Corpus = "Б",
-                //        Entrance = 3,
-                //        ContractNumb = "218",
-                //        ContractDate = new DateTime(2012, 02, 22),
-                //        FlatCount = 15,
-                //        DoorsCount = 1,
-                //        DomofonSystemId = 4,
-                //        DomofonKeyId = 8
-                //    });
-                //db.Subscribers.Add(
-                //    new Subscriber
-                //    {
-                //        Name = "Тамара",
-                //        Surname = "Мельникова",
-                //        Phone = "+380683871920",
-                //        Flat = 57,
-                //        ContractNumb = "221",
-                //        ContractDate = new DateTime(2010, 10, 21),
-                //        Code = "500697057",
-                //        AdressId = 1,
-                //        DomofonHandsetId = 3,
-                //        DomofonKeyId = 7,
-                //        Comments = "Хочет поменять на видеодомофон"
-                //    });
-                //db.Subscribers.Add(
-                //    new Subscriber
-                //    {
-                //        Name = "Антонина",
-                //        Surname = "Вивденко",
-                //        Phone = "+380504652012",
-                //        Flat = 56,
-                //        ContractNumb = "220",
-                //        ContractDate = new DateTime(2010, 10, 20),
-                //        Code = "500697056",
-                //        AdressId = 1,
-                //        DomofonHandsetId = 4,
-                //        DomofonKeyId = 7
-                //    });
-                //db.Subscribers.Add(
-                //    new Subscriber
-                //    {
-                //        Name = "Сергей",
-                //        Surname = "Шурубенко",
-                //        Phone = "+380502216025",
-                //        Flat = 59,
-                //        ContractNumb = "223",
-                //        ContractDate = new DateTime(2015, 11, 11),
-                //        Code = "500697059",
-                //        AdressId = 1,
-                //        DomofonHandsetId = 5,
-                //        DomofonKeyId = 7
-                //    });
-                //db.Subscribers.Add(
-                //    new Subscriber
-                //    {
-                //        Name = "Андрей",
-                //        Surname = "Древа",
-                //        Phone = "+380685528956",
-                //        Flat = 5,
-                //        ContractNumb = "17",
-                //        ContractDate = new DateTime(2012, 12, 12),
-                //        Code = "500481005",
-                //        AdressId = 2,
-                //        DomofonHandsetId = 1,
-                //        DomofonKeyId = 4
-                //    });
-                //db.Subscribers.Add(
-                //    new Subscriber
-                //    {
-                //        Name = "Владимир",
-                //        Surname = "Королёв",
-                //        Phone = "+38972689541",
-                //        Flat = 13,
-                //        ContractNumb = "23",
-                //        ContractDate = new DateTime(2014, 02, 16),
-                //        Code = "500481013",
-                //        AdressId = 2,
-                //        DomofonHandsetId = 2,
-                //        DomofonKeyId = 4
-                //    });
-                //db.Subscribers.Add(
-                //    new Subscriber
-                //    {
-                //        Name = "Марина",
-                //        Surname = "Огурец",
-                //        Phone = "+380502020100",
-                //        Flat = 40,
-                //        ContractNumb = "20",
-                //        ContractDate = new DateTime(2017, 10, 20),
-                //        Code = "500218040",
-                //        AdressId = 3,
-                //        DomofonHandsetId = 3,
-                //        DomofonKeyId = 8
-                //    });
+            //using (DomofonContext db = new DomofonContext())
+            //{
+            //    db.Companies.Add(
+            //        new Company
+            //        {
+            //            Name = "К.С-Инвест",
+            //            Address = "г.Чернигов, ул. Родимцева 14",//адрес
+            //            Phone = "+38 (0462) 614-681",//тедефон
+            //            Account = "UA133052990000026008006300527",//расчетный счет в банке
+            //            Code = "33660167",//код ЕДРПОУ
+            //            BankCode = "305299"// МФО банка
+            //        }
+            //    );
+            //    db.Servicemen.Add(new Serviceman { Name = "Петя", Surname = "Павленко", Phone = "0937033817" });
+            //    db.Servicemen.Add(new Serviceman { Name = "Кирилл", Surname = "Павленко", Phone = "0934163083" });
+            //    db.DomofonHandsets.Add(
+            //        new DomofonHandset
+            //        {
+            //            DomofonHandsetType = "SmartEl"
+            //        });
+            //    db.DomofonHandsets.Add(
+            //        new DomofonHandset
+            //        {
+            //            DomofonHandsetType = "ТАП-02"
+            //        });
+            //    db.DomofonHandsets.Add(
+            //        new DomofonHandset
+            //        {
+            //            DomofonHandsetType = "УКП-7"
+            //        });
+            //    db.DomofonHandsets.Add(
+            //        new DomofonHandset
+            //        {
+            //            DomofonHandsetType = "УКП-12"
+            //        });
+            //    db.DomofonHandsets.Add(
+            //        new DomofonHandset
+            //        {
+            //            DomofonHandsetType = "УКП-12М"
+            //        });
+            //    db.DomofonHandsets.Add(
+            //        new DomofonHandset
+            //        {
+            //            DomofonHandsetType = "ВИДЕО"
+            //        });
+            //    db.DomofonHandsets.Add(
+            //        new DomofonHandset
+            //        {
+            //            DomofonHandsetType = "Другое"
+            //        });
+            //    db.DomofonKeys.Add(
+            //        new DomofonKey
+            //        {
+            //            DomofonKeyType = "АДК"
+            //        });
+            //    db.DomofonKeys.Add(
+            //        new DomofonKey
+            //        {
+            //            DomofonKeyType = "Беркут ТМ"
+            //        });
+            //    db.DomofonKeys.Add(
+            //        new DomofonKey
+            //        {
+            //            DomofonKeyType = "Беркут RC - 310"
+            //        });
+            //    db.DomofonKeys.Add(
+            //        new DomofonKey
+            //        {
+            //            DomofonKeyType = "Беркут RC - T470"
+            //        });
+            //    db.DomofonKeys.Add(
+            //        new DomofonKey
+            //        {
+            //            DomofonKeyType = "Беркут RC - 2K4"
+            //        });
+            //    db.DomofonKeys.Add(
+            //        new DomofonKey
+            //        {
+            //            DomofonKeyType = "Беркут RC - T6K8"
+            //        });
+            //    db.DomofonKeys.Add(
+            //        new DomofonKey
+            //        {
+            //            DomofonKeyType = "Vizit RF-2.1"
+            //        });
+            //    db.DomofonKeys.Add(
+            //        new DomofonKey
+            //        {
+            //            DomofonKeyType = "Cyfral Dallas"
+            //        });
+            //    db.DomofonSystems.Add(
+            //        new DomofonSystem
+            //        {
+            //            DomofonSystemType = "АДК"
+            //        });
+            //    db.DomofonSystems.Add(
+            //        new DomofonSystem
+            //        {
+            //            DomofonSystemType = "Беркут"
+            //        });
+            //    db.DomofonSystems.Add(
+            //    new DomofonSystem
+            //    {
+            //        DomofonSystemType = "Vizit"
+            //    });
+            //    db.DomofonSystems.Add(
+            //    new DomofonSystem
+            //    {
+            //        DomofonSystemType = "Cyfral"
+            //    });
+            //    db.DomofonSystems.Add(
+            //    new DomofonSystem
+            //    {
+            //        DomofonSystemType = "Беркут SmartEl"
+            //    });
+            //    db.Addresses.Add(
+            //        new Address
+            //        {
+            //            City = "Чернигов",
+            //            Street = "Ивана Мазепы",
+            //            House = 33,
+            //            Entrance = 4,
+            //            ContractNumb = "697",
+            //            ContractDate = new DateTime(2010, 10, 12),
+            //            FlatCount = 15,
+            //            DoorsCount = 1,
+            //            DomofonSystemId = 3,
+            //            DomofonKeyId = 7
+            //        });
+            //    db.Addresses.Add(
+            //        new Address
+            //        {
+            //            City = "Чернигов",
+            //            Street = "Мстиславского",
+            //            House = 34,
+            //            Entrance = 1,
+            //            ContractNumb = "481",
+            //            ContractDate = new DateTime(2008, 05, 11),
+            //            FlatCount = 36,
+            //            DoorsCount = 1,
+            //            DomofonSystemId = 2,
+            //            DomofonKeyId = 4
+            //        });
+            //    db.Addresses.Add(
+            //        new Address
+            //        {
+            //            City = "Чернигов",
+            //            Street = "Попудренко",
+            //            House = 12,
+            //            Corpus = "Б",
+            //            Entrance = 3,
+            //            ContractNumb = "218",
+            //            ContractDate = new DateTime(2012, 02, 22),
+            //            FlatCount = 15,
+            //            DoorsCount = 1,
+            //            DomofonSystemId = 4,
+            //            DomofonKeyId = 8
+            //        });
+            //    db.Subscribers.Add(
+            //        new Subscriber
+            //        {
+            //            Name = "Тамара",
+            //            Surname = "Мельникова",
+            //            Phone = "+380683871920",
+            //            Flat = 57,
+            //            ContractNumb = "221",
+            //            ContractDate = new DateTime(2010, 10, 21),
+            //            Code = "500697057",
+            //            AddressId = 1,
+            //            DomofonHandsetId = 3,
+            //            DomofonKeyId = 7,
+            //            Comments = "Хочет поменять на видеодомофон"
+            //        });
+            //    db.Subscribers.Add(
+            //        new Subscriber
+            //        {
+            //            Name = "Антонина",
+            //            Surname = "Вивденко",
+            //            Phone = "+380504652012",
+            //            Flat = 56,
+            //            ContractNumb = "220",
+            //            ContractDate = new DateTime(2010, 10, 20),
+            //            Code = "500697056",
+            //            AddressId = 1,
+            //            DomofonHandsetId = 4,
+            //            DomofonKeyId = 7
+            //        });
+            //    db.Subscribers.Add(
+            //        new Subscriber
+            //        {
+            //            Name = "Сергей",
+            //            Surname = "Шурубенко",
+            //            Phone = "+380502216025",
+            //            Flat = 59,
+            //            ContractNumb = "223",
+            //            ContractDate = new DateTime(2015, 11, 11),
+            //            Code = "500697059",
+            //            AddressId = 1,
+            //            DomofonHandsetId = 5,
+            //            DomofonKeyId = 7
+            //        });
+            //    db.Subscribers.Add(
+            //        new Subscriber
+            //        {
+            //            Name = "Андрей",
+            //            Surname = "Древа",
+            //            Phone = "+380685528956",
+            //            Flat = 5,
+            //            ContractNumb = "17",
+            //            ContractDate = new DateTime(2012, 12, 12),
+            //            Code = "500481005",
+            //            AddressId = 2,
+            //            DomofonHandsetId = 1,
+            //            DomofonKeyId = 4
+            //        });
+            //    db.Subscribers.Add(
+            //        new Subscriber
+            //        {
+            //            Name = "Владимир",
+            //            Surname = "Королёв",
+            //            Phone = "+38972689541",
+            //            Flat = 13,
+            //            ContractNumb = "23",
+            //            ContractDate = new DateTime(2014, 02, 16),
+            //            Code = "500481013",
+            //            AddressId = 2,
+            //            DomofonHandsetId = 2,
+            //            DomofonKeyId = 4
+            //        });
+            //    db.Subscribers.Add(
+            //        new Subscriber
+            //        {
+            //            Name = "Марина",
+            //            Surname = "Огурец",
+            //            Phone = "+380502020100",
+            //            Flat = 40,
+            //            ContractNumb = "20",
+            //            ContractDate = new DateTime(2017, 10, 20),
+            //            Code = "500218040",
+            //            AddressId = 3,
+            //            DomofonHandsetId = 3,
+            //            DomofonKeyId = 8
+            //        });
 
 
-                //db.SaveChanges();
-            }
+            //    db.SaveChanges();
+            //}
             GetAllCompanies();
             activeTable = "company";
         }
@@ -306,7 +306,7 @@ namespace Project
         {
             using (DomofonContext db = new DomofonContext())
             {
-                var adress = db.Adresses.ToList();
+                var adress = db.Addresses.ToList();
                 dataGridView1.Columns.Add("col0", "ID");
                 dataGridView1.Columns.Add("col1", "Город");
                 dataGridView1.Columns.Add("col2", "Улица");
@@ -523,10 +523,10 @@ namespace Project
 
                 foreach (var item in subscriberList)
                 {
-                    dataGridView1.Rows.Add(item.Id, db.Adresses.FirstOrDefault(el => el.Id == ID).Street + " № "
-                        + db.Adresses.FirstOrDefault(el => el.Id == ID).House
-                        + "к. " + db.Adresses.FirstOrDefault(el => el.Id == ID).Corpus
-                        + " п. " + db.Adresses.FirstOrDefault(el => el.Id == ID).Entrance,
+                    dataGridView1.Rows.Add(item.Id, db.Addresses.FirstOrDefault(el => el.Id == ID).Street + " № "
+                        + db.Addresses.FirstOrDefault(el => el.Id == ID).House
+                        + "к. " + db.Addresses.FirstOrDefault(el => el.Id == ID).Corpus
+                        + " п. " + db.Addresses.FirstOrDefault(el => el.Id == ID).Entrance,
                         item.Flat, item.Name, item.Surname, item.Phone, item.ContractNumb, item.ContractDate.ToShortDateString(),
                         item.Code, db.DomofonHandsets.FirstOrDefault(el => el.Id == item.DomofonHandsetId).DomofonHandsetType,
                         db.DomofonKeys.FirstOrDefault(el => el.Id == item.DomofonKeyId).DomofonKeyType, item.Comments);
@@ -679,7 +679,7 @@ namespace Project
                         subscriber.Comments = subscriberform.textBox6.Text;
                         try
                         {
-                            var domofonAdresstID = db.Adresses.FirstOrDefault(el => el.Street + " дом № " + el.House + " корпус " + el.Corpus + " подъезд № " + el.Entrance == subscriberform.comboBox1.SelectedItem.ToString());
+                            var domofonAdresstID = db.Addresses.FirstOrDefault(el => el.Street + " дом № " + el.House + " корпус " + el.Corpus + " подъезд № " + el.Entrance == subscriberform.comboBox1.SelectedItem.ToString());
                             if (domofonAdresstID != null)
                             {
                                 subscriber.AddressId = domofonAdresstID.Id;
@@ -737,7 +737,7 @@ namespace Project
                         {
                             adress.DomofonKeyId = domofonKeyID.Id;
                         }
-                        db.Adresses.Add(adress);
+                        db.Addresses.Add(adress);
                         db.SaveChanges();
                         ClearTable();
                         GetAllAdresses();
@@ -912,7 +912,7 @@ namespace Project
                             subscriberform.textBox6.Text = subscriber.Comments;
                             for (int i = 0; i < subscriberform.comboBox1.Items.Count; i++)
                             {
-                                var adress = db.Adresses.FirstOrDefault(el => el.Id == subscriber.AddressId);
+                                var adress = db.Addresses.FirstOrDefault(el => el.Id == subscriber.AddressId);
                                 if (subscriberform.comboBox1.Items[i].ToString() == adress.Street + " дом № " + adress.House + " корпус " + adress.Corpus + " подъезд № " + adress.Entrance)
                                 {
                                     subscriberform.comboBox1.SelectedIndex = i;
@@ -944,7 +944,7 @@ namespace Project
                             subscriber.ContractDate = subscriberform.dateTimePicker1.Value;
                             subscriber.Code = subscriberform.textBox5.Text;
                             subscriber.Comments = subscriberform.textBox6.Text;
-                            var domofonAdresstID = db.Adresses.FirstOrDefault(el => el.Street + " дом № " + el.House + " корпус " + el.Corpus + " подъезд № " + el.Entrance == subscriberform.comboBox1.SelectedItem.ToString());
+                            var domofonAdresstID = db.Addresses.FirstOrDefault(el => el.Street + " дом № " + el.House + " корпус " + el.Corpus + " подъезд № " + el.Entrance == subscriberform.comboBox1.SelectedItem.ToString());
                             if (domofonAdresstID != null)
                             {
                                 subscriber.AddressId = domofonAdresstID.Id;
@@ -989,7 +989,7 @@ namespace Project
                             return;
                         using (DomofonContext db = new DomofonContext())
                         {
-                            Address adress = db.Adresses.Find(id);
+                            Address adress = db.Addresses.Find(id);
                             AddressForm adressform = new AddressForm();
                             adressform.textBox1.Text = adress.City;
                             adressform.textBox2.Text = adress.Street;
@@ -1303,13 +1303,13 @@ namespace Project
                         
                         using (DomofonContext db = new DomofonContext())
                         {
-                            Address adress = db.Adresses.Find(id);
+                            Address adress = db.Addresses.Find(id);
                             DialogResult dialogResult = MessageBox.Show("Выдействительно хотите удалить адрес: "
                                 + adress.Street + " дом № " + adress.House + " корпус "
                                 + adress.Corpus + " подъезд № " + adress.Entrance + "?", "WARNING", MessageBoxButtons.YesNo);
                             if (dialogResult == DialogResult.Yes)
                             {
-                                db.Adresses.Remove(adress);
+                                db.Addresses.Remove(adress);
                                 db.SaveChanges();
                             }
                             else if (dialogResult == DialogResult.No)
@@ -1568,10 +1568,10 @@ namespace Project
                                     totalSumm += sum.SumMinus;//сумма всех оплат определенного абонента
                                 }
                                 
-                                dataGridView1.Rows.Add(item.Id, db.Adresses.FirstOrDefault(el => el.Id == id).Street + " № "
-                                    + db.Adresses.FirstOrDefault(el => el.Id == id).House
-                                    + " к. " + db.Adresses.FirstOrDefault(el => el.Id == id).Corpus
-                                    + " п. " + db.Adresses.FirstOrDefault(el => el.Id == id).Entrance,
+                                dataGridView1.Rows.Add(item.Id, db.Addresses.FirstOrDefault(el => el.Id == id).Street + " № "
+                                    + db.Addresses.FirstOrDefault(el => el.Id == id).House
+                                    + " к. " + db.Addresses.FirstOrDefault(el => el.Id == id).Corpus
+                                    + " п. " + db.Addresses.FirstOrDefault(el => el.Id == id).Entrance,
                                     item.Flat, item.Name, item.Surname, item.Code, totalAccrual, totalSumm, totalAccrual - totalSumm);//8-й столбец если будет знак "-" - значит у человека переплат
                             }
                         }
@@ -1747,7 +1747,7 @@ namespace Project
                 {
                     dataGridView1.Rows.Add(item.Name, item.Address);
                 }
-                var address = from a in db.Adresses
+                var address = from a in db.Addresses
                              select a;
                 int numberOfAdress = address.Count();
                 dataGridView1.Rows.Add("Всего подъездов", numberOfAdress);
@@ -1784,7 +1784,7 @@ namespace Project
                 dataGridView1.Rows.Add("На сумму", totalDebt);
 
                 var domofonSys = from ds in db.DomofonSystems
-                                 join adr in db.Adresses on ds.Id equals adr.DomofonSystemId
+                                 join adr in db.Addresses on ds.Id equals adr.DomofonSystemId
                                  orderby ds.DomofonSystemType
                                  select ds;
                 var domofonSysList = domofonSys.ToList();
@@ -1870,10 +1870,10 @@ namespace Project
                 dataGridView1.Columns.Add("col9", "Трубка");
                 dataGridView1.Columns.Add("col10", "Ключ");
                 dataGridView1.Columns.Add("col11", "Комментарии");
-                dataGridView1.Rows.Add(subscriber.Id, db.Adresses.FirstOrDefault(el => el.Id == subscriber.AddressId).Street + " № "
-                    + db.Adresses.FirstOrDefault(el => el.Id == subscriber.AddressId).House
-                    + "к. " + db.Adresses.FirstOrDefault(el => el.Id == subscriber.AddressId).Corpus
-                    + " п. " + db.Adresses.FirstOrDefault(el => el.Id == subscriber.AddressId).Entrance,
+                dataGridView1.Rows.Add(subscriber.Id, db.Addresses.FirstOrDefault(el => el.Id == subscriber.AddressId).Street + " № "
+                    + db.Addresses.FirstOrDefault(el => el.Id == subscriber.AddressId).House
+                    + "к. " + db.Addresses.FirstOrDefault(el => el.Id == subscriber.AddressId).Corpus
+                    + " п. " + db.Addresses.FirstOrDefault(el => el.Id == subscriber.AddressId).Entrance,
                     subscriber.Flat, subscriber.Name, subscriber.Surname, subscriber.Phone, subscriber.ContractNumb, subscriber.ContractDate.ToShortDateString(),
                     subscriber.Code, db.DomofonHandsets.FirstOrDefault(el => el.Id == subscriber.DomofonHandsetId).DomofonHandsetType,
                     db.DomofonKeys.FirstOrDefault(el => el.Id == subscriber.DomofonKeyId).DomofonKeyType, subscriber.Comments);
@@ -1926,10 +1926,10 @@ namespace Project
                 dataGridView1.Columns.Add("col9", "Трубка");
                 dataGridView1.Columns.Add("col10", "Ключ");
                 dataGridView1.Columns.Add("col11", "Комментарии");
-                dataGridView1.Rows.Add(subscriber.Id, db.Adresses.FirstOrDefault(el => el.Id == subscriber.AddressId).Street + " № "
-                    + db.Adresses.FirstOrDefault(el => el.Id == subscriber.AddressId).House
-                    + "к. " + db.Adresses.FirstOrDefault(el => el.Id == subscriber.AddressId).Corpus
-                    + " п. " + db.Adresses.FirstOrDefault(el => el.Id == subscriber.AddressId).Entrance,
+                dataGridView1.Rows.Add(subscriber.Id, db.Addresses.FirstOrDefault(el => el.Id == subscriber.AddressId).Street + " № "
+                    + db.Addresses.FirstOrDefault(el => el.Id == subscriber.AddressId).House
+                    + "к. " + db.Addresses.FirstOrDefault(el => el.Id == subscriber.AddressId).Corpus
+                    + " п. " + db.Addresses.FirstOrDefault(el => el.Id == subscriber.AddressId).Entrance,
                     subscriber.Flat, subscriber.Name, subscriber.Surname, subscriber.Phone, subscriber.ContractNumb, subscriber.ContractDate.ToShortDateString(),
                     subscriber.Code, db.DomofonHandsets.FirstOrDefault(el => el.Id == subscriber.DomofonHandsetId).DomofonHandsetType,
                     db.DomofonKeys.FirstOrDefault(el => el.Id == subscriber.DomofonKeyId).DomofonKeyType, subscriber.Comments);

@@ -24,13 +24,13 @@ namespace Project.Forms
             
             using (DomofonContext db = new DomofonContext())
             {
-                var adresses = db.Adresses.ToList();
-                foreach(var item in adresses)
+                var addresses = db.Addresses.ToList();
+                foreach(var item in addresses)
                 {
                     comboBox1.Items.Add(item.Street + " дом № " + item.House + " корпус " + item.Corpus + " подъезд № " + item.Entrance);
                 }
-                Address adress = db.Adresses.Find(idAdress);
-                comboBox1.SelectedItem = adress.Street + " дом № " + adress.House + " корпус " + adress.Corpus + " подъезд № " + adress.Entrance;
+                Address address = db.Addresses.Find(idAdress);
+                comboBox1.SelectedItem = address.Street + " дом № " + address.House + " корпус " + address.Corpus + " подъезд № " + address.Entrance;
                 var keys = db.DomofonKeys.ToList();
                 foreach (var item in keys)
                 {
@@ -61,9 +61,9 @@ namespace Project.Forms
                 flatNumber = "0" + flatNumber;
             using (DomofonContext db = new DomofonContext())
             {
-                Address adress = db.Adresses.Find(idAdress);
-                textBox4.Text = adress.ContractNumb + flatNumber;
-                textBox5.Text = "500" + adress.ContractNumb + flatNumber;
+                Address address = db.Addresses.Find(idAdress);
+                textBox4.Text = address.ContractNumb + flatNumber;
+                textBox5.Text = "500" + address.ContractNumb + flatNumber;
             }
         }
     }

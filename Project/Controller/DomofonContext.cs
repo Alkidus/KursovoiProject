@@ -17,7 +17,7 @@ namespace Project.Controller
         }
 
         public DbSet<Accrual> Accruals { get; set; }
-        public DbSet<Address> Adresses { get; set; }
+        public DbSet<Address> Addresses { get; set; }
         public DbSet<Company> Companies { get; set; }
         public DbSet<DomofonHandset> DomofonHandsets { get; set; }
         public DbSet<DomofonKey> DomofonKeys { get; set; }
