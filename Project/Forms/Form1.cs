@@ -294,7 +294,7 @@ namespace Project
 
                 foreach (var item in comp)
                 {
-                    dataGridView1.Rows.Add(item.Id, item.Name, item.Adress, item.Phone, item.Account, item.Code, item.BankCode);
+                    dataGridView1.Rows.Add(item.Id, item.Name, item.Address, item.Phone, item.Account, item.Code, item.BankCode);
                 }
             }
             ChangeFontAndColor();
@@ -505,7 +505,7 @@ namespace Project
             using (DomofonContext db = new DomofonContext())
             {
                 var subscribers = from sub in db.Subscribers
-                                  where sub.AdressId == ID
+                                  where sub.AddressId == ID
                                   select sub;
                 var subscriberList = subscribers.ToList();
                 dataGridView1.Columns.Add("col0", "ID");
@@ -559,7 +559,7 @@ namespace Project
 
                 foreach (var item in repairs)
                 {
-                    dataGridView1.Rows.Add(item.Id, item.DateRepairBegin, item.AdressId, item.Flat,
+                    dataGridView1.Rows.Add(item.Id, item.DateRepairBegin, item.AddressId, item.Flat,
                         item.DescriptionFromSub, item.DateRepairEnd, item.DescriptionFromServ,
                         item.Status, item.SubscriberId, item.Comments);
                 }
@@ -586,7 +586,10 @@ namespace Project
                 decimal sumToEnd = 0; //сумма долга абонента
                 decimal paymentSum = 0; // итоговая сумма фиктивной оплаты
 
-                var allAccruals = 
+                var allAccruals = from accruals in db.Accruals
+                                  select accruals;
+                foreach (var el in allAccruals)
+                    totalAccrual += el.SumPlus;
                 DateTime addDate = createDate; ; //дата создания абонента
                 DateTime startAccrual = lastAccrual.SumPlusDate; //дата начала квартала
                 DateTime endAccrual = startAccrual.AddMonths(3); //дата окончания квартала
@@ -630,7 +633,7 @@ namespace Project
                     {
                         Company company = new Company();
                         company.Name = companyForm.textBox1.Text;
-                        company.Adress = companyForm.textBox2.Text;
+                        company.Address = companyForm.textBox2.Text;
                         company.Phone = companyForm.textBox3.Text;
                         company.Account = companyForm.textBox4.Text;
                         company.Code = companyForm.textBox5.Text;
@@ -679,7 +682,7 @@ namespace Project
                             var domofonAdresstID = db.Adresses.FirstOrDefault(el => el.Street + " дом № " + el.House + " корпус " + el.Corpus + " подъезд № " + el.Entrance == subscriberform.comboBox1.SelectedItem.ToString());
                             if (domofonAdresstID != null)
                             {
-                                subscriber.AdressId = domofonAdresstID.Id;
+                                subscriber.AddressId = domofonAdresstID.Id;
                             }
                             var domofonHandsetID = db.DomofonHandsets.FirstOrDefault(el => el.DomofonHandsetType == subscriberform.comboBox2.SelectedItem.ToString());
                             if (domofonHandsetID != null)
@@ -838,7 +841,7 @@ namespace Project
                             Company company = db.Companies.Find(id);
                             CompanyForm companyForm = new CompanyForm();
                             companyForm.textBox1.Text = company.Name;
-                            companyForm.textBox2.Text = company.Adress;
+                            companyForm.textBox2.Text = company.Address;
                             companyForm.textBox3.Text = company.Phone;
                             companyForm.textBox4.Text = company.Account;
                             companyForm.textBox5.Text = company.Code;
@@ -847,7 +850,7 @@ namespace Project
                             if (result == DialogResult.Cancel)
                                 return;
                             company.Name = companyForm.textBox1.Text;
-                            company.Adress = companyForm.textBox2.Text;
+                            company.Address = companyForm.textBox2.Text;
                             company.Phone = companyForm.textBox3.Text;
                             company.Account = companyForm.textBox4.Text;
                             company.Code = companyForm.textBox5.Text;
@@ -909,7 +912,7 @@ namespace Project
                             subscriberform.textBox6.Text = subscriber.Comments;
                             for (int i = 0; i < subscriberform.comboBox1.Items.Count; i++)
                             {
-                                var adress = db.Adresses.FirstOrDefault(el => el.Id == subscriber.AdressId);
+                                var adress = db.Adresses.FirstOrDefault(el => el.Id == subscriber.AddressId);
                                 if (subscriberform.comboBox1.Items[i].ToString() == adress.Street + " дом № " + adress.House + " корпус " + adress.Corpus + " подъезд № " + adress.Entrance)
                                 {
                                     subscriberform.comboBox1.SelectedIndex = i;
@@ -944,7 +947,7 @@ namespace Project
                             var domofonAdresstID = db.Adresses.FirstOrDefault(el => el.Street + " дом № " + el.House + " корпус " + el.Corpus + " подъезд № " + el.Entrance == subscriberform.comboBox1.SelectedItem.ToString());
                             if (domofonAdresstID != null)
                             {
-                                subscriber.AdressId = domofonAdresstID.Id;
+                                subscriber.AddressId = domofonAdresstID.Id;
                             }
                             var domofonHandsetID = db.DomofonHandsets.FirstOrDefault(el => el.DomofonHandsetType == subscriberform.comboBox2.SelectedItem.ToString());
                             if (domofonHandsetID != null)
@@ -1209,7 +1212,7 @@ namespace Project
                         {
                             Company company = db.Companies.Find(id);
                             DialogResult dialogResult = MessageBox.Show("Выдействительно хотите удалить компанию: "
-                                + company.Name + " " + company.Adress + "?", "WARNING", MessageBoxButtons.YesNo);
+                                + company.Name + " " + company.Address + "?", "WARNING", MessageBoxButtons.YesNo);
                             if (dialogResult == DialogResult.Yes)
                             {
                                 db.Companies.Remove(company);
@@ -1533,7 +1536,7 @@ namespace Project
                         using (DomofonContext db = new DomofonContext())
                         {
                             var subscribers = from sub in db.Subscribers
-                                              where sub.AdressId == id
+                                              where sub.AddressId == id
                                               select sub;
                             var subscriberList = subscribers.ToList();//делает выборку всех абонентов в подъезде
                             dataGridView1.Columns.Add("col0", "ID");
@@ -1742,11 +1745,11 @@ namespace Project
                               select c;
                 foreach(var item in company)
                 {
-                    dataGridView1.Rows.Add(item.Name, item.Adress);
+                    dataGridView1.Rows.Add(item.Name, item.Address);
                 }
-                var adress = from a in db.Adresses
+                var address = from a in db.Adresses
                              select a;
-                int numberOfAdress = adress.Count();
+                int numberOfAdress = address.Count();
                 dataGridView1.Rows.Add("Всего подъездов", numberOfAdress);
                 var subscribers = from s in db.Subscribers
                                   select s;
@@ -1867,15 +1870,15 @@ namespace Project
                 dataGridView1.Columns.Add("col9", "Трубка");
                 dataGridView1.Columns.Add("col10", "Ключ");
                 dataGridView1.Columns.Add("col11", "Комментарии");
-                dataGridView1.Rows.Add(subscriber.Id, db.Adresses.FirstOrDefault(el => el.Id == subscriber.AdressId).Street + " № "
-                    + db.Adresses.FirstOrDefault(el => el.Id == subscriber.AdressId).House
-                    + "к. " + db.Adresses.FirstOrDefault(el => el.Id == subscriber.AdressId).Corpus
-                    + " п. " + db.Adresses.FirstOrDefault(el => el.Id == subscriber.AdressId).Entrance,
+                dataGridView1.Rows.Add(subscriber.Id, db.Adresses.FirstOrDefault(el => el.Id == subscriber.AddressId).Street + " № "
+                    + db.Adresses.FirstOrDefault(el => el.Id == subscriber.AddressId).House
+                    + "к. " + db.Adresses.FirstOrDefault(el => el.Id == subscriber.AddressId).Corpus
+                    + " п. " + db.Adresses.FirstOrDefault(el => el.Id == subscriber.AddressId).Entrance,
                     subscriber.Flat, subscriber.Name, subscriber.Surname, subscriber.Phone, subscriber.ContractNumb, subscriber.ContractDate.ToShortDateString(),
                     subscriber.Code, db.DomofonHandsets.FirstOrDefault(el => el.Id == subscriber.DomofonHandsetId).DomofonHandsetType,
                     db.DomofonKeys.FirstOrDefault(el => el.Id == subscriber.DomofonKeyId).DomofonKeyType, subscriber.Comments);
 
-                idAdress = subscriber.AdressId;
+                idAdress = subscriber.AddressId;
                 
             }
             ChangeFontAndColor();
@@ -1923,15 +1926,15 @@ namespace Project
                 dataGridView1.Columns.Add("col9", "Трубка");
                 dataGridView1.Columns.Add("col10", "Ключ");
                 dataGridView1.Columns.Add("col11", "Комментарии");
-                dataGridView1.Rows.Add(subscriber.Id, db.Adresses.FirstOrDefault(el => el.Id == subscriber.AdressId).Street + " № "
-                    + db.Adresses.FirstOrDefault(el => el.Id == subscriber.AdressId).House
-                    + "к. " + db.Adresses.FirstOrDefault(el => el.Id == subscriber.AdressId).Corpus
-                    + " п. " + db.Adresses.FirstOrDefault(el => el.Id == subscriber.AdressId).Entrance,
+                dataGridView1.Rows.Add(subscriber.Id, db.Adresses.FirstOrDefault(el => el.Id == subscriber.AddressId).Street + " № "
+                    + db.Adresses.FirstOrDefault(el => el.Id == subscriber.AddressId).House
+                    + "к. " + db.Adresses.FirstOrDefault(el => el.Id == subscriber.AddressId).Corpus
+                    + " п. " + db.Adresses.FirstOrDefault(el => el.Id == subscriber.AddressId).Entrance,
                     subscriber.Flat, subscriber.Name, subscriber.Surname, subscriber.Phone, subscriber.ContractNumb, subscriber.ContractDate.ToShortDateString(),
                     subscriber.Code, db.DomofonHandsets.FirstOrDefault(el => el.Id == subscriber.DomofonHandsetId).DomofonHandsetType,
                     db.DomofonKeys.FirstOrDefault(el => el.Id == subscriber.DomofonKeyId).DomofonKeyType, subscriber.Comments);
 
-                idAdress = subscriber.AdressId;
+                idAdress = subscriber.AddressId;
 
             }
             ChangeFontAndColor();
