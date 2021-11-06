@@ -29,7 +29,7 @@ namespace Project.Forms
                 {
                     comboBox1.Items.Add(item.Street + " дом № " + item.House + " корпус " + item.Corpus + " подъезд № " + item.Entrance);
                 }
-                Adress adress = db.Adresses.Find(idAdress);
+                Address adress = db.Adresses.Find(idAdress);
                 comboBox1.SelectedItem = adress.Street + " дом № " + adress.House + " корпус " + adress.Corpus + " подъезд № " + adress.Entrance;
                 var keys = db.DomofonKeys.ToList();
                 foreach (var item in keys)
@@ -61,7 +61,7 @@ namespace Project.Forms
                 flatNumber = "0" + flatNumber;
             using (DomofonContext db = new DomofonContext())
             {
-                Adress adress = db.Adresses.Find(idAdress);
+                Address adress = db.Adresses.Find(idAdress);
                 textBox4.Text = adress.ContractNumb + flatNumber;
                 textBox5.Text = "500" + adress.ContractNumb + flatNumber;
             }

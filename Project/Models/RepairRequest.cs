@@ -10,7 +10,7 @@ namespace Project.Models
     {
         public int Id { get; set; }
         public DateTime DateRepairBegin { get; set; } //дата поступления заявки
-        public int AdressId { get; set; } //адрес заявки, адреса могут быть не из списков, частные вызовы к неабонентам
+        public int AddressId { get; set; } //адрес заявки, адреса могут быть не из списков, частные вызовы к неабонентам
         public int Flat { get; set; } //номер квартиры
         public string DescriptionFromSub { get; set; } //описание неисправности
         public DateTime DateRepairEnd { get; set; } //дата выполнения ремонта

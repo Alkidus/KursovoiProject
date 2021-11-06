@@ -1,7 +1,7 @@
 ﻿
 namespace Project.Forms
 {
-    partial class AdressForm
+    partial class AddressForm
     {
         /// <summary>
         /// Required designer variable.

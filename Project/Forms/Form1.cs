@@ -568,7 +568,54 @@ namespace Project
             payments_btn.Visible = false;
             label1.Text = "Операции с заявками:";
         }
+        private void CalculatePaymentForNewSubscriber(string newSubscriberCode, DateTime createDate) //высчитываем сумму начисления абонплаты для нового абонента
+        {
+            using (DomofonContext db = new DomofonContext())
+            {
+                Accrual lastAccrual = new Accrual();
+                lastAccrual = db.Accruals.LastOrDefault();
+                if(lastAccrual == null)
+                {
+                    MessageBox.Show("Нет ни одного начисления! Сперва начислите абонплату!", "ERROR");
+                    return;
+                }
+                int numberDeysInAccrual = 0; //количество дней в последнем начисленном квартале
+                decimal totalAccrual = 0; //Общая сумма всех начисленй
+                decimal sumPerDay = 0; //сумма гривен/вдень
+                int daysToEnd = 0; //количество дней от даты добавления нового абонента и до конца квартала
+                decimal sumToEnd = 0; //сумма долга абонента
+                decimal paymentSum = 0; // итоговая сумма фиктивной оплаты
 
+                var allAccruals = 
+                DateTime addDate = createDate; ; //дата создания абонента
+                DateTime startAccrual = lastAccrual.SumPlusDate; //дата начала квартала
+                DateTime endAccrual = startAccrual.AddMonths(3); //дата окончания квартала
+
+                numberDeysInAccrual = DateTime.DaysInMonth(startAccrual.Year, startAccrual.Month) + //количество дней в квартале
+                    DateTime.DaysInMonth(startAccrual.Year, startAccrual.Month + 1) +
+                    DateTime.DaysInMonth(startAccrual.Year, startAccrual.Month + 2);
+
+                daysToEnd = (endAccrual.Date - addDate.Date).Days; //количество дней от даты создания абонента и до конца квартала
+
+                sumPerDay = lastAccrual.SumPlus / numberDeysInAccrual;
+                sumPerDay = Decimal.Round(sumPerDay, 2); //округляем до двух знаков после запятой
+
+                sumToEnd = sumPerDay * daysToEnd;
+                sumToEnd = Decimal.Round(sumToEnd, 2); //округляем до двух знаков после запятой
+
+                paymentSum = totalAccrual - sumToEnd;
+                paymentSum = Decimal.Round(paymentSum, 2); //округляем до двух знаков после запятой
+
+
+                Subscriber subscriber = new Subscriber();
+                subscriber = db.Subscribers.FirstOrDefault(el => el.Code == newSubscriberCode);
+                Payment payment = new Payment();
+                payment.SubscriberId = subscriber.Id;
+                payment.SumMinusDate = createDate;
+                payment.SumMinus = paymentSum;
+                db.SaveChanges();
+            }
+        }
         private void ADD_btn_Click(object sender, EventArgs e)
         {
             DialogResult result;
@@ -652,6 +699,8 @@ namespace Project
 
                         db.Subscribers.Add(subscriber);
                         db.SaveChanges();
+                        CalculatePaymentForNewSubscriber(subscriber.Code, subscriber.ContractDate);
+                        db.SaveChanges();
                         ClearTable();
                         GetAllSubscribersByAdress(idAdress);
                     }
@@ -659,13 +708,13 @@ namespace Project
                 case "repair":
                     break;
                 case "adress":
-                    AdressForm adressform = new AdressForm();
+                    AddressForm adressform = new AddressForm();
                     result = adressform.ShowDialog(this);
                     if (result == DialogResult.Cancel)
                         return;
                     using (DomofonContext db = new DomofonContext())
                     {
-                        Adress adress = new Adress();
+                        Address adress = new Address();
                         adress.City = adressform.textBox1.Text;
                         adress.Street = adressform.textBox2.Text;
                         adress.House = (int)adressform.numericUpDown1.Value;
@@ -937,8 +986,8 @@ namespace Project
                             return;
                         using (DomofonContext db = new DomofonContext())
                         {
-                            Adress adress = db.Adresses.Find(id);
-                            AdressForm adressform = new AdressForm();
+                            Address adress = db.Adresses.Find(id);
+                            AddressForm adressform = new AddressForm();
                             adressform.textBox1.Text = adress.City;
                             adressform.textBox2.Text = adress.Street;
                             adressform.numericUpDown1.Value = adress.House;
@@ -1251,7 +1300,7 @@ namespace Project
                         
                         using (DomofonContext db = new DomofonContext())
                         {
-                            Adress adress = db.Adresses.Find(id);
+                            Address adress = db.Adresses.Find(id);
                             DialogResult dialogResult = MessageBox.Show("Выдействительно хотите удалить адрес: "
                                 + adress.Street + " дом № " + adress.House + " корпус "
                                 + adress.Corpus + " подъезд № " + adress.Entrance + "?", "WARNING", MessageBoxButtons.YesNo);
@@ -1780,7 +1829,7 @@ namespace Project
             }
         }
 
-        private void findSurnameToolStripMenuItem_Click(object sender, EventArgs e)
+        private void findSurnameToolStripMenuItem_Click(object sender, EventArgs e)//обработчик меню поиск по фамилии
         {
             ClearTable();
             FindForm findForm = new FindForm("surname");
@@ -1805,7 +1854,7 @@ namespace Project
                     MessageBox.Show("Совпадений не найдено!", "ERROR");
                     return;
                 }
-                //MessageBox.Show(subscriber.Code + " " + subscriber.Name);
+
                 dataGridView1.Columns.Add("col0", "ID");
                 dataGridView1.Columns.Add("col1", "Адрес");
                 dataGridView1.Columns.Add("col2", "Квартира");
@@ -1836,7 +1885,7 @@ namespace Project
             
         }
 
-        private void findCodeToolStripMenuItem_Click(object sender, EventArgs e)
+        private void findCodeToolStripMenuItem_Click(object sender, EventArgs e)//обработчик меню поиск по коду
         {
             ClearTable();
             FindForm findForm = new FindForm("code");
@@ -1861,7 +1910,7 @@ namespace Project
                     MessageBox.Show("Совпадений не найдено!", "ERROR");
                     return;
                 }
-                //MessageBox.Show(subscriber.Code + " " + subscriber.Name);
+
                 dataGridView1.Columns.Add("col0", "ID");
                 dataGridView1.Columns.Add("col1", "Адрес");
                 dataGridView1.Columns.Add("col2", "Квартира");

@@ -11,9 +11,9 @@ using Project.Controller;
 
 namespace Project.Forms
 {
-    public partial class AdressForm : Form
+    public partial class AddressForm : Form
     {
-        public AdressForm()
+        public AddressForm()
         {
             InitializeComponent();
             Text = "ADRESS_DOMOFON";

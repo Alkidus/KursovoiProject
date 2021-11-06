@@ -23,7 +23,7 @@ namespace Project.Models
         public string ContractNumb { get; set; } //номер договора
         public DateTime ContractDate { get; set; } //дата заключения договора
         public string Code { get; set; } //индивидуальный код абонента
-        public int AdressId { get; set; } //адресс
+        public int AddressId { get; set; } //адресс
         public int DomofonHandsetId { get; set; } //тип трубки
         public int DomofonKeyId { get; set; } //тип ключа
         public Nullable<int> PaymentId { get; set; } //оплаты

@@ -10,7 +10,7 @@ namespace Project.Models
     {
         public int Id { get; set; }
         public string Name { get; set; } //название      
-        public string Adress { get; set; } //адрес
+        public string Address { get; set; } //адрес
         public string Phone { get; set; } //тедефон
         public string Account { get; set; } //расчетный счет в банке
         public string Code { get; set; } //код ЕДРПОУ
