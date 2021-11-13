@@ -272,6 +272,59 @@ namespace Project
             //            DomofonHandsetId = 3,
             //            DomofonKeyId = 8
             //        });
+            //    db.Accruals.Add(
+            //        new Accrual
+            //        {
+            //            SumPlusDate = new DateTime(2020, 1, 1),
+            //            SumPlus = 45,
+            //            Comments = "Первый квартал 2020 года"
+
+            //        });
+            //    db.Accruals.Add(
+            //        new Accrual
+            //        {
+            //            SumPlusDate = new DateTime(2020, 4, 1),
+            //            SumPlus = 45,
+            //            Comments = "Второй квартал"
+            //        });
+            //    db.Accruals.Add(
+            //        new Accrual
+            //        {
+            //            SumPlusDate = new DateTime(2020, 7, 1),
+            //            SumPlus = 45,
+            //            Comments = "третий"
+            //        });
+            //    db.Accruals.Add(
+            //        new Accrual
+            //        {
+            //            SumPlusDate = new DateTime(2020, 10, 1),
+            //            SumPlus = 45,
+            //            Comments = "IV cvartal"
+            //        });
+            //    db.Accruals.Add(
+            //        new Accrual
+            //        {
+            //            SumPlusDate = new DateTime(2021, 1, 1),
+            //            SumPlus = 51
+            //        });
+            //    db.Accruals.Add(
+            //        new Accrual
+            //        {
+            //            SumPlusDate = new DateTime(2021, 4, 1),
+            //            SumPlus = 51
+            //        });
+            //    db.Accruals.Add(
+            //        new Accrual
+            //        {
+            //            SumPlusDate = new DateTime(2021, 7, 1),
+            //            SumPlus = 51
+            //        });
+            //    db.Accruals.Add(
+            //        new Accrual
+            //        {
+            //            SumPlusDate = new DateTime(2021, 10, 1),
+            //            SumPlus = 51
+            //        });
 
 
             //    db.SaveChanges();
@@ -456,7 +509,7 @@ namespace Project
 
                 foreach (var item in accrual)
                 {
-                    dataGridView1.Rows.Add(item.Id, item.SumPlusDate, item.SumPlus, item.Comments);
+                    dataGridView1.Rows.Add(item.Id, item.SumPlusDate.ToShortDateString(), item.SumPlus, item.Comments);
                 }
             }
             ChangeFontAndColor();
@@ -559,8 +612,11 @@ namespace Project
 
                 foreach (var item in repairs)
                 {
-                    dataGridView1.Rows.Add(item.Id, item.DateRepairBegin, item.AddressId, item.Flat,
-                        item.DescriptionFromSub, item.DateRepairEnd, item.DescriptionFromServ,
+                    dataGridView1.Rows.Add(item.Id, item.DateRepairBegin.ToShortDateString(), db.Addresses.FirstOrDefault(el => el.Id == item.AddressId).Street + " № "
+                        + db.Addresses.FirstOrDefault(el => el.Id == item.AddressId).House
+                        + "к. " + db.Addresses.FirstOrDefault(el => el.Id == item.AddressId).Corpus
+                        + " п. " + db.Addresses.FirstOrDefault(el => el.Id == item.AddressId).Entrance, item.Flat,
+                        item.DescriptionFromSub, item.DateRepairEnd.ToShortDateString(), item.DescriptionFromServ,
                         item.Status, item.SubscriberId, item.Comments);
                 }
             }
@@ -709,6 +765,28 @@ namespace Project
                     }
                         break;
                 case "repair":
+                    RepairForm repairForm = new RepairForm();
+                    result = repairForm.ShowDialog(this);
+                    if (result == DialogResult.Cancel)
+                        return;
+                    using (DomofonContext db = new DomofonContext())
+                    {
+                        RepairRequest repair = new RepairRequest();
+                        repair.DateRepairBegin = repairForm.dateTimePicker1.Value;
+                        repair.AddressId = repairForm.idAddress;
+                        repair.Flat = (int)repairForm.numericUpDown1.Value;
+                        repair.DescriptionFromSub = repairForm.textBox3.Text;
+                        repair.DateRepairEnd = repairForm.dateTimePicker2.Value;
+                        repair.DescriptionFromServ = repairForm.textBox4.Text;
+                        repair.Status = repairForm.comboBox2.SelectedItem.ToString();
+                        repair.SubscriberId = repairForm.subscriderID;
+                        repair.Comments = repairForm.textBox5.Text;
+                        db.RepairRequests.Add(repair);
+                        db.SaveChanges(); // SqlException: The INSERT statement conflicted with the FOREIGN KEY constraint "FK_dbo.RepairRequests_dbo.Subscribers_SubscriberId".The conflict occurred in database "DomofonBase", table "dbo.Subscribers", column 'Id'. The statement has been terminated.
+
+                        ClearTable();
+                        GetAllRepairs();
+                    }
                     break;
                 case "adress":
                     AddressForm adressform = new AddressForm();
@@ -975,7 +1053,51 @@ namespace Project
                             return;
                         using (DomofonContext db = new DomofonContext())
                         {
+                            RepairRequest repair = db.RepairRequests.Find(id);
+                            RepairForm repairForm = new RepairForm();
+                            repairForm.dateTimePicker1.Value = repair.DateRepairBegin;
+                            repairForm.idAddress = repair.AddressId;
+                            Address repairAddress = db.Addresses.Find(repair.AddressId);
+                            string repairAddressToString = repairAddress.Street + " дом № " + repairAddress.House + " корпус " + repairAddress.Corpus + " подъезд № " + repairAddress.Entrance + "; id=" + repairAddress.Id;
+                            for (int i = 0; i < repairForm.comboBox1.Items.Count; i++)
+                            {
+                                if (repairForm.comboBox1.Items[i].ToString() == repairAddressToString)
+                                {
+                                    repairForm.comboBox1.SelectedIndex = i;
+                                }
+                            }
+                            repairForm.numericUpDown1.Value = repair.Flat;
+                            repairForm.textBox3.Text = repair.DescriptionFromSub;
+                            repairForm.dateTimePicker2.Value = repair.DateRepairEnd;
+                            repairForm.textBox4.Text = repair.DescriptionFromServ;
+                            for (int i = 0; i < repairForm.comboBox2.Items.Count; i++)
+                            {
+                                if (repairForm.comboBox2.Items[i].ToString() == repair.Status)
+                                {
+                                    repairForm.comboBox2.SelectedIndex = i;
+                                }
+                            }
+                            //repairForm.numericUpDown2.Value = repair.SubscriberId.Value;
+                            //repairForm.textBox6.Text = repair.SubscriberId.ToString();
+                            repairForm.textBox5.Text = repair.Comments;
 
+                            DialogResult result = repairForm.ShowDialog(this);
+
+                            if (result == DialogResult.Cancel)
+                                return;
+                            repair.DateRepairBegin = repairForm.dateTimePicker1.Value;
+                            repair.AddressId = repairForm.idAddress;
+                            repair.Flat = (int)repairForm.numericUpDown1.Value;
+                            repair.DescriptionFromSub = repairForm.textBox3.Text;
+                            repair.DateRepairEnd = repairForm.dateTimePicker2.Value;
+                            repair.DescriptionFromServ = repairForm.textBox4.Text;
+                            repair.Status = repairForm.comboBox2.SelectedItem.ToString();
+                            //repair.SubscriberId = (int)repairForm.numericUpDown2.Value;
+                            repair.SubscriberId = repairForm.subscriderID;
+                            repair.Comments = repairForm.textBox5.Text;
+                            db.SaveChanges();
+                            ClearTable();
+                            GetAllRepairs();
                         }
                     }
                     break;
@@ -1288,7 +1410,19 @@ namespace Project
                             return;
                         using (DomofonContext db = new DomofonContext())
                         {
-
+                            RepairRequest repair = db.RepairRequests.Find(id);
+                            DialogResult dialogResult = MessageBox.Show("Выдействительно хотите удалить заявку: "
+                                + repair.DescriptionFromSub + " квартиры " + repair.Flat + " от "
+                                + repair.DateRepairBegin + "?", "WARNING", MessageBoxButtons.YesNo);
+                            if (dialogResult == DialogResult.Yes)
+                            {
+                                db.RepairRequests.Remove(repair);
+                                db.SaveChanges();
+                            }
+                            else if (dialogResult == DialogResult.No)
+                                return;
+                            ClearTable();
+                            GetAllRepairs();
                         }
                     }
                     break;
@@ -1808,6 +1942,12 @@ namespace Project
                 {
                     dataGridView1.Rows.Add(item.Name, item.Count);
                 }
+                dataGridView1.Rows.Add("Заявок в работе", "Количество:");
+                var repairs = from rep in db.RepairRequests
+                              where rep.Status == "В работе"
+                              select rep;
+                int repairsNumber = repairs.Count();
+                dataGridView1.Rows.Add("", repairsNumber);
 
             }
             ChangeFontAndColor();

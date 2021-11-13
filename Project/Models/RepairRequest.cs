@@ -15,7 +15,7 @@ namespace Project.Models
         public string DescriptionFromSub { get; set; } //описание неисправности
         public DateTime DateRepairEnd { get; set; } //дата выполнения ремонта
         public string DescriptionFromServ { get; set; } // описание от мастеров что было отремонтировано, какие детали израсходованы
-        public bool Status { get; set; } // статус заявки, true - в работе; false - выполнена
+        public string Status { get; set; } // статус заявки, в работе или выполнена
         public Nullable<int> SubscriberId { get; set; }
         public string Comments { get; set; } //дополнительные коментарии
         public virtual Subscriber Subscriber { get; set; }
