@@ -2184,80 +2184,173 @@ namespace Project
             payments_btn.Visible = false;//оскрыть кнопку "Оплаты"
             label1.Text = "Операции приостановлены:";
         }
+        public void ExportGridToPdf(DataGridView dgw, string filename)
+        {
+            BaseFont bf = BaseFont.CreateFont(BaseFont.TIMES_ROMAN, BaseFont.CP1250, BaseFont.EMBEDDED);
+            PdfPTable pdfTable = new PdfPTable(dgw.Columns.Count);
+            pdfTable.DefaultCell.Padding = 3;
+            pdfTable.WidthPercentage = 100;
+            pdfTable.HorizontalAlignment = Element.ALIGN_LEFT;
+            pdfTable.DefaultCell.BorderWidth = 1;
 
-        private void saveToPDF_ToolStripMenuItem_Click(object sender, EventArgs e)
+            iTextSharp.text.Font text = new iTextSharp.text.Font(bf, 10, iTextSharp.text.Font.NORMAL);
+            // new font
+            BaseFont baseFont = BaseFont.CreateFont("..\\..\\arial.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+            iTextSharp.text.Font font = new iTextSharp.text.Font(baseFont, iTextSharp.text.Font.DEFAULTSIZE, iTextSharp.text.Font.NORMAL);
+            //Add header
+            foreach (DataGridViewColumn column in dgw.Columns)
+            {
+                PdfPCell cell = new PdfPCell(new Phrase(column.HeaderText, font));
+                cell.BackgroundColor = new iTextSharp.text.BaseColor(240, 240, 240);
+                pdfTable.AddCell(cell);
+            }
+
+            //Add datarow
+            foreach (DataGridViewRow row in dgw.Rows)
+            {
+                foreach(DataGridViewCell cell in row.Cells)
+                {
+                    if (cell.Value != null)
+                    {
+                        pdfTable.AddCell(new Phrase(cell.Value.ToString(), font));
+                    }
+                    else
+                        pdfTable.AddCell(new Phrase("", font));
+                }
+            }
+            var savefiledialog = new SaveFileDialog();
+            savefiledialog.FileName = filename;
+            savefiledialog.DefaultExt = ".pdf";
+            if (savefiledialog.ShowDialog() == DialogResult.OK)
+            {
+                using (FileStream stream = new FileStream(savefiledialog.FileName, FileMode.Create))
+                {
+                    Document pdfdoc = new Document(PageSize.A4, 20f, 20f, 20f, 0f);
+                    PdfWriter.GetInstance(pdfdoc, stream);
+                    pdfdoc.Open();
+                    pdfdoc.Add(pdfTable);
+                    pdfdoc.Close();
+                    stream.Close();
+                }
+            }
+        }
+        public void DataGridView_SAVE(DataGridView dgw)
         {
             SaveFileDialog save = new SaveFileDialog();
+            save.DefaultExt = ".txt";
             if (save.ShowDialog() == DialogResult.OK)
             {
                 StreamWriter writer = new StreamWriter(save.FileName);
-                //foreach (ListViewItem item in listcollection[tabSelInd].Items)
-                //{
-                //    writer.WriteLine(item.Text);
-                //}
-                writer.Close();
-                //--------------------------saving in pdf
-                //Объект документа пдф
-                iTextSharp.text.Document doc = new iTextSharp.text.Document();
-
-                //Создаем объект записи пдф-документа в файл
-                PdfWriter.GetInstance(doc, new FileStream(save.FileName + ".pdf", FileMode.Create));
-
-                //Открываем документ
-                doc.Open();
-
-                //Определение шрифта необходимо для сохранения кириллического текста
-                //Иначе мы не увидим кириллический текст
-                //Если мы работаем только с англоязычными текстами, то шрифт можно не указывать
-                BaseFont baseFont = BaseFont.CreateFont("..\\..\\arial.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
-                iTextSharp.text.Font font = new iTextSharp.text.Font(baseFont, iTextSharp.text.Font.DEFAULTSIZE, iTextSharp.text.Font.NORMAL);
-
-                //Создаем объект таблицы и передаем в нее число столбцов таблицы из нашего датасета
-                PdfPTable table = new PdfPTable(1);
-
-                //Добавим в таблицу общий заголовок
-                PdfPCell cell = new PdfPCell(new Phrase("Отчёт на дату: " + DateTime.Now.ToShortDateString(), font));
-
-                cell.Colspan = dataGridView1.Columns.Count;// listcollection[tabSelInd].Items.Count;
-                cell.HorizontalAlignment = 1;
-                //Убираем границу первой ячейки, чтобы была как заголовок
-                cell.Border = 0;
-                table.AddCell(cell);
-
-                //Добавляем все остальные ячейки
-                //foreach (ListViewItem item in listcollection[tabSelInd].Items)
-                //{
-                //    table.AddCell(new Phrase(item.Text, font));
-                //}
-                foreach (DataGridViewRow row in dataGridView1.Rows)
+                foreach (DataGridViewColumn column in dgw.Columns)
                 {
-                    for (int i = 0; i < dataGridView1.Columns.Count; i++)
+                    writer.Write(column.HeaderText + " | ");
+                }
+                writer.WriteLine(";");
+                foreach (DataGridViewRow row in dgw.Rows)
+                {
+                    foreach (DataGridViewCell cell in row.Cells)
                     {
-                        //String header = dataGridView1.Columns[i].HeaderText;
-                        //String cellText = row.Cells[i].Value.ToString();
-                        table.AddCell(new Phrase(row.Cells[i].Value.ToString(), font));
+                        if (cell.Value != null)
+                        {
+                            writer.Write(cell.Value.ToString() + " | ");
+                        }
+                        else
+                            writer.Write(" " + " | ");
+                    }
+                    writer.WriteLine(";");
+                }
+                writer.Close();
+            }
+        }
+        public void ReadDataGrid(DataGridView dgw)
+        {
+            foreach (DataGridViewRow row in dgw.Rows)
+            {
+                foreach (DataGridViewCell cell in row.Cells)
+                {
+                    if(cell.Value != null)
+                    {
+                        MessageBox.Show(cell.Value.ToString(), "reading");
                     }
                 }
-                //foreach (DataGridViewRow row in dataGridView1.Rows)
-                //{
-                //    System.Collections.IList list = row.Cells;
-                //    for (int i = 0; i < list.Count; i++)
-                //    {
-                //        DataGridViewCell cell = (DataGridViewCell)list[i];
-                //        //if (cell.Value != null)
-                //        //{
-                //            table.AddCell(cell.Value.ToString());
-                //        //}
-                //    }
-                //}
-                //Добавляем таблицу в документ
-                doc.Add(table);
-                //}
-                //Закрываем документ
-                doc.Close();
-
-                MessageBox.Show("Pdf-документ сохранен");
             }
+        }
+        private void saveToPDF_ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ExportGridToPdf(dataGridView1, "test");
+            //ReadDataGrid(dataGridView1);
+            //DataGridView_SAVE(dataGridView1);
+            //SaveFileDialog save = new SaveFileDialog();
+            //if (save.ShowDialog() == DialogResult.OK)
+            //{
+            //    StreamWriter writer = new StreamWriter(save.FileName);
+            //    //foreach (ListViewItem item in listcollection[tabSelInd].Items)
+            //    //{
+            //    //    writer.WriteLine(item.Text);
+            //    //}
+            //    writer.Close();
+            //    //--------------------------saving in pdf
+            //    //Объект документа пдф
+            //    iTextSharp.text.Document doc = new iTextSharp.text.Document();
+
+            //    //Создаем объект записи пдф-документа в файл
+            //    PdfWriter.GetInstance(doc, new FileStream(save.FileName + ".pdf", FileMode.Create));
+
+            //    //Открываем документ
+            //    doc.Open();
+
+            //    //Определение шрифта необходимо для сохранения кириллического текста
+            //    //Иначе мы не увидим кириллический текст
+            //    //Если мы работаем только с англоязычными текстами, то шрифт можно не указывать
+            //    BaseFont baseFont = BaseFont.CreateFont("..\\..\\arial.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+            //    iTextSharp.text.Font font = new iTextSharp.text.Font(baseFont, iTextSharp.text.Font.DEFAULTSIZE, iTextSharp.text.Font.NORMAL);
+
+            //    //Создаем объект таблицы и передаем в нее число столбцов таблицы из нашего датасета
+            //    PdfPTable table = new PdfPTable(1);
+
+            //    //Добавим в таблицу общий заголовок
+            //    PdfPCell cell = new PdfPCell(new Phrase("Отчёт на дату: " + DateTime.Now.ToShortDateString(), font));
+
+            //    cell.Colspan = dataGridView1.Columns.Count;// listcollection[tabSelInd].Items.Count;
+            //    cell.HorizontalAlignment = 1;
+            //    //Убираем границу первой ячейки, чтобы была как заголовок
+            //    cell.Border = 0;
+            //    table.AddCell(cell);
+
+            //    //Добавляем все остальные ячейки
+            //    //foreach (ListViewItem item in listcollection[tabSelInd].Items)
+            //    //{
+            //    //    table.AddCell(new Phrase(item.Text, font));
+            //    //}
+            //    foreach (DataGridViewRow row in dataGridView1.Rows)
+            //    {
+            //        for (int i = 0; i < dataGridView1.Columns.Count; i++)
+            //        {
+            //            //String header = dataGridView1.Columns[i].HeaderText;
+            //            //String cellText = row.Cells[i].Value.ToString();
+            //            table.AddCell(new Phrase(row.Cells[i].Value.ToString(), font));
+            //        }
+            //    }
+            //    //foreach (DataGridViewRow row in dataGridView1.Rows)
+            //    //{
+            //    //    System.Collections.IList list = row.Cells;
+            //    //    for (int i = 0; i < list.Count; i++)
+            //    //    {
+            //    //        DataGridViewCell cell = (DataGridViewCell)list[i];
+            //    //        //if (cell.Value != null)
+            //    //        //{
+            //    //            table.AddCell(cell.Value.ToString());
+            //    //        //}
+            //    //    }
+            //    //}
+            //    //Добавляем таблицу в документ
+            //    doc.Add(table);
+            //    //}
+            //    //Закрываем документ
+            //    doc.Close();
+
+            MessageBox.Show("Pdf-документ сохранен");
+            //}
         }
     }
 }
