@@ -6,17 +6,21 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 using System.Windows.Forms;
 using Project.Models;
 using Project.Controller;
 using Project.Forms;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+
 
 namespace Project
 {
     public partial class Form1 : Form
     {
         public string activeTable = "";//переменная для определения выбранной таблицы
-        public Font font = new Font("Comic Sans MS", 12);//шрифт в dataGridView по умолчанию
+        public System.Drawing.Font font = new System.Drawing.Font("Comic Sans MS", 12);//шрифт в dataGridView по умолчанию
         public Color color = Color.Black;//цвет текста в dataGridView по умолчанию
         public int idAdress = 0;//переменная для хранения айдишника выбранного адреса
         public Form1()
@@ -630,7 +634,7 @@ namespace Project
             {
                 Accrual lastAccrual = new Accrual();
                 lastAccrual = db.Accruals.LastOrDefault();
-                if(lastAccrual == null)
+                if (lastAccrual == null)
                 {
                     MessageBox.Show("Нет ни одного начисления! Сперва начислите абонплату!", "ERROR");
                     return;
@@ -751,7 +755,7 @@ namespace Project
                                 subscriber.DomofonKeyId = domofonKeyID.Id;
                             }
                         }
-                        catch(Exception ex)
+                        catch (Exception ex)
                         {
                             MessageBox.Show("Все поля должны быть заполнены", "WARNING");
                         }
@@ -763,7 +767,7 @@ namespace Project
                         ClearTable();
                         GetAllSubscribersByAdress(idAdress);
                     }
-                        break;
+                    break;
                 case "repair":
                     RepairForm repairForm = new RepairForm();
                     result = repairForm.ShowDialog(this);
@@ -967,7 +971,7 @@ namespace Project
                             GetAllServiсeman();
                         }
                     }
-                            break;
+                    break;
                 case "subscriber":
                     if (dataGridView1.SelectedRows.Count > 0)
                     {
@@ -1434,7 +1438,7 @@ namespace Project
                         bool converted = Int32.TryParse(dataGridView1[0, index].Value.ToString(), out id);
                         if (converted == false)
                             return;
-                        
+
                         using (DomofonContext db = new DomofonContext())
                         {
                             Address adress = db.Addresses.Find(id);
@@ -1451,7 +1455,7 @@ namespace Project
                             dataGridView1.Refresh();
                             ClearTable();
                             GetAllAdresses();
-                        } 
+                        }
                     }
                     break;
                 case "key":
@@ -1629,7 +1633,7 @@ namespace Project
 
         private void default_ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            font = new Font("Comic Sans MS", 12);
+            font = new System.Drawing.Font("Comic Sans MS", 12);
             color = Color.Black;
             for (int i = 0; i < dataGridView1.Columns.Count; i++)
             {
@@ -1697,16 +1701,16 @@ namespace Project
                                                  select pay;
                                 var sumList = subPayment.ToList();
                                 decimal totalSumm = 0;
-                                foreach(var sum in sumList)
+                                foreach (var sum in sumList)
                                 {
                                     totalSumm += sum.SumMinus;//сумма всех оплат определенного абонента
                                 }
-                                
+
                                 dataGridView1.Rows.Add(item.Id, db.Addresses.FirstOrDefault(el => el.Id == id).Street + " № "
                                     + db.Addresses.FirstOrDefault(el => el.Id == id).House
                                     + " к. " + db.Addresses.FirstOrDefault(el => el.Id == id).Corpus
                                     + " п. " + db.Addresses.FirstOrDefault(el => el.Id == id).Entrance,
-                                    item.Flat, item.Name, item.Surname, item.Code, totalAccrual, totalSumm, totalAccrual - totalSumm);//8-й столбец если будет знак "-" - значит у человека переплат
+                                    item.Flat, item.Name, item.Surname, item.Code, totalAccrual, totalSumm, totalAccrual - totalSumm);//8-й столбец если будет знак "-" - значит у человека переплата
                             }
                         }
                     }
@@ -1877,12 +1881,12 @@ namespace Project
                 dataGridView1.Columns.Add("col1", "Количество");
                 var company = from c in db.Companies
                               select c;
-                foreach(var item in company)
+                foreach (var item in company)
                 {
                     dataGridView1.Rows.Add(item.Name, item.Address);
                 }
                 var address = from a in db.Addresses
-                             select a;
+                              select a;
                 int numberOfAdress = address.Count();
                 dataGridView1.Rows.Add("Всего подъездов", numberOfAdress);
                 var subscribers = from s in db.Subscribers
@@ -1913,7 +1917,7 @@ namespace Project
                         totalDebt += (item.Sum - sumOfAllAccruals); //суммируем задолженность
                     }
                 }
-                
+
                 dataGridView1.Rows.Add("Всего должников", numberOfDebtors);
                 dataGridView1.Rows.Add("На сумму", totalDebt);
 
@@ -1934,11 +1938,11 @@ namespace Project
                               join sub in db.Subscribers on hs.Id equals sub.DomofonHandsetId
                               orderby hs.DomofonHandsetType
                               select hs;
-                
+
                 var handsetList = handset.ToList();
                 var handsetCount = handsetList.GroupBy(item => item).Select(item => new { Name = item.Key.DomofonHandsetType, Count = item.Count() }).OrderByDescending(item => item.Count).ThenBy(item => item.Name);
                 dataGridView1.Rows.Add("Установленно трубок", "Количество:");
-                foreach(var item in handsetCount)
+                foreach (var item in handsetCount)
                 {
                     dataGridView1.Rows.Add(item.Name, item.Count);
                 }
@@ -1952,6 +1956,7 @@ namespace Project
             }
             ChangeFontAndColor();
             payments_btn.Visible = false;//скрыть кнопку "Оплаты"
+            activeTable = "";
             label1.Text = "Операции приостановлены:";
         }
 
@@ -1982,11 +1987,11 @@ namespace Project
             using (DomofonContext db = new DomofonContext())
             {
                 string surname = "";
-                
+
                 if (String.IsNullOrEmpty(findForm.textBox1.Text))
                 {
                     MessageBox.Show("Введите фамилию!", "WARNING");
-                    return; 
+                    return;
                 }
                 else surname = findForm.textBox1.Text;
                 Subscriber subscriber = new Subscriber();
@@ -2019,13 +2024,13 @@ namespace Project
                     db.DomofonKeys.FirstOrDefault(el => el.Id == subscriber.DomofonKeyId).DomofonKeyType, subscriber.Comments);
 
                 idAdress = subscriber.AddressId;
-                
+
             }
             ChangeFontAndColor();
             payments_btn.Visible = true;//отобразить кнопку "Оплаты"
             label1.Text = "Операции с абонентами:";
             activeTable = "subscriber";
-            
+
         }
 
         private void findCodeToolStripMenuItem_Click(object sender, EventArgs e)//обработчик меню поиск по коду
@@ -2081,6 +2086,178 @@ namespace Project
             payments_btn.Visible = true;//отобразить кнопку "Оплаты"
             label1.Text = "Операции с абонентами:";
             activeTable = "subscriber";
+        }
+
+        private void keysToAddressToolStripMenuItem_Click(object sender, EventArgs e)//кнопка меню "Ключи по адресам"
+        {
+            ClearTable();
+            using (DomofonContext db = new DomofonContext())
+            {
+                var adress = db.Addresses.ToList();
+                dataGridView1.Columns.Add("col0", "Улица");
+                dataGridView1.Columns.Add("col1", "Дом");
+                dataGridView1.Columns.Add("col2", "Корпус");
+                dataGridView1.Columns.Add("col3", "Подъезд");
+                dataGridView1.Columns.Add("col4", "Тип домофона");
+                dataGridView1.Columns.Add("col5", "Тип ключей");
+
+                foreach (var item in adress)
+                {
+                    dataGridView1.Rows.Add(item.Street, item.House,
+                        item.Corpus, item.Entrance,
+                        db.DomofonSystems.FirstOrDefault(el => el.Id == item.DomofonSystemId).DomofonSystemType,
+                        db.DomofonKeys.FirstOrDefault(el => el.Id == item.DomofonKeyId).DomofonKeyType);
+                }
+            }
+            ChangeFontAndColor();
+            payments_btn.Visible = false;//отобразить кнопку "Оплаты"
+            label1.Text = "Операции приостановлены:";
+            activeTable = "";
+        }
+
+        private void debtorsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.SelectedRows.Count > 0)
+            {
+                int index = dataGridView1.SelectedRows[0].Index;
+                int id = 0;
+                bool converted = Int32.TryParse(dataGridView1[0, index].Value.ToString(), out id);
+                if (converted == false)
+                    return;
+                idAdress = id;
+                ClearTable();
+                using (DomofonContext db = new DomofonContext())
+                {
+                    var subscribers = from sub in db.Subscribers
+                                      where sub.AddressId == id
+                                      select sub;
+                    var subscriberList = subscribers.ToList();//делает выборку всех абонентов в подъезде
+                    dataGridView1.Columns.Add("col0", "ID");
+                    dataGridView1.Columns.Add("col1", "Адрес");
+                    dataGridView1.Columns.Add("col2", "Квартира");
+                    dataGridView1.Columns.Add("col3", "ID код");
+                    dataGridView1.Columns.Add("col4", "Долг");
+                    dataGridView1.Columns.Add("col5", "Общая задолженность");
+                    var accrual = from acc in db.Accruals
+                                  select acc;
+                    decimal totalAccrual = 0;
+                    foreach (var el in accrual)
+                    {
+                        totalAccrual += el.SumPlus;//суммирует все суммы начислений
+                    }
+                    foreach (var item in subscriberList)
+                    {
+                        var subPayment = from pay in db.Payments
+                                         where pay.SubscriberId == item.Id
+                                         select pay;
+                        var sumList = subPayment.ToList();
+                        decimal totalSumm = 0;
+                        foreach (var sum in sumList)
+                        {
+                            totalSumm += sum.SumMinus;//сумма всех оплат определенного абонента
+                        }
+                        if (totalAccrual - totalSumm > 0)
+                        {
+                            dataGridView1.Rows.Add(item.Id, db.Addresses.FirstOrDefault(el => el.Id == id).Street + " № "
+                            + db.Addresses.FirstOrDefault(el => el.Id == id).House
+                            + " к. " + db.Addresses.FirstOrDefault(el => el.Id == id).Corpus
+                            + " п. " + db.Addresses.FirstOrDefault(el => el.Id == id).Entrance,
+                            item.Flat, item.Code, totalAccrual - totalSumm);
+                        }
+                    }
+                }
+            }
+            dataGridView1.Refresh();
+            decimal totalDebt = 0;//общая сумма задолженности подъезда
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                decimal sum = 0;
+                bool convert = Decimal.TryParse(dataGridView1[4, i].Value.ToString(), out sum);
+                if (convert == false)
+                    return;
+                if (sum > 0)//суммируем только должников, ведь со знаком "-" у человека переплата
+                    totalDebt += sum;
+            }
+            dataGridView1[5, 0].Value = totalDebt;//в шестой колонке выводим общуюю сумму задолжености
+            activeTable = "";//дэактивируем таблицу subscriber
+            ChangeFontAndColor();
+            payments_btn.Visible = false;//оскрыть кнопку "Оплаты"
+            label1.Text = "Операции приостановлены:";
+        }
+
+        private void saveToPDF_ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog save = new SaveFileDialog();
+            if (save.ShowDialog() == DialogResult.OK)
+            {
+                StreamWriter writer = new StreamWriter(save.FileName);
+                //foreach (ListViewItem item in listcollection[tabSelInd].Items)
+                //{
+                //    writer.WriteLine(item.Text);
+                //}
+                writer.Close();
+                //--------------------------saving in pdf
+                //Объект документа пдф
+                iTextSharp.text.Document doc = new iTextSharp.text.Document();
+
+                //Создаем объект записи пдф-документа в файл
+                PdfWriter.GetInstance(doc, new FileStream(save.FileName + ".pdf", FileMode.Create));
+
+                //Открываем документ
+                doc.Open();
+
+                //Определение шрифта необходимо для сохранения кириллического текста
+                //Иначе мы не увидим кириллический текст
+                //Если мы работаем только с англоязычными текстами, то шрифт можно не указывать
+                BaseFont baseFont = BaseFont.CreateFont("..\\..\\arial.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+                iTextSharp.text.Font font = new iTextSharp.text.Font(baseFont, iTextSharp.text.Font.DEFAULTSIZE, iTextSharp.text.Font.NORMAL);
+
+                //Создаем объект таблицы и передаем в нее число столбцов таблицы из нашего датасета
+                PdfPTable table = new PdfPTable(1);
+
+                //Добавим в таблицу общий заголовок
+                PdfPCell cell = new PdfPCell(new Phrase("Отчёт на дату: " + DateTime.Now.ToShortDateString(), font));
+
+                cell.Colspan = dataGridView1.Columns.Count;// listcollection[tabSelInd].Items.Count;
+                cell.HorizontalAlignment = 1;
+                //Убираем границу первой ячейки, чтобы была как заголовок
+                cell.Border = 0;
+                table.AddCell(cell);
+
+                //Добавляем все остальные ячейки
+                //foreach (ListViewItem item in listcollection[tabSelInd].Items)
+                //{
+                //    table.AddCell(new Phrase(item.Text, font));
+                //}
+                foreach (DataGridViewRow row in dataGridView1.Rows)
+                {
+                    for (int i = 0; i < dataGridView1.Columns.Count; i++)
+                    {
+                        //String header = dataGridView1.Columns[i].HeaderText;
+                        //String cellText = row.Cells[i].Value.ToString();
+                        table.AddCell(new Phrase(row.Cells[i].Value.ToString(), font));
+                    }
+                }
+                //foreach (DataGridViewRow row in dataGridView1.Rows)
+                //{
+                //    System.Collections.IList list = row.Cells;
+                //    for (int i = 0; i < list.Count; i++)
+                //    {
+                //        DataGridViewCell cell = (DataGridViewCell)list[i];
+                //        //if (cell.Value != null)
+                //        //{
+                //            table.AddCell(cell.Value.ToString());
+                //        //}
+                //    }
+                //}
+                //Добавляем таблицу в документ
+                doc.Add(table);
+                //}
+                //Закрываем документ
+                doc.Close();
+
+                MessageBox.Show("Pdf-документ сохранен");
+            }
         }
     }
 }
