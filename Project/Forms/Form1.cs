@@ -2400,18 +2400,87 @@ namespace Project
             label1.Text = "Операции приостановлены:";
             activeTable = "";
         }
+        public void PrintRepairsToPdf(DataGridView dgw, string filename)//ф-я переносит данные из dataGridView в файл pdf формата
+        {
+            //настройка таблицы
+            PdfPTable pdfTable = new PdfPTable(dgw.Columns.Count);
+            pdfTable.DefaultCell.Padding = 3;
+            pdfTable.WidthPercentage = 100;
+            pdfTable.HorizontalAlignment = Element.ALIGN_LEFT;
+            pdfTable.DefaultCell.BorderWidth = 1;
+
+            // создаем шрифт для отображения содержимого таблицы
+            BaseFont baseFont = BaseFont.CreateFont("..\\..\\arial.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+            iTextSharp.text.Font font = new iTextSharp.text.Font(baseFont, iTextSharp.text.Font.DEFAULTSIZE, iTextSharp.text.Font.NORMAL);
+            // создаем шрифт для отображения содержимого заголовка плана-задания
+            iTextSharp.text.Font fontHead = new iTextSharp.text.Font(baseFont, 16, iTextSharp.text.Font.BOLD);
+            // создаем шрифт для отображения содержимого текста плана-задания
+            iTextSharp.text.Font fontText = new iTextSharp.text.Font(baseFont, 16, iTextSharp.text.Font.NORMAL);
+
+            //Добавим в таблицу общий заголовок
+            string head = @"                                         ПЛАН-ЗАДАНИЕ
+            выполнения заявленных ремонтных работ по техническому обслуживанию
+            установленных домофонных систем на '____'______________20___ года
+            Данный план-задание является одновременно и Актом выполненных работ.
+            Работы выполнял мастер: ____________________________________________.
+ ";
+            PdfPCell cellHead = new PdfPCell(new Phrase(head, fontHead));
+
+            cellHead.Colspan = dgw.Columns.Count;
+            cellHead.HorizontalAlignment = 0;
+            //Убираем границу первой ячейки, чтобы была как заголовок
+            cellHead.Border = 0;
+            pdfTable.AddCell(cellHead);
+
+            //добавляем заголовки
+            List<int> headers = new List<int>();//список заголовков для перерасчета их длин в проценты
+            foreach (DataGridViewColumn column in dgw.Columns)
+            {
+                headers.Add(column.Width);
+                PdfPCell cell = new PdfPCell(new Phrase(column.HeaderText, font));
+                cell.BackgroundColor = new iTextSharp.text.BaseColor(240, 240, 240);//заголовки делаем серым цветом
+                pdfTable.AddCell(cell);
+            }
+            List<float> headersFloat = MakeHeader(headers);//делаем перерасчет заголовков
+            pdfTable.SetWidths(headersFloat.ToArray());//задаем ширину каждого столбца таблицы
+            //добавляем данные в таблицу
+            foreach (DataGridViewRow row in dgw.Rows)
+            {
+                foreach (DataGridViewCell cell in row.Cells)
+                {
+                    if (cell.Value != null)
+                    {
+                        pdfTable.AddCell(new Phrase(cell.Value.ToString(), font));
+                    }
+                    else
+                        pdfTable.AddCell(new Phrase("", font));
+                }
+            }
+            var savefiledialog = new SaveFileDialog();
+            savefiledialog.FileName = filename;
+            savefiledialog.DefaultExt = ".pdf";
+            if (savefiledialog.ShowDialog() == DialogResult.OK)
+            {
+                using (FileStream stream = new FileStream(savefiledialog.FileName, FileMode.Create))
+                {
+                    Document pdfdoc = new Document(PageSize.A4.Rotate(), 20f, 20f, 20f, 0f);//лист А4 - альбомная ориентация и отступы о краев
+                    PdfWriter.GetInstance(pdfdoc, stream);
+                    pdfdoc.Open();
+                    pdfdoc.Add(pdfTable);
+                    pdfdoc.Close();
+                    stream.Close();
+                }
+            }
+        }
+
+        private void Prin_Repairs_ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PrintRepairsToPdf(dataGridView1, "план-задание");
+
+            MessageBox.Show("план-задание-документ сохранен");
+        }
 
 
-        ////Создаем объект таблицы и передаем в нее число столбцов таблицы из нашего датасета
-        //PdfPTable table = new PdfPTable(MyDataSet.Tables[i].Columns.Count);
 
-        ////Добавим в таблицу общий заголовок
-        //PdfPCell cell = new PdfPCell(new Phrase("БД " + fileName + ", таблица №" + (i + 1), font));
-
-        //cell.Colspan = MyDataSet.Tables[i].Columns.Count;
-        //cell.HorizontalAlignment = 1;
-        ////Убираем границу первой ячейки, чтобы балы как заголовок
-        //cell.Border = 0;
-        //table.AddCell(cell);
     }
 }

@@ -41,6 +41,7 @@ namespace Project
             this.chooseCompanyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToPDF_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Prin_Repairs_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.отчетыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.debtorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.receiptsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -48,6 +49,9 @@ namespace Project
             this.keysToAddressToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.findSurnameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.findCodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.repairs_by_date_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.repairs_by_subscriber_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.repairs_by_address_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.форматToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.font_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.color_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -68,9 +72,6 @@ namespace Project
             this.payments_btn = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.Back_btn = new System.Windows.Forms.Button();
-            this.repairs_by_date_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.repairs_by_subscriber_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.repairs_by_address_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -138,7 +139,8 @@ namespace Project
             this.addServiсemanToolStripMenuItem,
             this.chooseCompanyToolStripMenuItem,
             this.saveToPDF_ToolStripMenuItem,
-            this.exitToolStripMenuItem});
+            this.exitToolStripMenuItem,
+            this.Prin_Repairs_ToolStripMenuItem});
             this.файлToolStripMenuItem.Name = "файлToolStripMenuItem";
             this.файлToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.файлToolStripMenuItem.Text = "Файл";
@@ -146,21 +148,21 @@ namespace Project
             // makeAccrualToolStripMenuItem
             // 
             this.makeAccrualToolStripMenuItem.Name = "makeAccrualToolStripMenuItem";
-            this.makeAccrualToolStripMenuItem.Size = new System.Drawing.Size(252, 22);
+            this.makeAccrualToolStripMenuItem.Size = new System.Drawing.Size(258, 22);
             this.makeAccrualToolStripMenuItem.Text = "Начислить абонплату";
             this.makeAccrualToolStripMenuItem.Click += new System.EventHandler(this.makeAccrualToolStripMenuItem_Click);
             // 
             // addServiсemanToolStripMenuItem
             // 
             this.addServiсemanToolStripMenuItem.Name = "addServiсemanToolStripMenuItem";
-            this.addServiсemanToolStripMenuItem.Size = new System.Drawing.Size(252, 22);
+            this.addServiсemanToolStripMenuItem.Size = new System.Drawing.Size(258, 22);
             this.addServiсemanToolStripMenuItem.Text = "Мастера по ремонту";
             this.addServiсemanToolStripMenuItem.Click += new System.EventHandler(this.addServiсemanToolStripMenuItem_Click);
             // 
             // chooseCompanyToolStripMenuItem
             // 
             this.chooseCompanyToolStripMenuItem.Name = "chooseCompanyToolStripMenuItem";
-            this.chooseCompanyToolStripMenuItem.Size = new System.Drawing.Size(252, 22);
+            this.chooseCompanyToolStripMenuItem.Size = new System.Drawing.Size(258, 22);
             this.chooseCompanyToolStripMenuItem.Text = "Выбрать компанию";
             this.chooseCompanyToolStripMenuItem.Click += new System.EventHandler(this.chooseCompanyToolStripMenuItem_Click);
             // 
@@ -168,7 +170,7 @@ namespace Project
             // 
             this.saveToPDF_ToolStripMenuItem.Name = "saveToPDF_ToolStripMenuItem";
             this.saveToPDF_ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
-            this.saveToPDF_ToolStripMenuItem.Size = new System.Drawing.Size(252, 22);
+            this.saveToPDF_ToolStripMenuItem.Size = new System.Drawing.Size(258, 22);
             this.saveToPDF_ToolStripMenuItem.Text = "Сохранить таблицу в pdf";
             this.saveToPDF_ToolStripMenuItem.Click += new System.EventHandler(this.saveToPDF_ToolStripMenuItem_Click);
             // 
@@ -176,9 +178,16 @@ namespace Project
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(252, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(258, 22);
             this.exitToolStripMenuItem.Text = "Выход";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
+            // Prin_Repairs_ToolStripMenuItem
+            // 
+            this.Prin_Repairs_ToolStripMenuItem.Name = "Prin_Repairs_ToolStripMenuItem";
+            this.Prin_Repairs_ToolStripMenuItem.Size = new System.Drawing.Size(258, 22);
+            this.Prin_Repairs_ToolStripMenuItem.Text = "Печать мастерам Плана-Задания";
+            this.Prin_Repairs_ToolStripMenuItem.Click += new System.EventHandler(this.Prin_Repairs_ToolStripMenuItem_Click);
             // 
             // отчетыToolStripMenuItem
             // 
@@ -236,6 +245,27 @@ namespace Project
             this.findCodeToolStripMenuItem.Size = new System.Drawing.Size(277, 22);
             this.findCodeToolStripMenuItem.Text = "Поиск по коду абонента";
             this.findCodeToolStripMenuItem.Click += new System.EventHandler(this.findCodeToolStripMenuItem_Click);
+            // 
+            // repairs_by_date_ToolStripMenuItem
+            // 
+            this.repairs_by_date_ToolStripMenuItem.Name = "repairs_by_date_ToolStripMenuItem";
+            this.repairs_by_date_ToolStripMenuItem.Size = new System.Drawing.Size(277, 22);
+            this.repairs_by_date_ToolStripMenuItem.Text = "Вывести заявки на дату";
+            this.repairs_by_date_ToolStripMenuItem.Click += new System.EventHandler(this.repairs_by_date_ToolStripMenuItem_Click);
+            // 
+            // repairs_by_subscriber_ToolStripMenuItem
+            // 
+            this.repairs_by_subscriber_ToolStripMenuItem.Name = "repairs_by_subscriber_ToolStripMenuItem";
+            this.repairs_by_subscriber_ToolStripMenuItem.Size = new System.Drawing.Size(277, 22);
+            this.repairs_by_subscriber_ToolStripMenuItem.Text = "Все заявки по выбранному абоненту";
+            this.repairs_by_subscriber_ToolStripMenuItem.Click += new System.EventHandler(this.repairs_by_subscriber_ToolStripMenuItem_Click);
+            // 
+            // repairs_by_address_ToolStripMenuItem
+            // 
+            this.repairs_by_address_ToolStripMenuItem.Name = "repairs_by_address_ToolStripMenuItem";
+            this.repairs_by_address_ToolStripMenuItem.Size = new System.Drawing.Size(277, 22);
+            this.repairs_by_address_ToolStripMenuItem.Text = "Все заявки по выбранному адресу";
+            this.repairs_by_address_ToolStripMenuItem.Click += new System.EventHandler(this.repairs_by_address_ToolStripMenuItem_Click);
             // 
             // форматToolStripMenuItem
             // 
@@ -441,27 +471,6 @@ namespace Project
             this.Back_btn.UseVisualStyleBackColor = true;
             this.Back_btn.Click += new System.EventHandler(this.Back_btn_Click);
             // 
-            // repairs_by_date_ToolStripMenuItem
-            // 
-            this.repairs_by_date_ToolStripMenuItem.Name = "repairs_by_date_ToolStripMenuItem";
-            this.repairs_by_date_ToolStripMenuItem.Size = new System.Drawing.Size(277, 22);
-            this.repairs_by_date_ToolStripMenuItem.Text = "Вывести заявки на дату";
-            this.repairs_by_date_ToolStripMenuItem.Click += new System.EventHandler(this.repairs_by_date_ToolStripMenuItem_Click);
-            // 
-            // repairs_by_subscriber_ToolStripMenuItem
-            // 
-            this.repairs_by_subscriber_ToolStripMenuItem.Name = "repairs_by_subscriber_ToolStripMenuItem";
-            this.repairs_by_subscriber_ToolStripMenuItem.Size = new System.Drawing.Size(277, 22);
-            this.repairs_by_subscriber_ToolStripMenuItem.Text = "Все заявки по выбранному абоненту";
-            this.repairs_by_subscriber_ToolStripMenuItem.Click += new System.EventHandler(this.repairs_by_subscriber_ToolStripMenuItem_Click);
-            // 
-            // repairs_by_address_ToolStripMenuItem
-            // 
-            this.repairs_by_address_ToolStripMenuItem.Name = "repairs_by_address_ToolStripMenuItem";
-            this.repairs_by_address_ToolStripMenuItem.Size = new System.Drawing.Size(277, 22);
-            this.repairs_by_address_ToolStripMenuItem.Text = "Все заявки по выбранному адресу";
-            this.repairs_by_address_ToolStripMenuItem.Click += new System.EventHandler(this.repairs_by_address_ToolStripMenuItem_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -535,6 +544,7 @@ namespace Project
         private System.Windows.Forms.ToolStripMenuItem repairs_by_date_ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem repairs_by_subscriber_ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem repairs_by_address_ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem Prin_Repairs_ToolStripMenuItem;
     }
 }
 
