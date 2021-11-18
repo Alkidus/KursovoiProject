@@ -94,6 +94,12 @@
     <Compile Include="Forms\PaymentForm.Designer.cs">
       <DependentUpon>PaymentForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Repairs_By_Date.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Repairs_By_Date.Designer.cs">
+      <DependentUpon>Repairs_By_Date.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\RepairForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -148,6 +154,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\PaymentForm.resx">
       <DependentUpon>PaymentForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Repairs_By_Date.resx">
+      <DependentUpon>Repairs_By_Date.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\RepairForm.resx">
       <DependentUpon>RepairForm.cs</DependentUpon>

@@ -2110,13 +2110,15 @@ namespace Project
                 }
             }
             ChangeFontAndColor();
-            payments_btn.Visible = false;//отобразить кнопку "Оплаты"
+            payments_btn.Visible = false;//скрыть кнопку "Оплаты"
             label1.Text = "Операции приостановлены:";
             activeTable = "";
         }
 
         private void debtorsToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (activeTable != "adress")
+                return;
             if (dataGridView1.SelectedRows.Count > 0)
             {
                 int index = dataGridView1.SelectedRows[0].Index;
@@ -2181,7 +2183,7 @@ namespace Project
             dataGridView1[5, 0].Value = totalDebt;//в шестой колонке выводим общуюю сумму задолжености
             activeTable = "";//дэактивируем таблицу subscriber
             ChangeFontAndColor();
-            payments_btn.Visible = false;//оскрыть кнопку "Оплаты"
+            payments_btn.Visible = false;//скрыть кнопку "Оплаты"
             label1.Text = "Операции приостановлены:";
         }
         public List<float> MakeHeader(List<int> headers) 
@@ -2255,6 +2257,145 @@ namespace Project
             ExportGridToPdf(dataGridView1, "test");
 
             MessageBox.Show("Pdf-документ сохранен");
+        }
+
+        private void repairs_by_date_ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ClearTable();
+            Repairs_By_Date repairsByDate = new Repairs_By_Date();
+            DialogResult dialogResult = repairsByDate.ShowDialog(this);
+            if (dialogResult == DialogResult.Cancel)
+                return;
+            DateTime findDate = repairsByDate.dateTimePicker1.Value;
+            using (DomofonContext db = new DomofonContext())
+            {
+                var repairs = from rep in db.RepairRequests
+                              where rep.DateRepairEnd.ToString() == findDate.ToString()
+                              select rep;
+                dataGridView1.Columns.Add("col0", "№");
+                dataGridView1.Columns.Add("col1", "Адрес");
+                dataGridView1.Columns.Add("col2", "Кв.");
+                dataGridView1.Columns.Add("col3", "Заявленная неисправность");
+                dataGridView1.Columns.Add("col4", "Время вып");
+                dataGridView1.Columns.Add("col5", "Отметки про выполнение мастера");
+                dataGridView1.Columns.Add("col6", "Кв.");
+                dataGridView1.Columns.Add("col7", "Фамилия");
+                dataGridView1.Columns.Add("col8", "Подпись");
+
+                int numberOfRepair = 1;
+                foreach (var item in repairs)
+                {
+                    dataGridView1.Rows.Add(numberOfRepair, db.Addresses.FirstOrDefault(el => el.Id == item.AddressId).Street + " № "
+                        + db.Addresses.FirstOrDefault(el => el.Id == item.AddressId).House
+                        + "к. " + db.Addresses.FirstOrDefault(el => el.Id == item.AddressId).Corpus
+                        + " п. " + db.Addresses.FirstOrDefault(el => el.Id == item.AddressId).Entrance, item.Flat,
+                        item.DescriptionFromSub, "", "", "", "", "");
+                    numberOfRepair++;
+                }
+            }
+
+            ChangeFontAndColor();
+            payments_btn.Visible = false;//скрыть кнопку "Оплаты"
+            label1.Text = "Операции приостановлены:";
+            activeTable = "";
+        }
+
+        private void repairs_by_subscriber_ToolStripMenuItem_Click(object sender, EventArgs e)//все завки по выбранному абоненту
+        {
+            ClearTable();
+            if (activeTable != "subscriber")
+            {
+                MessageBox.Show("Выберите одного абонента в списке абонетов", "WARNING!!!");
+                return;
+            }
+            if (dataGridView1.SelectedRows.Count > 0)
+            {
+                int index = dataGridView1.SelectedRows[0].Index;
+                int id = 0;
+                bool converted = Int32.TryParse(dataGridView1[0, index].Value.ToString(), out id);
+                if (converted == false)
+                    return;
+                using (DomofonContext db = new DomofonContext())
+                {
+                    var repairs = from rep in db.RepairRequests
+                                  where rep.SubscriberId == id
+                                  select rep;
+
+                    dataGridView1.Columns.Add("col0", "ID");
+                    dataGridView1.Columns.Add("col1", "Дата заявки");
+                    dataGridView1.Columns.Add("col2", "Адрес");
+                    dataGridView1.Columns.Add("col3", "Квартира");
+                    dataGridView1.Columns.Add("col4", "Заявленная неисправность");
+                    dataGridView1.Columns.Add("col5", "Дата выполнения");
+                    dataGridView1.Columns.Add("col6", "Что ремонтировалось");
+                    dataGridView1.Columns.Add("col7", "Статус");
+                    dataGridView1.Columns.Add("col8", "Абонент");
+                    dataGridView1.Columns.Add("col9", "Комментарии");
+
+                    foreach (var item in repairs)
+                    {
+                        dataGridView1.Rows.Add(item.Id, item.DateRepairBegin.ToShortDateString(), db.Addresses.FirstOrDefault(el => el.Id == item.AddressId).Street + " № "
+                            + db.Addresses.FirstOrDefault(el => el.Id == item.AddressId).House
+                            + "к. " + db.Addresses.FirstOrDefault(el => el.Id == item.AddressId).Corpus
+                            + " п. " + db.Addresses.FirstOrDefault(el => el.Id == item.AddressId).Entrance, item.Flat,
+                            item.DescriptionFromSub, item.DateRepairEnd.ToShortDateString(), item.DescriptionFromServ,
+                            item.Status, item.SubscriberId, item.Comments);
+                    }
+                }
+            }
+            ChangeFontAndColor();
+            payments_btn.Visible = false;//скрыть кнопку "Оплаты"
+            label1.Text = "Операции приостановлены:";
+            activeTable = "";
+        }
+
+        private void repairs_by_address_ToolStripMenuItem_Click(object sender, EventArgs e)//все завки по выбранному адресу
+        {
+            ClearTable();
+            if (activeTable != "adress")
+            {
+                MessageBox.Show("Выберите один адрес в списке адресов", "WARNING!!!");
+                return;
+            }
+            if (dataGridView1.SelectedRows.Count > 0)
+            {
+                int index = dataGridView1.SelectedRows[0].Index;
+                int id = 0;
+                bool converted = Int32.TryParse(dataGridView1[0, index].Value.ToString(), out id);
+                if (converted == false)
+                    return;
+                using (DomofonContext db = new DomofonContext())
+                {
+                    var repairs = from rep in db.RepairRequests
+                                  where rep.AddressId == id
+                                  select rep;
+
+                    dataGridView1.Columns.Add("col0", "ID");
+                    dataGridView1.Columns.Add("col1", "Дата заявки");
+                    dataGridView1.Columns.Add("col2", "Адрес");
+                    dataGridView1.Columns.Add("col3", "Квартира");
+                    dataGridView1.Columns.Add("col4", "Заявленная неисправность");
+                    dataGridView1.Columns.Add("col5", "Дата выполнения");
+                    dataGridView1.Columns.Add("col6", "Что ремонтировалось");
+                    dataGridView1.Columns.Add("col7", "Статус");
+                    dataGridView1.Columns.Add("col8", "Абонент");
+                    dataGridView1.Columns.Add("col9", "Комментарии");
+
+                    foreach (var item in repairs)
+                    {
+                        dataGridView1.Rows.Add(item.Id, item.DateRepairBegin.ToShortDateString(), db.Addresses.FirstOrDefault(el => el.Id == item.AddressId).Street + " № "
+                            + db.Addresses.FirstOrDefault(el => el.Id == item.AddressId).House
+                            + "к. " + db.Addresses.FirstOrDefault(el => el.Id == item.AddressId).Corpus
+                            + " п. " + db.Addresses.FirstOrDefault(el => el.Id == item.AddressId).Entrance, item.Flat,
+                            item.DescriptionFromSub, item.DateRepairEnd.ToShortDateString(), item.DescriptionFromServ,
+                            item.Status, item.SubscriberId, item.Comments);
+                    }
+                }
+            }
+                ChangeFontAndColor();
+            payments_btn.Visible = false;//скрыть кнопку "Оплаты"
+            label1.Text = "Операции приостановлены:";
+            activeTable = "";
         }
     }
 }
