@@ -13,7 +13,7 @@ using Project.Controller;
 using Project.Forms;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
-
+using System.Data.Entity;
 
 namespace Project
 {
@@ -2115,10 +2115,13 @@ namespace Project
             activeTable = "";
         }
 
-        private void debtorsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void debtorsToolStripMenuItem_Click(object sender, EventArgs e)//вывод списка должников
         {
             if (activeTable != "adress")
+            {
+                MessageBox.Show("Выберите один адрес в списке адресов", "WARNING!!!");
                 return;
+            }
             if (dataGridView1.SelectedRows.Count > 0)
             {
                 int index = dataGridView1.SelectedRows[0].Index;
@@ -2269,9 +2272,9 @@ namespace Project
             DateTime findDate = repairsByDate.dateTimePicker1.Value;
             using (DomofonContext db = new DomofonContext())
             {
-                var repairs = from rep in db.RepairRequests
-                              where rep.DateRepairEnd.ToString() == findDate.ToString()
-                              select rep;
+                var repairs = db.RepairRequests.Where(r => DbFunctions.TruncateTime(r.DateRepairEnd) == DbFunctions.TruncateTime(findDate));
+
+                var allRepairs = repairs.ToList();
                 dataGridView1.Columns.Add("col0", "№");
                 dataGridView1.Columns.Add("col1", "Адрес");
                 dataGridView1.Columns.Add("col2", "Кв.");
@@ -2283,7 +2286,7 @@ namespace Project
                 dataGridView1.Columns.Add("col8", "Подпись");
 
                 int numberOfRepair = 1;
-                foreach (var item in repairs)
+                foreach (var item in allRepairs)
                 {
                     dataGridView1.Rows.Add(numberOfRepair, db.Addresses.FirstOrDefault(el => el.Id == item.AddressId).Street + " № "
                         + db.Addresses.FirstOrDefault(el => el.Id == item.AddressId).House
@@ -2302,7 +2305,6 @@ namespace Project
 
         private void repairs_by_subscriber_ToolStripMenuItem_Click(object sender, EventArgs e)//все завки по выбранному абоненту
         {
-            ClearTable();
             if (activeTable != "subscriber")
             {
                 MessageBox.Show("Выберите одного абонента в списке абонетов", "WARNING!!!");
@@ -2315,12 +2317,13 @@ namespace Project
                 bool converted = Int32.TryParse(dataGridView1[0, index].Value.ToString(), out id);
                 if (converted == false)
                     return;
+                ClearTable();
                 using (DomofonContext db = new DomofonContext())
                 {
                     var repairs = from rep in db.RepairRequests
-                                  where rep.SubscriberId == id
+                                  where rep.SubscriberId.Value == id
                                   select rep;
-
+                    var allRepairs = repairs.ToList();
                     dataGridView1.Columns.Add("col0", "ID");
                     dataGridView1.Columns.Add("col1", "Дата заявки");
                     dataGridView1.Columns.Add("col2", "Адрес");
@@ -2332,7 +2335,7 @@ namespace Project
                     dataGridView1.Columns.Add("col8", "Абонент");
                     dataGridView1.Columns.Add("col9", "Комментарии");
 
-                    foreach (var item in repairs)
+                    foreach (var item in allRepairs)
                     {
                         dataGridView1.Rows.Add(item.Id, item.DateRepairBegin.ToShortDateString(), db.Addresses.FirstOrDefault(el => el.Id == item.AddressId).Street + " № "
                             + db.Addresses.FirstOrDefault(el => el.Id == item.AddressId).House
@@ -2351,7 +2354,6 @@ namespace Project
 
         private void repairs_by_address_ToolStripMenuItem_Click(object sender, EventArgs e)//все завки по выбранному адресу
         {
-            ClearTable();
             if (activeTable != "adress")
             {
                 MessageBox.Show("Выберите один адрес в списке адресов", "WARNING!!!");
@@ -2364,12 +2366,13 @@ namespace Project
                 bool converted = Int32.TryParse(dataGridView1[0, index].Value.ToString(), out id);
                 if (converted == false)
                     return;
+                ClearTable();
                 using (DomofonContext db = new DomofonContext())
                 {
                     var repairs = from rep in db.RepairRequests
                                   where rep.AddressId == id
                                   select rep;
-
+                    var allRepairs = repairs.ToList();
                     dataGridView1.Columns.Add("col0", "ID");
                     dataGridView1.Columns.Add("col1", "Дата заявки");
                     dataGridView1.Columns.Add("col2", "Адрес");
@@ -2381,7 +2384,7 @@ namespace Project
                     dataGridView1.Columns.Add("col8", "Абонент");
                     dataGridView1.Columns.Add("col9", "Комментарии");
 
-                    foreach (var item in repairs)
+                    foreach (var item in allRepairs)
                     {
                         dataGridView1.Rows.Add(item.Id, item.DateRepairBegin.ToShortDateString(), db.Addresses.FirstOrDefault(el => el.Id == item.AddressId).Street + " № "
                             + db.Addresses.FirstOrDefault(el => el.Id == item.AddressId).House
@@ -2397,5 +2400,18 @@ namespace Project
             label1.Text = "Операции приостановлены:";
             activeTable = "";
         }
+
+
+        ////Создаем объект таблицы и передаем в нее число столбцов таблицы из нашего датасета
+        //PdfPTable table = new PdfPTable(MyDataSet.Tables[i].Columns.Count);
+
+        ////Добавим в таблицу общий заголовок
+        //PdfPCell cell = new PdfPCell(new Phrase("БД " + fileName + ", таблица №" + (i + 1), font));
+
+        //cell.Colspan = MyDataSet.Tables[i].Columns.Count;
+        //cell.HorizontalAlignment = 1;
+        ////Убираем границу первой ячейки, чтобы балы как заголовок
+        //cell.Border = 0;
+        //table.AddCell(cell);
     }
 }
