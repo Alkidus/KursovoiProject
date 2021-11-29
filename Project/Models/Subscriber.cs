@@ -24,8 +24,8 @@ namespace Project.Models
         public DateTime ContractDate { get; set; } //дата заключения договора
         public string Code { get; set; } //индивидуальный код абонента
         public int AddressId { get; set; } //адресс
-        public int DomofonHandsetId { get; set; } //тип трубки
-        public int DomofonKeyId { get; set; } //тип ключа
+        public Nullable<int> DomofonHandsetId { get; set; } //тип трубки
+        public Nullable<int> DomofonKeyId { get; set; } //тип ключа
         public Nullable<int> PaymentId { get; set; } //оплаты
         public Nullable<int> AccrualId { get; set; } //начисления
         public string Comments { get; set; } //коментарии

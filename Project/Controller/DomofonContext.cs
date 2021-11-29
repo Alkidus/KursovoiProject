@@ -26,6 +26,6 @@ namespace Project.Controller
         public DbSet<RepairRequest> RepairRequests { get; set; }
         public DbSet<Serviceman> Servicemen { get; set; }
         public DbSet<Subscriber> Subscribers { get; set; }
-        public DbSet<User> Users { get; set; }
+
     }
 }

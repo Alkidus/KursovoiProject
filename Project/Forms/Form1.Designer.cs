@@ -44,7 +44,6 @@ namespace Project
             this.Prin_Repairs_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.отчетыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.debtorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.receiptsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.generalReportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.keysToAddressToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.findSurnameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -100,10 +99,10 @@ namespace Project
             dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle4;
-            this.dataGridView1.Location = new System.Drawing.Point(394, 27);
+            this.dataGridView1.Location = new System.Drawing.Point(297, 27);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(778, 572);
+            this.dataGridView1.Size = new System.Drawing.Size(875, 572);
             this.dataGridView1.TabIndex = 0;
             // 
             // ChooseSubs_btn
@@ -111,7 +110,7 @@ namespace Project
             this.ChooseSubs_btn.BackColor = System.Drawing.SystemColors.Control;
             this.ChooseSubs_btn.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ChooseSubs_btn.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ChooseSubs_btn.Location = new System.Drawing.Point(20, 100);
+            this.ChooseSubs_btn.Location = new System.Drawing.Point(7, 77);
             this.ChooseSubs_btn.Name = "ChooseSubs_btn";
             this.ChooseSubs_btn.Size = new System.Drawing.Size(200, 45);
             this.ChooseSubs_btn.TabIndex = 1;
@@ -139,8 +138,8 @@ namespace Project
             this.addServiсemanToolStripMenuItem,
             this.chooseCompanyToolStripMenuItem,
             this.saveToPDF_ToolStripMenuItem,
-            this.exitToolStripMenuItem,
-            this.Prin_Repairs_ToolStripMenuItem});
+            this.Prin_Repairs_ToolStripMenuItem,
+            this.exitToolStripMenuItem});
             this.файлToolStripMenuItem.Name = "файлToolStripMenuItem";
             this.файлToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.файлToolStripMenuItem.Text = "Файл";
@@ -193,7 +192,6 @@ namespace Project
             // 
             this.отчетыToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.debtorsToolStripMenuItem,
-            this.receiptsToolStripMenuItem,
             this.generalReportToolStripMenuItem,
             this.keysToAddressToolStripMenuItem,
             this.findSurnameToolStripMenuItem,
@@ -211,12 +209,6 @@ namespace Project
             this.debtorsToolStripMenuItem.Size = new System.Drawing.Size(277, 22);
             this.debtorsToolStripMenuItem.Text = "Должники";
             this.debtorsToolStripMenuItem.Click += new System.EventHandler(this.debtorsToolStripMenuItem_Click);
-            // 
-            // receiptsToolStripMenuItem
-            // 
-            this.receiptsToolStripMenuItem.Name = "receiptsToolStripMenuItem";
-            this.receiptsToolStripMenuItem.Size = new System.Drawing.Size(277, 22);
-            this.receiptsToolStripMenuItem.Text = "Квитанции";
             // 
             // generalReportToolStripMenuItem
             // 
@@ -324,7 +316,7 @@ namespace Project
             // 
             this.Repair_btn.Cursor = System.Windows.Forms.Cursors.Hand;
             this.Repair_btn.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.Repair_btn.Location = new System.Drawing.Point(20, 150);
+            this.Repair_btn.Location = new System.Drawing.Point(7, 127);
             this.Repair_btn.Name = "Repair_btn";
             this.Repair_btn.Size = new System.Drawing.Size(200, 45);
             this.Repair_btn.TabIndex = 3;
@@ -336,7 +328,7 @@ namespace Project
             // 
             this.Adress_btn.Cursor = System.Windows.Forms.Cursors.Hand;
             this.Adress_btn.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.Adress_btn.Location = new System.Drawing.Point(20, 50);
+            this.Adress_btn.Location = new System.Drawing.Point(7, 27);
             this.Adress_btn.Name = "Adress_btn";
             this.Adress_btn.Size = new System.Drawing.Size(200, 45);
             this.Adress_btn.TabIndex = 4;
@@ -348,7 +340,7 @@ namespace Project
             // 
             this.Keys_btn.Cursor = System.Windows.Forms.Cursors.Hand;
             this.Keys_btn.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.Keys_btn.Location = new System.Drawing.Point(20, 200);
+            this.Keys_btn.Location = new System.Drawing.Point(7, 177);
             this.Keys_btn.Name = "Keys_btn";
             this.Keys_btn.Size = new System.Drawing.Size(200, 45);
             this.Keys_btn.TabIndex = 5;
@@ -360,7 +352,7 @@ namespace Project
             // 
             this.HandSet_btn.Cursor = System.Windows.Forms.Cursors.Hand;
             this.HandSet_btn.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.HandSet_btn.Location = new System.Drawing.Point(20, 250);
+            this.HandSet_btn.Location = new System.Drawing.Point(7, 227);
             this.HandSet_btn.Name = "HandSet_btn";
             this.HandSet_btn.Size = new System.Drawing.Size(200, 45);
             this.HandSet_btn.TabIndex = 6;
@@ -372,7 +364,7 @@ namespace Project
             // 
             this.Domofons_btn.Cursor = System.Windows.Forms.Cursors.Hand;
             this.Domofons_btn.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.Domofons_btn.Location = new System.Drawing.Point(20, 300);
+            this.Domofons_btn.Location = new System.Drawing.Point(7, 277);
             this.Domofons_btn.Name = "Domofons_btn";
             this.Domofons_btn.Size = new System.Drawing.Size(200, 45);
             this.Domofons_btn.TabIndex = 7;
@@ -389,9 +381,9 @@ namespace Project
             this.ADD_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ADD_btn.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.ADD_btn.ForeColor = System.Drawing.Color.Green;
-            this.ADD_btn.Location = new System.Drawing.Point(7, 395);
+            this.ADD_btn.Location = new System.Drawing.Point(7, 386);
             this.ADD_btn.Name = "ADD_btn";
-            this.ADD_btn.Size = new System.Drawing.Size(120, 45);
+            this.ADD_btn.Size = new System.Drawing.Size(200, 45);
             this.ADD_btn.TabIndex = 8;
             this.ADD_btn.Text = "Добавить";
             this.ADD_btn.UseVisualStyleBackColor = true;
@@ -406,9 +398,9 @@ namespace Project
             this.CHAGE_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.CHAGE_btn.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.CHAGE_btn.ForeColor = System.Drawing.Color.Blue;
-            this.CHAGE_btn.Location = new System.Drawing.Point(137, 395);
+            this.CHAGE_btn.Location = new System.Drawing.Point(7, 437);
             this.CHAGE_btn.Name = "CHAGE_btn";
-            this.CHAGE_btn.Size = new System.Drawing.Size(120, 45);
+            this.CHAGE_btn.Size = new System.Drawing.Size(200, 45);
             this.CHAGE_btn.TabIndex = 9;
             this.CHAGE_btn.Text = "Изменить";
             this.CHAGE_btn.UseVisualStyleBackColor = true;
@@ -423,9 +415,9 @@ namespace Project
             this.DELL_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.DELL_btn.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.DELL_btn.ForeColor = System.Drawing.Color.Red;
-            this.DELL_btn.Location = new System.Drawing.Point(267, 395);
+            this.DELL_btn.Location = new System.Drawing.Point(7, 488);
             this.DELL_btn.Name = "DELL_btn";
-            this.DELL_btn.Size = new System.Drawing.Size(120, 45);
+            this.DELL_btn.Size = new System.Drawing.Size(200, 45);
             this.DELL_btn.TabIndex = 10;
             this.DELL_btn.Text = "Удалить";
             this.DELL_btn.UseVisualStyleBackColor = true;
@@ -440,9 +432,9 @@ namespace Project
             this.payments_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.payments_btn.Font = new System.Drawing.Font("Comic Sans MS", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.payments_btn.ForeColor = System.Drawing.Color.Blue;
-            this.payments_btn.Location = new System.Drawing.Point(15, 471);
+            this.payments_btn.Location = new System.Drawing.Point(7, 539);
             this.payments_btn.Name = "payments_btn";
-            this.payments_btn.Size = new System.Drawing.Size(360, 47);
+            this.payments_btn.Size = new System.Drawing.Size(200, 47);
             this.payments_btn.TabIndex = 11;
             this.payments_btn.Text = "Оплаты";
             this.payments_btn.UseVisualStyleBackColor = true;
@@ -453,20 +445,20 @@ namespace Project
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(20, 350);
+            this.label1.Location = new System.Drawing.Point(7, 329);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(244, 27);
+            this.label1.Size = new System.Drawing.Size(141, 54);
             this.label1.TabIndex = 12;
-            this.label1.Text = "Операции с компанией:";
+            this.label1.Text = "Операции\r\nс компанией:";
             // 
             // Back_btn
             // 
             this.Back_btn.Cursor = System.Windows.Forms.Cursors.Hand;
             this.Back_btn.Font = new System.Drawing.Font("Comic Sans MS", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.Back_btn.Image = ((System.Drawing.Image)(resources.GetObject("Back_btn.Image")));
-            this.Back_btn.Location = new System.Drawing.Point(287, 27);
+            this.Back_btn.Location = new System.Drawing.Point(213, 27);
             this.Back_btn.Name = "Back_btn";
-            this.Back_btn.Size = new System.Drawing.Size(105, 55);
+            this.Back_btn.Size = new System.Drawing.Size(78, 35);
             this.Back_btn.TabIndex = 13;
             this.Back_btn.UseVisualStyleBackColor = true;
             this.Back_btn.Click += new System.EventHandler(this.Back_btn_Click);
@@ -475,7 +467,6 @@ namespace Project
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1184, 611);
             this.Controls.Add(this.Back_btn);
@@ -513,7 +504,6 @@ namespace Project
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem отчетыToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem debtorsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem receiptsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem справкаToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem help_ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem about_ToolStripMenuItem;

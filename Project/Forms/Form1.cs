@@ -27,12 +27,14 @@ namespace Project
         {
             InitializeComponent();
             Text = "PROJECT_DOMOFON";
-            //this.BackColor = Color.Aquamarine;
+            this.BackColor = Color.Aquamarine;
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            payments_btn.Visible = false;
+            payments_btn.Visible = false; //скрываем кнопку "Оплаты"
+            Back_btn.Visible = false; //скрываем кнопку "Назад"
+            ChooseSubs_btn.Enabled = false; //деактивируем кнопку "Выбрать абонента"
             //using (DomofonContext db = new DomofonContext())
             //{
             //    db.Companies.Add(
@@ -336,7 +338,7 @@ namespace Project
             GetAllCompanies();
             activeTable = "company";
         }
-        private void GetAllCompanies()
+        private void GetAllCompanies()//Получение списка всех компаний
         {
             using (DomofonContext db = new DomofonContext())
             {
@@ -354,12 +356,14 @@ namespace Project
                     dataGridView1.Rows.Add(item.Id, item.Name, item.Address, item.Phone, item.Account, item.Code, item.BankCode);
                 }
             }
-            ChangeFontAndColor();
-            payments_btn.Visible = false;
+            ChangeFontAndColor();//применяем выбранный пользователем стиль шрифта и цвет
+            payments_btn.Visible = false; //скрываем кнопку "Оплаты"
+            Back_btn.Visible = false; //скрываем кнопку "Назад"
+            ChooseSubs_btn.Enabled = false; //деактивируем кнопку "Выбрать абонента"
             label1.Text = "Операции с компанией:";
         }
 
-        private void GetAllAdresses()
+        private void GetAllAdresses()//получение списка всех адресов
         {
             using (DomofonContext db = new DomofonContext())
             {
@@ -386,25 +390,27 @@ namespace Project
                         db.DomofonKeys.FirstOrDefault(el => el.Id == item.DomofonKeyId).DomofonKeyType);
                 }
             }
-            ChangeFontAndColor();
-            payments_btn.Visible = true;
+            ChangeFontAndColor();//применяем выбранный пользователем стиль шрифта и цвет
+            payments_btn.Visible = true; //отображаем кнопку "Оплаты"
+            Back_btn.Visible = false; //скрываем кнопку "Назад"
+            ChooseSubs_btn.Enabled = true; //активируем кнопку "Выбрать абонента"
             label1.Text = "Операции с адресами:";
         }
-        private void Adress_btn_Click(object sender, EventArgs e)
+        private void Adress_btn_Click(object sender, EventArgs e)//кнопка "СПИСОК АДРЕСОВ"
         {
-            ClearTable();
-            GetAllAdresses();
-            activeTable = "adress";
+            ClearTable();//очитска таблицы
+            GetAllAdresses();//получаем все адреса
+            activeTable = "adress";//активируем таблицу адреса
         }
 
-        private void Keys_btn_Click(object sender, EventArgs e)
+        private void Keys_btn_Click(object sender, EventArgs e)//кнопка "КЛЮЧИ"
         {
             ClearTable();
             GetAllKeys();
             activeTable = "key";
         }
 
-        private void GetAllKeys()
+        private void GetAllKeys()//получаем список всех ключей
         {
             using (DomofonContext db = new DomofonContext())
             {
@@ -419,7 +425,9 @@ namespace Project
                 }
             }
             ChangeFontAndColor();
-            payments_btn.Visible = false;
+            payments_btn.Visible = false; //скрываем кнопку "Оплаты"
+            Back_btn.Visible = false; //скрываем кнопку "Назад"
+            ChooseSubs_btn.Enabled = false; //деактивируем кнопку "Выбрать абонента"
             label1.Text = "Операции с ключами:";
         }
 
@@ -445,7 +453,9 @@ namespace Project
                 }
             }
             ChangeFontAndColor();
-            payments_btn.Visible = false;
+            payments_btn.Visible = false; //скрываем кнопку "Оплаты"
+            Back_btn.Visible = false; //скрываем кнопку "Назад"
+            ChooseSubs_btn.Enabled = false; //деактивируем кнопку "Выбрать абонента"
             label1.Text = "Операции с трубками:";
         }
 
@@ -471,7 +481,9 @@ namespace Project
                 }
             }
             ChangeFontAndColor();
-            payments_btn.Visible = false;
+            payments_btn.Visible = false; //скрываем кнопку "Оплаты"
+            Back_btn.Visible = false; //скрываем кнопку "Назад"
+            ChooseSubs_btn.Enabled = false; //деактивируем кнопку "Выбрать абонента"
             label1.Text = "Операции с домофонами:";
         }
 
@@ -498,7 +510,9 @@ namespace Project
                 }
             }
             ChangeFontAndColor();
-            payments_btn.Visible = false;
+            payments_btn.Visible = false; //скрываем кнопку "Оплаты"
+            Back_btn.Visible = false; //скрываем кнопку "Назад"
+            ChooseSubs_btn.Enabled = false; //деактивируем кнопку "Выбрать абонента"
             label1.Text = "Операции с мастерами:";
         }
         private void GetAllAccruals()//выводим таблицу всех начислений
@@ -517,7 +531,9 @@ namespace Project
                 }
             }
             ChangeFontAndColor();
-            payments_btn.Visible = false;
+            payments_btn.Visible = false; //скрываем кнопку "Оплаты"
+            Back_btn.Visible = false; //скрываем кнопку "Назад"
+            ChooseSubs_btn.Enabled = false; //деактивируем кнопку "Выбрать абонента"
         }
         private void chooseCompanyToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -553,11 +569,14 @@ namespace Project
             GetAllSubscribersByAdress(idAdress);
             ChangeFontAndColor();
             activeTable = "subscriber";
+
         }
 
         private void GetAllSubscribersByAdress(int ID)
         {
-            payments_btn.Visible = true;
+            payments_btn.Visible = true; //отобразить кнопку "Оплаты"
+            Back_btn.Visible = true; //отобразить кнопку "Назад"
+            ChooseSubs_btn.Enabled = false; //деактивируем кнопку "Выбрать абонента"
             ClearTable();
             using (DomofonContext db = new DomofonContext())
             {
@@ -625,20 +644,26 @@ namespace Project
                 }
             }
             ChangeFontAndColor();
-            payments_btn.Visible = false;
+            payments_btn.Visible = false; //скрываем кнопку "Оплаты"
+            Back_btn.Visible = false; //скрываем кнопку "Назад"
+            ChooseSubs_btn.Enabled = false; //деактивируем кнопку "Выбрать абонента"
             label1.Text = "Операции с заявками:";
         }
-        private void CalculatePaymentForNewSubscriber(string newSubscriberCode, DateTime createDate) //высчитываем сумму начисления абонплаты для нового абонента
+        private void CalculatePaymentForNewSubscriber(Subscriber subscriber/*string newSubscriberCode, DateTime createDate*/) //высчитываем сумму начисления абонплаты для нового абонента
         {
             using (DomofonContext db = new DomofonContext())
             {
                 Accrual lastAccrual = new Accrual();
-                lastAccrual = db.Accruals.LastOrDefault();
-                if (lastAccrual == null)
+                //lastAccrual = db.Accruals.LastOrDefault();//ERROR!!!!!!!!!!!!!!!!!!!!!!
+                //db.Users.OrderByDescending(u => u.UserId).FirstOrDefault();
+                //lastAccrual = db.Accruals.Max(acc => acc.Id);
+                int? intIdt = db.Accruals.Max(accrual => (int?)accrual.Id);//ищем последнее начисление с максимальным id
+                if (intIdt == null)
                 {
                     MessageBox.Show("Нет ни одного начисления! Сперва начислите абонплату!", "ERROR");
                     return;
                 }
+                lastAccrual = db.Accruals.Find(intIdt);
                 int numberDeysInAccrual = 0; //количество дней в последнем начисленном квартале
                 decimal totalAccrual = 0; //Общая сумма всех начисленй
                 decimal sumPerDay = 0; //сумма гривен/вдень
@@ -650,7 +675,7 @@ namespace Project
                                   select accruals;
                 foreach (var el in allAccruals)
                     totalAccrual += el.SumPlus;
-                DateTime addDate = createDate; ; //дата создания абонента
+                DateTime addDate = subscriber.ContractDate;// createDate; ; //дата создания абонента
                 DateTime startAccrual = lastAccrual.SumPlusDate; //дата начала квартала
                 DateTime endAccrual = startAccrual.AddMonths(3); //дата окончания квартала
 
@@ -670,12 +695,13 @@ namespace Project
                 paymentSum = Decimal.Round(paymentSum, 2); //округляем до двух знаков после запятой
 
 
-                Subscriber subscriber = new Subscriber();
-                subscriber = db.Subscribers.FirstOrDefault(el => el.Code == newSubscriberCode);
+                //Subscriber subscriber = new Subscriber();
+                //var subscriber = db.Subscribers.FirstOrDefault(el => el.Code == newSubscriberCode);
                 Payment payment = new Payment();
                 payment.SubscriberId = subscriber.Id;
-                payment.SumMinusDate = createDate;
+                payment.SumMinusDate = subscriber.ContractDate; //createDate;
                 payment.SumMinus = paymentSum;
+                db.Payments.Add(payment);
                 db.SaveChanges();
             }
         }
@@ -737,32 +763,50 @@ namespace Project
                         subscriber.ContractDate = subscriberform.dateTimePicker1.Value;
                         subscriber.Code = subscriberform.textBox5.Text;
                         subscriber.Comments = subscriberform.textBox6.Text;
-                        try
-                        {
+                        //try
+                        //{
                             var domofonAdresstID = db.Addresses.FirstOrDefault(el => el.Street + " дом № " + el.House + " корпус " + el.Corpus + " подъезд № " + el.Entrance == subscriberform.comboBox1.SelectedItem.ToString());
                             if (domofonAdresstID != null)
                             {
                                 subscriber.AddressId = domofonAdresstID.Id;
                             }
-                            var domofonHandsetID = db.DomofonHandsets.FirstOrDefault(el => el.DomofonHandsetType == subscriberform.comboBox2.SelectedItem.ToString());
-                            if (domofonHandsetID != null)
-                            {
-                                subscriber.DomofonHandsetId = domofonHandsetID.Id;
-                            }
-                            var domofonKeyID = db.DomofonKeys.FirstOrDefault(el => el.DomofonKeyType == subscriberform.comboBox3.SelectedItem.ToString());
-                            if (domofonKeyID != null)
-                            {
-                                subscriber.DomofonKeyId = domofonKeyID.Id;
-                            }
-                        }
-                        catch (Exception ex)
+                        if (subscriberform.comboBox2.SelectedIndex != -1)
                         {
-                            MessageBox.Show("Все поля должны быть заполнены", "WARNING");
+                            var domofonHandsetID = db.DomofonHandsets.FirstOrDefault(el => el.DomofonHandsetType == subscriberform.comboBox2.SelectedItem.ToString());
+                            subscriber.DomofonHandsetId = domofonHandsetID.Id;
                         }
+                        else
+                            subscriber.DomofonHandsetId = db.DomofonHandsets.FirstOrDefault().Id;
+                        //var domofonHandsetID = db.DomofonHandsets.FirstOrDefault(el => el.DomofonHandsetType == subscriberform.comboBox2.SelectedItem.ToString());
+                        //    if (domofonHandsetID != null)
+                        //    {
+                        //        subscriber.DomofonHandsetId = domofonHandsetID.Id;
+                        //    }
+                        //    else
+                        //        subscriber.DomofonHandsetId = null;
+                        if (subscriberform.comboBox3.SelectedIndex != -1)
+                        {
+                            var domofonKeyID = db.DomofonKeys.FirstOrDefault(el => el.DomofonKeyType == subscriberform.comboBox3.SelectedItem.ToString());
+                            subscriber.DomofonKeyId = domofonKeyID.Id;
+                        }
+                        else
+                            subscriber.DomofonKeyId = db.DomofonKeys.FirstOrDefault().Id;
 
                         db.Subscribers.Add(subscriber);
                         db.SaveChanges();
-                        CalculatePaymentForNewSubscriber(subscriber.Code, subscriber.ContractDate);
+                            //CalculatePaymentForNewSubscriber(subscriber.Code, subscriber.ContractDate);
+                            //db.SaveChanges();
+                            //ClearTable();
+                            //GetAllSubscribersByAdress(idAdress);
+                        //}
+                        //catch (Exception ex)
+                        //{
+                            //MessageBox.Show("Все поля должны быть заполнены", "WARNING");
+                        //}
+
+                        //db.Subscribers.Add(subscriber);
+                        //db.SaveChanges();
+                        CalculatePaymentForNewSubscriber(subscriber/*subscriber.Code, subscriber.ContractDate*/);
                         db.SaveChanges();
                         ClearTable();
                         GetAllSubscribersByAdress(idAdress);
@@ -786,7 +830,7 @@ namespace Project
                         repair.SubscriberId = repairForm.subscriderID;
                         repair.Comments = repairForm.textBox5.Text;
                         db.RepairRequests.Add(repair);
-                        db.SaveChanges(); // SqlException: The INSERT statement conflicted with the FOREIGN KEY constraint "FK_dbo.RepairRequests_dbo.Subscribers_SubscriberId".The conflict occurred in database "DomofonBase", table "dbo.Subscribers", column 'Id'. The statement has been terminated.
+                        db.SaveChanges(); 
 
                         ClearTable();
                         GetAllRepairs();
@@ -896,7 +940,9 @@ namespace Project
                         GetSubscriberPayments(ID, Adress);
                     }
                     ChangeFontAndColor();
-                    payments_btn.Visible = false;//скрыть кнопку "Оплаты"
+                    payments_btn.Visible = false; //скрываем кнопку "Оплаты"
+                    Back_btn.Visible = true; //отобразить кнопку "Назад"
+                    ChooseSubs_btn.Enabled = false; //деактивируем кнопку "Выбрать абонента"
                     break;
                 case "accrual":
                     AddAccrual();
@@ -1081,8 +1127,7 @@ namespace Project
                                     repairForm.comboBox2.SelectedIndex = i;
                                 }
                             }
-                            //repairForm.numericUpDown2.Value = repair.SubscriberId.Value;
-                            //repairForm.textBox6.Text = repair.SubscriberId.ToString();
+
                             repairForm.textBox5.Text = repair.Comments;
 
                             DialogResult result = repairForm.ShowDialog(this);
@@ -1096,7 +1141,6 @@ namespace Project
                             repair.DateRepairEnd = repairForm.dateTimePicker2.Value;
                             repair.DescriptionFromServ = repairForm.textBox4.Text;
                             repair.Status = repairForm.comboBox2.SelectedItem.ToString();
-                            //repair.SubscriberId = (int)repairForm.numericUpDown2.Value;
                             repair.SubscriberId = repairForm.subscriderID;
                             repair.Comments = repairForm.textBox5.Text;
                             db.SaveChanges();
@@ -1126,8 +1170,7 @@ namespace Project
                             adressform.dateTimePicker1.Value = adress.ContractDate;
                             adressform.numericUpDown3.Value = adress.FlatCount;
                             adressform.numericUpDown4.Value = adress.DoorsCount;
-                            //adressform.comboBox1.SelectedItem = db.DomofonSystems.FirstOrDefault(el => el.Id == adress.DomofonSystemId).DomofonSystemType;
-                            //adressform.comboBox2.SelectedItem = db.DomofonKeys.FirstOrDefault(el => el.Id == adress.DomofonKeyId);
+
                             for (int i = 0; i < adressform.comboBox1.Items.Count; i++)
                             {
                                 if (adressform.comboBox1.Items[i].ToString() == db.DomofonSystems.FirstOrDefault(el => el.Id == adress.DomofonSystemId).DomofonSystemType)
@@ -1167,7 +1210,7 @@ namespace Project
                                 adress.DomofonKeyId = domofonKeyID.Id;
                             }
                             db.SaveChanges();
-                            //dataGridView1.Refresh(); // обновляем грид
+
                             ClearTable();
                             GetAllAdresses();
                         }
@@ -1287,7 +1330,9 @@ namespace Project
                             GetSubscriberPayments(ID, adress);
                         }
                         ChangeFontAndColor();
-                        payments_btn.Visible = false;//скрыть кнопку "Оплаты"
+                        payments_btn.Visible = false; //скрываем кнопку "Оплаты"
+                        Back_btn.Visible = false; //скрываем кнопку "Назад"
+                        ChooseSubs_btn.Enabled = false; //деактивируем кнопку "Выбрать абонента"
                     }
                     break;
                 case "accrual":
@@ -1565,7 +1610,9 @@ namespace Project
                             GetSubscriberPayments(ID, adress);
                         }
                         ChangeFontAndColor();
-                        payments_btn.Visible = false;//скрыть кнопку "Оплаты"
+                        payments_btn.Visible = false; //скрываем кнопку "Оплаты"
+                        Back_btn.Visible = false; //скрываем кнопку "Назад"
+                        ChooseSubs_btn.Enabled = false; //деактивируем кнопку "Выбрать абонента"
                     }
                     break;
                 case "accrual":
@@ -1603,7 +1650,7 @@ namespace Project
                 dataGridView1.Columns[i].DefaultCellStyle.ForeColor = color;
             }
         }
-        private void font_ToolStripMenuItem_Click(object sender, EventArgs e)
+        private void font_ToolStripMenuItem_Click(object sender, EventArgs e)//меню шрифт
         {
             fontDialog1.ShowColor = true;
             if (fontDialog1.ShowDialog() == DialogResult.OK)
@@ -1618,7 +1665,7 @@ namespace Project
             }
         }
 
-        private void color_ToolStripMenuItem_Click(object sender, EventArgs e)
+        private void color_ToolStripMenuItem_Click(object sender, EventArgs e)//меню цвет
         {
             colorDialog1.Color = dataGridView1.Columns[0].DefaultCellStyle.ForeColor;
             if (colorDialog1.ShowDialog() == DialogResult.OK)
@@ -1631,7 +1678,7 @@ namespace Project
             }
         }
 
-        private void default_ToolStripMenuItem_Click(object sender, EventArgs e)
+        private void default_ToolStripMenuItem_Click(object sender, EventArgs e)//меню установки по умолчанию
         {
             font = new System.Drawing.Font("Comic Sans MS", 12);
             color = Color.Black;
@@ -1642,7 +1689,7 @@ namespace Project
             }
         }
 
-        private void about_ToolStripMenuItem_Click(object sender, EventArgs e)
+        private void about_ToolStripMenuItem_Click(object sender, EventArgs e)//меню о программе
         {
             MessageBox.Show(@"Это программа для работы с абонентами домофонной компании 'PROJECT_DOMOFON ver. 1.0'. 
 Разработана в рамках учебной программы Компьютерной Академии ШАГ как курсовой проект по .NET. 
@@ -1652,12 +1699,12 @@ namespace Project
 Для связи - alkiddkv@gmail.com", "О программе");
         }
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)//меню выход
         {
             Close();
         }
 
-        private void payments_btn_Click(object sender, EventArgs e)
+        private void payments_btn_Click(object sender, EventArgs e)//кнопка "Оплаты"
         {
             switch (activeTable)
             {
@@ -1727,6 +1774,8 @@ namespace Project
                     }
                     dataGridView1[9, 0].Value = totalDebt;//в десятой колонке выводим общуюю сумму задолжености
                     activeTable = "subscriber";//активируем таблицу subscriber
+                    Back_btn.Visible = true; //отобразить кнопку "Назад"
+                    ChooseSubs_btn.Enabled = false; //деактивируем кнопку "Выбрать абонента"
                     ChangeFontAndColor();
                     label1.Text = "Операции с абонентами:";
                     break;
@@ -1741,7 +1790,9 @@ namespace Project
                         string adress = dataGridView1[1, index].Value.ToString();
                         ClearTable();
                         GetSubscriberPayments(id, adress);
-                        payments_btn.Visible = false;//скрыть кнопку "Оплаты"
+                        payments_btn.Visible = false; //скрываем кнопку "Оплаты"
+                        Back_btn.Visible = true; //скрываем кнопку "Назад"
+                        ChooseSubs_btn.Enabled = false; //деактивируем кнопку "Выбрать абонента"
                         label1.Text = "Операции с платежами:";
                     }
                     activeTable = "payments";//активируем таблицу payments
@@ -1862,17 +1913,19 @@ namespace Project
                 db.SaveChanges();
             }
             ChangeFontAndColor();
-            payments_btn.Visible = false;//скрыть кнопку "Оплаты"
+            payments_btn.Visible = false; //скрываем кнопку "Оплаты"
+            Back_btn.Visible = false; //скрываем кнопку "Назад"
+            ChooseSubs_btn.Enabled = false; //деактивируем кнопку "Выбрать абонента"
             label1.Text = "Операции с начислениями:";
         }
-        private void makeAccrualToolStripMenuItem_Click(object sender, EventArgs e)
+        private void makeAccrualToolStripMenuItem_Click(object sender, EventArgs e)//меню начисление абонплаты
         {
             AddAccrual();
             GetAllAccruals();
             activeTable = "accrual";
         }
 
-        private void generalReportToolStripMenuItem_Click(object sender, EventArgs e)
+        private void generalReportToolStripMenuItem_Click(object sender, EventArgs e)//меню Общий отчет текущего состояния
         {
             ClearTable();
             using (DomofonContext db = new DomofonContext())
@@ -1955,7 +2008,9 @@ namespace Project
 
             }
             ChangeFontAndColor();
-            payments_btn.Visible = false;//скрыть кнопку "Оплаты"
+            payments_btn.Visible = false; //скрываем кнопку "Оплаты"
+            Back_btn.Visible = false; //скрываем кнопку "Назад"
+            ChooseSubs_btn.Enabled = false; //деактивируем кнопку "Выбрать абонента"
             activeTable = "";
             label1.Text = "Операции приостановлены:";
         }
@@ -2000,6 +2055,8 @@ namespace Project
                 if (subscriber == null)
                 {
                     MessageBox.Show("Совпадений не найдено!", "ERROR");
+                    label1.Text = "Операции приостановлены:";
+                    activeTable = "";
                     return;
                 }
 
@@ -2027,7 +2084,9 @@ namespace Project
 
             }
             ChangeFontAndColor();
-            payments_btn.Visible = true;//отобразить кнопку "Оплаты"
+            payments_btn.Visible = true; //отобразить кнопку "Оплаты"
+            Back_btn.Visible = false; //скрываем кнопку "Назад"
+            ChooseSubs_btn.Enabled = false; //деактивируем кнопку "Выбрать абонента"
             label1.Text = "Операции с абонентами:";
             activeTable = "subscriber";
 
@@ -2056,6 +2115,8 @@ namespace Project
                 if (subscriber == null)
                 {
                     MessageBox.Show("Совпадений не найдено!", "ERROR");
+                    label1.Text = "Операции приостановлены:";
+                    activeTable = "";
                     return;
                 }
 
@@ -2083,7 +2144,9 @@ namespace Project
 
             }
             ChangeFontAndColor();
-            payments_btn.Visible = true;//отобразить кнопку "Оплаты"
+            payments_btn.Visible = true; //отобразить кнопку "Оплаты"
+            Back_btn.Visible = false; //скрываем кнопку "Назад"
+            ChooseSubs_btn.Enabled = false; //деактивируем кнопку "Выбрать абонента"
             label1.Text = "Операции с абонентами:";
             activeTable = "subscriber";
         }
@@ -2110,7 +2173,9 @@ namespace Project
                 }
             }
             ChangeFontAndColor();
-            payments_btn.Visible = false;//скрыть кнопку "Оплаты"
+            payments_btn.Visible = false; //скрываем кнопку "Оплаты"
+            Back_btn.Visible = false; //скрываем кнопку "Назад"
+            ChooseSubs_btn.Enabled = false; //деактивируем кнопку "Выбрать абонента"
             label1.Text = "Операции приостановлены:";
             activeTable = "";
         }
@@ -2186,7 +2251,9 @@ namespace Project
             dataGridView1[5, 0].Value = totalDebt;//в шестой колонке выводим общуюю сумму задолжености
             activeTable = "";//дэактивируем таблицу subscriber
             ChangeFontAndColor();
-            payments_btn.Visible = false;//скрыть кнопку "Оплаты"
+            payments_btn.Visible = false; //скрываем кнопку "Оплаты"
+            Back_btn.Visible = false; //скрываем кнопку "Назад"
+            ChooseSubs_btn.Enabled = false; //деактивируем кнопку "Выбрать абонента"
             label1.Text = "Операции приостановлены:";
         }
         public List<float> MakeHeader(List<int> headers) 
@@ -2298,7 +2365,9 @@ namespace Project
             }
 
             ChangeFontAndColor();
-            payments_btn.Visible = false;//скрыть кнопку "Оплаты"
+            payments_btn.Visible = false; //скрываем кнопку "Оплаты"
+            Back_btn.Visible = false; //скрываем кнопку "Назад"
+            ChooseSubs_btn.Enabled = false; //деактивируем кнопку "Выбрать абонента"
             label1.Text = "Операции приостановлены:";
             activeTable = "";
         }
@@ -2347,7 +2416,9 @@ namespace Project
                 }
             }
             ChangeFontAndColor();
-            payments_btn.Visible = false;//скрыть кнопку "Оплаты"
+            payments_btn.Visible = false; //скрываем кнопку "Оплаты"
+            Back_btn.Visible = false; //скрываем кнопку "Назад"
+            ChooseSubs_btn.Enabled = false; //деактивируем кнопку "Выбрать абонента"
             label1.Text = "Операции приостановлены:";
             activeTable = "";
         }
@@ -2396,7 +2467,9 @@ namespace Project
                 }
             }
                 ChangeFontAndColor();
-            payments_btn.Visible = false;//скрыть кнопку "Оплаты"
+            payments_btn.Visible = false; //скрываем кнопку "Оплаты"
+            Back_btn.Visible = false; //скрываем кнопку "Назад"
+            ChooseSubs_btn.Enabled = false; //деактивируем кнопку "Выбрать абонента"
             label1.Text = "Операции приостановлены:";
             activeTable = "";
         }
