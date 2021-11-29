@@ -25,11 +25,13 @@ namespace Project.Forms
                 {
                     comboBox1.Items.Add(item.DomofonSystemType);
                 }
+                comboBox1.SelectedItem = domofom.FirstOrDefault().DomofonSystemType;
                 var keys = db.DomofonKeys.ToList();
                 foreach(var item in keys)
                 {
                     comboBox2.Items.Add(item.DomofonKeyType);
                 }
+                comboBox2.SelectedItem = keys.FirstOrDefault().DomofonKeyType;
             }
         }
 

@@ -28,6 +28,7 @@ namespace Project.Forms
                     comboBox1.Items.Add(item.Street + " дом № " + item.House + " корпус " + item.Corpus + " подъезд № " + item.Entrance + "; id=" + item.Id);
                 }
             }
+            comboBox1.SelectedIndex = 0;
             comboBox2.Items.Add("В работе");
             comboBox2.Items.Add("Выполнена");
             comboBox2.SelectedIndex = 0;

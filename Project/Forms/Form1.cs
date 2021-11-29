@@ -53,7 +53,7 @@ namespace Project
             //    db.DomofonHandsets.Add(
             //        new DomofonHandset
             //        {
-            //            DomofonHandsetType = "SmartEl"
+            //            DomofonHandsetType = "undefined"
             //        });
             //    db.DomofonHandsets.Add(
             //        new DomofonHandset
@@ -78,12 +78,17 @@ namespace Project
             //    db.DomofonHandsets.Add(
             //        new DomofonHandset
             //        {
-            //            DomofonHandsetType = "ВИДЕО"
+            //            DomofonHandsetType = "SmartEl"
             //        });
             //    db.DomofonHandsets.Add(
             //        new DomofonHandset
             //        {
-            //            DomofonHandsetType = "Другое"
+            //            DomofonHandsetType = "ВИДЕО"
+            //        });
+            //    db.DomofonKeys.Add(
+            //        new DomofonKey
+            //        {
+            //            DomofonKeyType = "undefined"
             //        });
             //    db.DomofonKeys.Add(
             //        new DomofonKey
@@ -124,6 +129,11 @@ namespace Project
             //        new DomofonKey
             //        {
             //            DomofonKeyType = "Cyfral Dallas"
+            //        });
+            //    db.DomofonSystems.Add(
+            //        new DomofonSystem
+            //        {
+            //            DomofonSystemType = "undefined"
             //        });
             //    db.DomofonSystems.Add(
             //        new DomofonSystem
@@ -633,7 +643,7 @@ namespace Project
                 dataGridView1.Columns.Add("col8", "Абонент");
                 dataGridView1.Columns.Add("col9", "Комментарии");
 
-                foreach (var item in repairs)
+                foreach (var item in repairs)//баг при добавлении пустой заявки
                 {
                     dataGridView1.Rows.Add(item.Id, item.DateRepairBegin.ToShortDateString(), db.Addresses.FirstOrDefault(el => el.Id == item.AddressId).Street + " № "
                         + db.Addresses.FirstOrDefault(el => el.Id == item.AddressId).House
@@ -649,14 +659,11 @@ namespace Project
             ChooseSubs_btn.Enabled = false; //деактивируем кнопку "Выбрать абонента"
             label1.Text = "Операции с заявками:";
         }
-        private void CalculatePaymentForNewSubscriber(Subscriber subscriber/*string newSubscriberCode, DateTime createDate*/) //высчитываем сумму начисления абонплаты для нового абонента
+        private void CalculatePaymentForNewSubscriber(Subscriber subscriber) //высчитываем сумму начисления абонплаты для нового абонента
         {
             using (DomofonContext db = new DomofonContext())
             {
                 Accrual lastAccrual = new Accrual();
-                //lastAccrual = db.Accruals.LastOrDefault();//ERROR!!!!!!!!!!!!!!!!!!!!!!
-                //db.Users.OrderByDescending(u => u.UserId).FirstOrDefault();
-                //lastAccrual = db.Accruals.Max(acc => acc.Id);
                 int? intIdt = db.Accruals.Max(accrual => (int?)accrual.Id);//ищем последнее начисление с максимальным id
                 if (intIdt == null)
                 {
@@ -694,9 +701,6 @@ namespace Project
                 paymentSum = totalAccrual - sumToEnd;
                 paymentSum = Decimal.Round(paymentSum, 2); //округляем до двух знаков после запятой
 
-
-                //Subscriber subscriber = new Subscriber();
-                //var subscriber = db.Subscribers.FirstOrDefault(el => el.Code == newSubscriberCode);
                 Payment payment = new Payment();
                 payment.SubscriberId = subscriber.Id;
                 payment.SumMinusDate = subscriber.ContractDate; //createDate;
@@ -763,8 +767,6 @@ namespace Project
                         subscriber.ContractDate = subscriberform.dateTimePicker1.Value;
                         subscriber.Code = subscriberform.textBox5.Text;
                         subscriber.Comments = subscriberform.textBox6.Text;
-                        //try
-                        //{
                             var domofonAdresstID = db.Addresses.FirstOrDefault(el => el.Street + " дом № " + el.House + " корпус " + el.Corpus + " подъезд № " + el.Entrance == subscriberform.comboBox1.SelectedItem.ToString());
                             if (domofonAdresstID != null)
                             {
@@ -777,13 +779,6 @@ namespace Project
                         }
                         else
                             subscriber.DomofonHandsetId = db.DomofonHandsets.FirstOrDefault().Id;
-                        //var domofonHandsetID = db.DomofonHandsets.FirstOrDefault(el => el.DomofonHandsetType == subscriberform.comboBox2.SelectedItem.ToString());
-                        //    if (domofonHandsetID != null)
-                        //    {
-                        //        subscriber.DomofonHandsetId = domofonHandsetID.Id;
-                        //    }
-                        //    else
-                        //        subscriber.DomofonHandsetId = null;
                         if (subscriberform.comboBox3.SelectedIndex != -1)
                         {
                             var domofonKeyID = db.DomofonKeys.FirstOrDefault(el => el.DomofonKeyType == subscriberform.comboBox3.SelectedItem.ToString());
@@ -794,19 +789,7 @@ namespace Project
 
                         db.Subscribers.Add(subscriber);
                         db.SaveChanges();
-                            //CalculatePaymentForNewSubscriber(subscriber.Code, subscriber.ContractDate);
-                            //db.SaveChanges();
-                            //ClearTable();
-                            //GetAllSubscribersByAdress(idAdress);
-                        //}
-                        //catch (Exception ex)
-                        //{
-                            //MessageBox.Show("Все поля должны быть заполнены", "WARNING");
-                        //}
-
-                        //db.Subscribers.Add(subscriber);
-                        //db.SaveChanges();
-                        CalculatePaymentForNewSubscriber(subscriber/*subscriber.Code, subscriber.ContractDate*/);
+                        CalculatePaymentForNewSubscriber(subscriber);
                         db.SaveChanges();
                         ClearTable();
                         GetAllSubscribersByAdress(idAdress);
@@ -853,6 +836,7 @@ namespace Project
                         adress.ContractDate = adressform.dateTimePicker1.Value;
                         adress.FlatCount = (int)adressform.numericUpDown3.Value;
                         adress.DoorsCount = (int)adressform.numericUpDown4.Value;
+
                         var domofonSystemID = db.DomofonSystems.FirstOrDefault(el => el.DomofonSystemType == adressform.comboBox1.SelectedItem.ToString());
                         if (domofonSystemID != null)
                         {
