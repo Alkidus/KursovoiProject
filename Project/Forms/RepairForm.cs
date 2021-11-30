@@ -47,7 +47,7 @@ namespace Project.Forms
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
             int flatNumber = (int)numericUpDown1.Value;
-            //int? subscriderID = null;
+
             using (DomofonContext db = new DomofonContext())
             {
                 var accrual = from acc in db.Accruals
@@ -57,14 +57,11 @@ namespace Project.Forms
                 {
                     totalAccrual += el.SumPlus;//суммирует все суммы начислений
                 }
-                //var subscriber = from sub in db.Subscribers
-                //                 where sub.Flat == flatNumber
-                //                 && sub.AddressId == idAddress
-                //                 select sub.Id;
+
                 var subscriber = db.Subscribers.FirstOrDefault(el => el.Flat == flatNumber && el.AddressId == idAddress);
                 if (subscriber != null)
                 {
-                    subscriderID = subscriber.Id; //System.InvalidCastException: "Не удалось привести тип объекта "System.Data.Entity.Infrastructure.DbQuery`1[System.Int32]" к типу "System.IConvertible"."
+                    subscriderID = subscriber.Id; 
                     var subPayment = from pay in db.Payments
                                      where pay.SubscriberId == subscriderID
                                      select pay;
@@ -91,7 +88,7 @@ namespace Project.Forms
                     textBox5.Text = "";
                     BackColor = Color.Aquamarine;
                 }
-                //textBox6.Text = subscriderID.Value.ToString();
+
                     
             }
             
@@ -103,7 +100,6 @@ namespace Project.Forms
             string selectedAddress = comboBox1.SelectedItem.ToString();
             int position = selectedAddress.IndexOf("=");
             idAddress = Convert.ToInt32(selectedAddress.Substring(position + 1));//получаем id выбранного адреса
-            //MessageBox.Show("Выбран адрес с id = " + idAddress);
         }
     }
 }

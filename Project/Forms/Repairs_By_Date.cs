@@ -16,6 +16,7 @@ namespace Project.Forms
         {
             InitializeComponent();
             BackColor = Color.Aquamarine;
+            Text = "ЗАЯВКИ НА ДАТУ";
         }
 
         private void button1_Click(object sender, EventArgs e)
