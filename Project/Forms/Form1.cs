@@ -14,6 +14,7 @@ using Project.Forms;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using System.Data.Entity;
+using System.Diagnostics;
 
 namespace Project
 {
@@ -2530,14 +2531,23 @@ namespace Project
             }
         }
 
-        private void Prin_Repairs_ToolStripMenuItem_Click(object sender, EventArgs e)
+        private void Prin_Repairs_ToolStripMenuItem_Click(object sender, EventArgs e)//меню печать для мастеров Плана-задания
         {
             PrintRepairsToPdf(dataGridView1, "план-задание");
 
             MessageBox.Show("план-задание-документ сохранен");
         }
 
-
-
+        private void help_ToolStripMenuItem_Click(object sender, EventArgs e)//меню Помощь
+        {
+            try
+            {
+                Process.Start(@"..\..\manual\Manual.pdf");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "ФАЙЛ НЕ НАЙДЕН!!!");
+            }
+        }
     }
 }
