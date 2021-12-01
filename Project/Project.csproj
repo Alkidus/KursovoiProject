@@ -124,6 +124,12 @@
     <Compile Include="Forms\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\SumPeriod.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SumPeriod.Designer.cs">
+      <DependentUpon>SumPeriod.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Accrual.cs" />
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\Company.cs" />
@@ -165,6 +171,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SubscriberForm.resx">
       <DependentUpon>SubscriberForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SumPeriod.resx">
+      <DependentUpon>SumPeriod.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

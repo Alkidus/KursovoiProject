@@ -71,6 +71,7 @@ namespace Project
             this.payments_btn = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.Back_btn = new System.Windows.Forms.Button();
+            this.sums_per_preiod_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -198,7 +199,8 @@ namespace Project
             this.findCodeToolStripMenuItem,
             this.repairs_by_date_ToolStripMenuItem,
             this.repairs_by_subscriber_ToolStripMenuItem,
-            this.repairs_by_address_ToolStripMenuItem});
+            this.repairs_by_address_ToolStripMenuItem,
+            this.sums_per_preiod_ToolStripMenuItem});
             this.отчетыToolStripMenuItem.Name = "отчетыToolStripMenuItem";
             this.отчетыToolStripMenuItem.Size = new System.Drawing.Size(60, 20);
             this.отчетыToolStripMenuItem.Text = "Отчеты";
@@ -302,14 +304,14 @@ namespace Project
             // help_ToolStripMenuItem
             // 
             this.help_ToolStripMenuItem.Name = "help_ToolStripMenuItem";
-            this.help_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.help_ToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.help_ToolStripMenuItem.Text = "Помощь...";
             this.help_ToolStripMenuItem.Click += new System.EventHandler(this.help_ToolStripMenuItem_Click);
             // 
             // about_ToolStripMenuItem
             // 
             this.about_ToolStripMenuItem.Name = "about_ToolStripMenuItem";
-            this.about_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.about_ToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.about_ToolStripMenuItem.Text = "О программе...";
             this.about_ToolStripMenuItem.Click += new System.EventHandler(this.about_ToolStripMenuItem_Click);
             // 
@@ -464,6 +466,13 @@ namespace Project
             this.Back_btn.UseVisualStyleBackColor = true;
             this.Back_btn.Click += new System.EventHandler(this.Back_btn_Click);
             // 
+            // sums_per_preiod_ToolStripMenuItem
+            // 
+            this.sums_per_preiod_ToolStripMenuItem.Name = "sums_per_preiod_ToolStripMenuItem";
+            this.sums_per_preiod_ToolStripMenuItem.Size = new System.Drawing.Size(277, 22);
+            this.sums_per_preiod_ToolStripMenuItem.Text = "Суммы поступлений за период";
+            this.sums_per_preiod_ToolStripMenuItem.Click += new System.EventHandler(this.sums_per_preiod_ToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -536,6 +545,7 @@ namespace Project
         private System.Windows.Forms.ToolStripMenuItem repairs_by_subscriber_ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem repairs_by_address_ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem Prin_Repairs_ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem sums_per_preiod_ToolStripMenuItem;
     }
 }
 

@@ -706,6 +706,7 @@ namespace Project
                 payment.SubscriberId = subscriber.Id;
                 payment.SumMinusDate = subscriber.ContractDate; //createDate;
                 payment.SumMinus = paymentSum;
+                payment.Comments = "not a payment";
                 db.Payments.Add(payment);
                 db.SaveChanges();
             }
@@ -1316,7 +1317,7 @@ namespace Project
                         }
                         ChangeFontAndColor();
                         payments_btn.Visible = false; //скрываем кнопку "Оплаты"
-                        Back_btn.Visible = false; //скрываем кнопку "Назад"
+                        Back_btn.Visible = true; //отобразить кнопку "Назад"
                         ChooseSubs_btn.Enabled = false; //деактивируем кнопку "Выбрать абонента"
                     }
                     break;
@@ -1596,7 +1597,7 @@ namespace Project
                         }
                         ChangeFontAndColor();
                         payments_btn.Visible = false; //скрываем кнопку "Оплаты"
-                        Back_btn.Visible = false; //скрываем кнопку "Назад"
+                        Back_btn.Visible = true; //отобразить кнопку "Назад"
                         ChooseSubs_btn.Enabled = false; //деактивируем кнопку "Выбрать абонента"
                     }
                     break;
@@ -2314,7 +2315,7 @@ namespace Project
             MessageBox.Show("Pdf-документ сохранен");
         }
 
-        private void repairs_by_date_ToolStripMenuItem_Click(object sender, EventArgs e)
+        private void repairs_by_date_ToolStripMenuItem_Click(object sender, EventArgs e)//меню заявки на дату
         {
             ClearTable();
             Repairs_By_Date repairsByDate = new Repairs_By_Date();
@@ -2324,7 +2325,7 @@ namespace Project
             DateTime findDate = repairsByDate.dateTimePicker1.Value;
             using (DomofonContext db = new DomofonContext())
             {
-                var repairs = db.RepairRequests.Where(r => DbFunctions.TruncateTime(r.DateRepairEnd) == DbFunctions.TruncateTime(findDate));
+                var repairs = db.RepairRequests.Where(r => DbFunctions.TruncateTime(r.DateRepairEnd) == DbFunctions.TruncateTime(findDate) && r.Status != "Выполнена");
 
                 var allRepairs = repairs.ToList();
                 dataGridView1.Columns.Add("col0", "№");
@@ -2548,6 +2549,36 @@ namespace Project
             {
                 MessageBox.Show(ex.Message, "ФАЙЛ НЕ НАЙДЕН!!!");
             }
+        }
+
+        private void sums_per_preiod_ToolStripMenuItem_Click(object sender, EventArgs e)//суммы поступлений за период
+        {
+            SumPeriod sumPeriod = new SumPeriod();
+            DialogResult dialogResult = sumPeriod.ShowDialog(this);
+            if (dialogResult == DialogResult.Cancel)
+                return;
+            DateTime startDate = sumPeriod.dateTimePicker1.Value;
+            DateTime endDate = sumPeriod.dateTimePicker2.Value;
+            decimal TotalPayment = 0;
+            using (DomofonContext db = new DomofonContext())
+            {
+                var payments = db.Payments.Where(r => r.SumMinusDate >= startDate && r.SumMinusDate <= endDate && r.Comments != "not a payment");
+                foreach(var sum in payments)
+                {
+                    TotalPayment += sum.SumMinus;
+                }
+                ClearTable();
+                dataGridView1.Columns.Add("col0", "Начало периода");
+                dataGridView1.Columns.Add("col1", "Конец периода");
+                dataGridView1.Columns.Add("col2", "Сумма поступлений");
+                dataGridView1.Rows.Add(startDate.ToShortDateString(), endDate.ToShortDateString(), TotalPayment);
+            }
+            ChangeFontAndColor();
+            payments_btn.Visible = false; //скрываем кнопку "Оплаты"
+            Back_btn.Visible = false; //скрываем кнопку "Назад"
+            ChooseSubs_btn.Enabled = false; //деактивируем кнопку "Выбрать абонента"
+            label1.Text = "Операции приостановлены:";
+            activeTable = "";
         }
     }
 }
